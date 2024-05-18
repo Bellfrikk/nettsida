@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bonden</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    @keyframes jobbing {
+      0% {border-color:red;}
+      25% {border-color:orange;}
+      50% {border-color:red;}
+      75% {border-color:orange;}
+      100% {border-color:red;}
+    }
+
+    body{
+    	background-color:#000;
+    }
+
+    .overskrift, .info, .brukar{
+      text-align:center;
+      padding:0px;
+      border:0px;
+      margin:0px;
+    }
+    .overskrift{
+      height:50px;
+    }
+    .info{
+      color:white;
+      font-size:1.2em;
+    }
+    .brukar{
+      color:yellow;
+      font-style: italic;
+      vetical-align:bottom;
+    }
+    h1{
+      color:red;
+      text-align:center;
+      font-size:3em;
+      padding:0px;
+      border:0px;
+        margin:0px;
+    }
+    h2{
+    	color:red;
+    	text-align:left;
+    	font-size:2em;
+    }
+    .ruteTekst{
+      color:white;
+      font-size:1.2em;
+      vertical-align:bottom;
+      align:center;
+    }
+    .silo{
+      height:150px;
+      width:100px;
+      text-align:center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .peng{
+    	text-align:center;
+    	font-size:1em;
+    	font-weight: 900;
+        background-image:url('pengar.png');
+    }
+    .grasSilo{
+      background-image:url('grasSilo0.png');
+    }
+    .kornSilo{
+      background-image:url('kornSilo0.png');
+    }
+    .ikon{
+      width:40px;
+      height:40px;
+      border:solid;
+      border-radius:50px;
+      border-color:#222222;
+
+    }
+    .ny, .gras, .grasFerdig, .korn, .kornFerdig, .ku, .kuFerdig, .kylling, .kyllingFerdig, .jobber{
+    	background-size:100% 100%;
+    	width:200px;
+    	height:150px;
+    	border:solid;
+    	border-width:4px;
+        border-radius:16px;
+        vertical-align:bottom;
+        text-align:center;
+    }
+    .gras, .korn, .ku, .kylling, .jobber{
+      animation-name:jobbing;
+      animation-duration:5s;
+      animation-iteration-count: infinite;
+    }
+    .grasFerdig, .kornFerdig, .kuFerdig, .kyllingFerdig{
+      border-color:yellow;
+    }
+    .ny{
+      background-color:grey;
+      border-color:#222222;
+      background-image:url('tilSalgs.jpg');
+    }
+    .gras, .grasFerdig{
+      background-color:green;
+      background-image:url('gras.jpg');
+    }
+    .korn, .kornFerdig{
+      background-color:yellow;
+      background-image:url('korn.gif');
+    }
+    .ku, .kuFerdig{
+      background-color:white;
+      background-image:url("ku.gif");
+    }
+    .kylling, .kyllingFerdig{
+      background-color:brown;
+      background-image:url("kylling.png");
+    }
+
+    @media screen and (max-width:700px) {
+  
+    }
+  </style>
+</head>
+
+<body>
+<table align="center">
+<tr>
+ <td colspan='3' class='overskrift'><h1 onclick="juks()" id="juks">Bonden!</h1></td>
+</tr>
+ <td colspan='3' id="info"  class='info' onclick='endreInfo("fjern")'><p id="infotekst">Hei. Velkommen til din nye gard. </p></td>
+ <td class='brukar'><p id='brukarTekst' onclick='nyBrukar()'>Brukar</p></td>
+</tr>
+<tr>
+ <td id="rute1" class="ny" onclick="klikk('rute1','1')"><p id='ruteTekst1' class='ruteTekst'></p></td>
+ <td id="rute2" class="ny" onclick="klikk('rute2','2')"><p id='ruteTekst2' class='ruteTekst'></p></td>
+ <td id="rute3" class="ny" onclick="klikk('rute3','3')"><p id='ruteTekst3' class='ruteTekst'></p></td>
+ <td class='silo peng' onclick='endreInfo("priser")'><p id="pengar">10</p><td>
+</tr>
+<tr>
+ <td id="rute4" class="ny" onclick="klikk('rute4','4')"><p id='ruteTekst4' class='ruteTekst'></p></td>
+ <td id="rute5" class="ny" onclick="klikk('rute5','5')"><p id='ruteTekst5' class='ruteTekst'></p></td>
+ <td id="rute6" class="ny" onclick="klikk('rute6','6')"><p id='ruteTekst6' class='ruteTekst'></p></td>
+ <td class="silo grasSilo" id='grasSilo'><td>
+</tr>
+<tr>
+ <td id="rute7" class="ny" onclick="klikk('rute7','7')"><p id='ruteTekst7' class='ruteTekst'></p></td>
+ <td id="rute8" class="ny" onclick="klikk('rute8','8')"><p id='ruteTekst8' class='ruteTekst'></p></td>
+ <td id="rute9" class="ny" onclick="klikk('rute9','9')"><p id='ruteTekst9' class='ruteTekst'></p></td>
+ <td class="silo kornSilo" id='kornSilo'><td>
+</tr>
+</table>
+</body>
+</html>
+
+
+
+
+  <script>
+let brukar = '';
+let aktivRuteId = '';
+let aktivRuteNr = 1;
+let pris = {ny:0, gras:500, korn:1000, ku:3000, kylling:2500, grasFerdig:1000, kornFerdig:1000, kuFerdig:2500, kyllingFerdig:1000};
+let formue = {peng:1000, korn:0, gras:0};
+let tid = 30;//{gras:30, korn:30, ku:30, kylling:30};
+let nyRuteTid = [0,0,0,0,0,0,0,0,0,0]; // nedtellingstid for kvar rute, nr0 er ikkje i bruk
+let nyRuteClass = ['ubrukt','ny','ny','ny','ny','ny','ny','ny','ny','ny']; // neste class for kvar rute
+let nyRuteId = ['ubrut', 'rute1' , 'rute2' , 'rute3' , 'rute4' , 'rute5' , 'rute6' , 'rute7' , 'rute8' , 'rute9'];
+let infoTekster = {
+  ny:`<img class='ikon' src='gras.jpg' onclick='kjop("gras" , "grasFerdig")'> 
+  <img class='ikon' src='korn.gif' onclick='kjop("korn" , "kornFerdig")'> 
+  <img class='ikon' src='ku.gif' onclick='kjop("ku" , "kuFerdig")'> 
+  <img class='ikon' src='kylling.png' onclick='kjop("kylling" , "kyllingFerdig")'>`, 
+  gras:`Vent`, //i produksjon
+  grasFerdig:`<img class='ikon' src='pengar.png' onclick='selgFor("gras","grasFerdig")'> 
+  <img class='ikon' src='grasSilo3.png' onclick='silo("gras","grasFerdig")'> 
+  <img src='bulldoser.png' class='ikon' onclick='kjop("ny" , "ny")'>`,//selge gras eller gi ku
+  korn:`Vent`, //korn i produksjon
+  kornFerdig:`<img class='ikon' src='pengar.png' onclick='selgFor("korn","kornFerdig")'> 
+  <img class='ikon' src='kornSilo3.png' onclick='silo("korn","kornFerdig")'> 
+  <img class='ikon' src='bulldoser.png' onclick='kjop("ny" , "ny")'>`, //selge eller gi til kylling
+  kylling:`Vent`, //prosuserer egg
+  kyllingFerdig:`<img class='ikon' src='pengar.png' onclick='selgMat("kylling" , "kyllingFerdig" , "korn")'> 
+  <img class='ikon' src='bulldoser.png' onclick='kjop("ny" , "ny")'>`,//selge egg
+  ku:`Vent`,//produserer melk
+  kuFerdig:`<img class='ikon' src='pengar.png' onclick='selgMat("ku","kuFerdig","gras")'> 
+  <img class='ikon' src='bulldoser.png' onclick='kjop("ny" , "ny")'>`,//selge melk
+  jobber:'Under arbeid...',//felles tekst mens jobbing pågår
+  litePenger:'Du har ikkje nok penger...',
+  liteFor:'Du har ikkje nok fôr til å starte produksjon',
+  fullSilo:'Siloen er full',
+  priser:'Prisar:<br>Dyrke:1000 <br>Bygge fjos:2500 <br>Bygge hønehus:1000<br>Selge gras:500<br>Selge korn:1000 <br>Selge melk:3000<br>Selge egg:2500',
+  fjern:''
+}
+
+document.body.onload = function() {//Starter ved oppstart
+document.getElementById('pengar').innerHTML = formue.peng;//Last inn pengar ved oppstart
+nyBrukar()
+}
+
+//evig loop
+setInterval(evigLoop, 1000);//kjører evigLoop functionen kvart secund
+function evigLoop () {
+  lagreBrukar();//Lagrer spelet i ein kjeks
+
+ for(let x = 1 ; x <= 9 ; x++) {   
+
+   if(nyRuteTid[x]>0){
+     nyRuteTid[x] -= 1;
+   document.getElementById('ruteTekst'+x).innerHTML = nyRuteTid[x];
+
+   }
+   else if(nyRuteTid[x] == 0) {
+     document.getElementById(nyRuteId[x]).setAttribute('class', nyRuteClass[x]);
+     nyRuteTid[x] = '';
+
+   }
+
+ }
+
+}//slutt evigLoop
+
+//klikk på rute
+function klikk (rutex, x) {
+
+  let rutestatus = document.getElementById(rutex).getAttribute("class");
+  document.getElementById("ruteTekst"+aktivRuteNr).innerHTML = '';
+  document.getElementById("ruteTekst"+x).innerHTML = infoTekster[rutestatus];
+  aktivRuteId = rutex;
+  aktivRuteNr = x;
+}//slutt klikk
+
+//knapp kjøp av tomt(gras-korn-ku-kylling)
+//ny til nokoFerdig
+function kjop(classVanlig, classFerdig) {
+  if(pris[classFerdig] <= formue.peng) {//sjekke at det er nok pengar
+    document.getElementById(aktivRuteId).setAttribute('class', classVanlig);
+    nyRuteClass[aktivRuteNr] = classFerdig;
+    nyRuteTid[aktivRuteNr] = tid;
+    document.getElementById("infotekst").innerHTML = infoTekster['jobber'];
+    formue.peng -= pris[classFerdig];//trekke fra pengar
+    document.getElementById('pengar').innerHTML = formue.peng;//oppdatere pengesum
+  }else{
+    document.getElementById("infotekst").innerHTML = infoTekster['litePenger'];
+  }
+}//slutt kjøp av rute
+
+//knapp selge for gras og korn
+//nokoFerdig til noko og nokoFerdig i køliste 
+
+function selgFor(classVanlig, classFerdig) {
+  document.getElementById(aktivRuteId).setAttribute('class', classVanlig);
+  formue.peng += pris[classVanlig];//legge til pengar
+  nyRuteClass[aktivRuteNr] = classFerdig;
+  nyRuteTid[aktivRuteNr] = tid;
+  document.getElementById("infotekst").innerHTML = infoTekster['jobber'];
+  document.getElementById('pengar').innerHTML = formue.peng;//oppdatere pengesum
+}//slutt selgFor
+
+//knapp Selge for egg og melk
+function selgMat(classVanlig, classFerdig, For) {
+  if(formue[For] >= 1) {//sjekk silo
+    document.getElementById(aktivRuteId).setAttribute('class', classVanlig);
+    formue.peng += pris[classVanlig];//legge til pengar
+    nyRuteClass[aktivRuteNr] = classFerdig;
+    nyRuteTid[aktivRuteNr] = tid;
+    formue[For] -= 1;
+    document.getElementById("infotekst").innerHTML = infoTekster['jobber'];
+    document.getElementById('pengar').innerHTML = formue.peng;//oppdatere pengesum
+    document.getElementById('grasSilo').style.backgroundImage = 'url(grasSilo' + formue.gras + '.png)';//oppdatere gras silo
+    document.getElementById('kornSilo').style.backgroundImage = 'url(kornSilo' + formue.korn + '.png)';//oppdatere korn silo
+  }else{
+    document.getElementById("infotekst").innerHTML = infoTekster['liteFor'];
+  }
+}//slutt selgMat
+
+//knapp for å legge korn og gras i silo
+//nokoFerdig til noko og nokoFerdig i kø
+function silo(classVanlig,classFerdig) {
+  if(formue[classVanlig] < 3) {//sjekk om silo er full
+    document.getElementById(aktivRuteId).setAttribute('class', classVanlig);
+    formue[classVanlig] += 1;//legge til 1 i silo
+    nyRuteClass[aktivRuteNr] = classFerdig;
+    nyRuteTid[aktivRuteNr] = tid;
+    document.getElementById("infotekst").innerHTML = '';
+    document.getElementById('grasSilo').style.backgroundImage = 'url(grasSilo' + formue.gras + '.png)';//oppdatere gras silo
+    document.getElementById('kornSilo').style.backgroundImage = 'url(kornSilo' + formue.korn + '.png)';//oppdatere korn silo
+  }else{
+    document.getElementById("infotekst").innerHTML = infoTekster['fullSilo'];
+  }    
+}//slutt silo
+
+function endreInfo(x){ 
+document.getElementById("infotekst").innerHTML = infoTekster[x];}
+
+function nyBrukar(){
+  brukar = prompt('Skriv inn brukarnavnet ditt, dette blir brukt for å lagra spelet i ein kjeks på denne maskina.','');
+  document.getElementById('brukarTekst').innerHTML = brukar;
+  tmp = document.cookie;
+  if(tmp.search(brukar) != -1){ lastinnBrukar(); }
+}
+function lagreBrukar(){
+  let kjeks = brukar + '=:' + formue.peng + ':' + formue.gras + ':' + formue.korn + ':';
+  for(x=1;x<10;x++){ kjeks += nyRuteClass[x] + ':';}
+  kjeks += brukar + 'slutt';
+  document.cookie = kjeks;
+}//slutt lageBrukar
+
+function lastinnBrukar(){
+  let tmp = document.cookie;
+  let brukarStart = tmp.search(brukar);
+  let brukarSlutt = brukar + 'slutt';
+  brukarSlutt = tmp.search(brukarSlutt);
+  tmp = tmp.slice(brukarStart,brukarSlutt);
+  tmp = tmp.split(':');
+  formue.peng = Number(tmp[1]);
+  document.getElementById('pengar').innerHTML = formue.peng;//oppdatere pengesum
+  formue.gras = Number(tmp[2]);
+  document.getElementById('grasSilo').src = 'grasSilo' + formue.gras + '.png';//oppdatere gras silo
+  formue.korn = Number(tmp[3]);
+  document.getElementById('kornSilo').src = 'kornSilo' + formue.korn + '.png';//oppdatere korn silo
+  
+  for(x=1;x<10;x++){
+    nyRuteClass[x] = tmp[x+3];
+  }
+}//slutt lastinnBrukar
+let jukseTellar = 0
+function juks(){
+  jukseTellar++;
+  if(jukseTellar > 10){
+  formue.peng = 10000;
+  tid = 2;
+  document.getElementById('pengar').innerHTML = formue.peng;//oppdatere pengesum
+  document.getElementById('juks').innerHTML = 'Din juksefant!!';//oppdatere pengesum
+  }
+}
+  </script>
