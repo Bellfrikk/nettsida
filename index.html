@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Kjetil sine ting</title>
+  <title>KjetilAardal.no</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -24,174 +24,144 @@
 <meta name="msapplication-TileColor" content="#000">
 <meta name="msapplication-TileImage" content="/ikon/ms-icon-144x144.png">
 <meta name="theme-color" content="#000">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --hovedfarge: rgb(216, 221, 189);
-      --skygefarge: rgba(255, 0, 0, 0.644);
+    :root{
+      --hovedfarge:#4bcd42;
     }
+    body{
+      width: 100vw;
+      height: 100dvh;
+      background-color: black;  
+      overflow: hidden;
 
-    * {
+
+    }
+    .ytterRamme{
+      width: 98vw;
+      height: 98dvh;
       box-sizing: border-box;
-      font-family: 'RocknRoll One', sans-serif;
-    }
-
-    body {
-      background-color: black;
+      border-style: double;
+      border-width: 5px;
+      border-color: var(--hovedfarge);
+      border-radius: 20px;
+      overflow: hidden;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      flex-direction: column;
     }
-
-    .ramme {
-      max-width: 1000px;
-      margin:1vw;
+    .innerRamme{
+      width: 90vw;
+      height: 82dvh;
+      box-sizing: border-box;
+      background-color: var(--hovedfarge);
+      border-radius: 20px;
+      padding:1vh;
+   
+      overflow-y: srcoll;
+      overflow-x: hidden;
+      scroll-snap-type: y mandatory;
+  }
+    .boks{
+      width: 100%;
+      height: 100%;
+      background-color: var(--hovedfarge);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      box-sizing: border-box;
     }
-
-    .rute {
+    .boks>div{
       display: flex;
-      margin: 1vw;
-      padding: 2vw;
-      border: 2px solid red;
-
+      justify-content:space-around;
+    }
+    .bilde{
+      width: 40vw;
+      height: 60vw;
+      border-radius: 10px;
+      border: solid black 5p;
+    }
+    h1{
       text-align: center;
-      font-size: 3.5vw;
+      color: var(--hovedfarge);
+      font-family: "Poetsen One", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      text-shadow: 0 0 10px #000, 0 0 20px #4bcd42, 0 0 40px #4bcd42, 0 0 50px #4bcd42;
+    }
+    h2{
+      text-align: center;
+      color: #000;
+      font-family: "Poetsen One", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      text-shadow: 0 0 2px #4bcd42, 0 0 10px #000;
+      padding:20px;
+    }
+    p{
+      font-family: "Poetsen One", sans-serif;
+      font-weight: 300;
+      font-style: normal;
+    }
+    a{
       text-decoration: none;
-      color: var(--hovedfarge);
+      color:#000;
     }
-
-    .rute>* {
-      flex-basis: 100%;
-    }
-    a,
-    p {
-      text-decoration: none;
-      margin-right: 1vw;
-    }
-    img{
-      width:50%;
-      border: 1px solid rgb(255, 0, 0, 0.5);
-    }
-
-    h1 {
-      font-size: 15vw;
-      max-width:1000px;
-      color: var(--hovedfarge);
-      text-shadow: 4px 4px 5px var(--skygefarge);
-      margin: 10px;
-    }
-
-
-    h2 {
-      font-size: 5vw;
-      color: var(--hovedfarge);
-      background-color: black;
-      padding: 12px;
-      border-radius: 7px;
-    }
-    #overskrift2{
-      padding-top:0px;
-      margin: 0px;
-    }
-
-     @media screen and (min-width:1000px){
-   h1{font-size: 150px;}
-   h2{font-size:50px;}
-   p{font-size:35px;}
- }
-
   </style>
 </head>
-
 <body>
-
-  <h1>www.kjetilaardal.com</h1>
-  <div class='ramme'>
+<div class="ytterRamme">
+<h1>KJETILAARDAL.NO</h1>
+<div class="innerRamme">
   <a target='_blank' href='bondenmedlappen/'>
-    <div class='rute'>
-      <div>
-        <h2>Bonden 2</h2>
-        <p>Kjør sjølv, driv ein gard.</p>
-      </div>
-      <img src='indexBilder/bondenmedlappen.png' alt='Skjermdump av bonden 2   spelet'>
+    <div class="boks" >
+      <h2>Bonden</h2>
+    <div>
+    <img class="bilde" src="indexBilder/bonden.png">
+    <p>Lek bonde, dyrk i vei.</p>
+  </div>
+</div>
+</a>
 
-    </div>
-  </a>
-  <a target='_blank' href='bonden/'>
-    <div class='rute'>
-      <div>
-        <h2>Bonden 1</h2>
-        <p>Driv din eigen gard.</p>
-      </div>
-      <img src='indexBilder/bonden.png' alt='Skjermdump av bonden spelet'>
-
-    </div>
-  </a>
-    <a target='_blank' href='muffinsMysteri/'>
-      <div class='rute'>
-        <div>
-          <h2>Muffins Mysterie</h2>
-          <p>Spel eit mysterie spel med opptil 7 stykk, Hjelp Kobolt</p>
-        </div>
-        <img src='indexBilder/muffinsMysteriet.png' alt='Skjermdump av appen'>
-
-      </div>
-    </a>
-
-    <a target='_blank' href='varulv/'>
-      <div class='rute'>
-        <div>
-          <h2>Varulv</h2>
-          <p>One Night Warevolf appen på norsk</p>
-        </div>
-        <img src='indexBilder/varulv.png' alt='Skjermdump av Varulv appen'>
-
-      </div>
-    </a>
-
-    <a target='_blank' href='strikkapp/'>
-      <div class='rute'>
-        <div>
-          <h2>StrikkApp</h2>
-          <p>Strikk ein traktorgenser med dynamisk oppskrift</p>
-        </div>
-        <img src='indexBilder/strikkApp.png' alt='Skjermdump av StrikkApp'>
-
-      </div>
-    </a>
-
-    <a target='_blank' href='strikkulator/'>
-      <div class='rute'>
-        <div>
-          <h2>Strikkulator</h2>
-          <p>Strikke kalulator...</p>
-        </div>
-        <img src='indexBilder/strikkulator.png' alt='Skjermdump av strikkulator appen'>
-
-      </div>
-    </a>
-
-    <a target='_blank' href='ovoverorsosetottoteror/'>
-      <div class='rute'>
-        <div>
-          <h2>Oversettar</h2>
-          <p>Oversett sjørøverspråk</p>
-        </div>
-        <img src='indexBilder/oversetter.png' alt='Skjermdump av oversetter appen'>
-
-      </div>
-    </a>
-
-    <a target='_blank' href='happymilliardsekund/'>
-      <div class='rute'>
-        <div>
-          <h2>Happy  MILLIARD Sekund</h2>
-          <p>Finn ut kva tid du blir ein milliard sekund gamal</p>
-        </div>
-        <img src='indexBilder/happymilliardsekund.png' alt='Skjermdump av appen'>
-
-      </div>
-    </a>
+<a target='_blank' href='happymilliardsekund/'>
+<div class="boks">
+  <h2>Happy Milliard Sekund</h2>
+  <img class="bilde" src="indexBilder/hms.png">
+</div>
+</a>
+<a target='_blank' href='ovoverorsosetottoteror/'>
+<div class="boks">
+  <h2>Oversetter</h2>
+  <img class="bilde" src="indexBilder/oversetter.png">
+</div>
+</a>
+<a target='_blank' href='strikkapp/'>
+<div class="boks">
+  <h2>StrikkApp</h2>
+  <img class="bilde" src="indexBilder/strikkApp.png">
+</div>
+</a>
+<a target='_blank' href='strikkulator/'>
+<div class="boks">
+  <h2>Strikkulator</h2>
+  <img class="bilde" src="indexBilder/strikkulator.png">
+</div>
+</a>
+<a target='_blank' href='varulv/'>
+<div class="boks">
+  <h2>Varulv</h2>
+  <img class="bilde" src="indexBilder/varulv.png">
+</div>
+</a>
+<a target='_blank' href='muffinsMysteri/'>
+<div class="boks">
+  <h2>Muffins mysteriet</h2>
+  <img class="bilde" src="indexBilder/muffinsMysteriet.png">
+</div>
+</div>
+</div>
 </body>
-
 </html>
