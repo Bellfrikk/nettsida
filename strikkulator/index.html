@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>STRIKKULATOR</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="57x57" href="ikon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="ikon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="ikon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="ikon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="ikon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="ikon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="ikon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="ikon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="ikon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="\ikon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="ikon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="ikon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="ikon/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="ikon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Kalam', cursive;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: #aeec66;
+      background-size: cover;
+      background-repeat: no-repeat;
+      gap: 2vw;
+      color: rgb(8, 49, 10);
+    }
+
+    .boks {
+      display: flex;
+      border-bottom: 1px solid black;
+      padding: 10px 0px 20px 0px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hylle {
+      display: flex;
+      gap: 5vw;
+      margin-bottom: 5px;
+      justify-content: space-around;
+    }
+
+    input {
+      width: 3em;
+      background-color: #aeec66;
+      border-radius: 3%;
+      border-color: black;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      text-align: center;
+      margin: 0px;
+    }
+
+    h2 {
+      font-size: 1.2em;
+      text-align: center;
+      margin: 0px;
+
+    }
+
+    p {
+      font-size: 15px;
+      margin: 0px;
+
+    }
+  </style>
+</head>
+
+<body>
+  <h1>STRIKKULATOR</h1>
+  <div class='boks'>
+    <div class='hylle'>
+      <h2>Omrekning</h2>
+    </div>
+    <form>
+      <div class='hylle'>
+        <p>
+          Fasthet <br>
+          <input type='number' id='innFasthet' class='inputboks' oninput='FML()'>
+        </p>
+        <p>
+          Masker <br>
+          <input type='number' id='innMasker' class='inputboks' oninput='FML()'>
+        </p>
+        <p>
+          Lengde <br>
+          <input type='number' id='innLengde' class='inputboks' oninput='FML()'>
+        </p>
+      </div>
+      <div class='hylle'>
+        <p id='omregningSvar'>Skriv det du veit..
+        <p>
+      </div>
+    </form>
+  </div>
+
+  <div class='boks'>
+    <div class='hylle'>
+      <h2>Felle masker</h2>
+    </div>
+    <form>
+      <div class='hylle'>
+        <p>Masker <br><input type='number' id='felleMasker' class='inputboks' oninput='felling()'> </p>
+        <p>Fellingar <br><input type='number' id='felleFellingar' class='inputboks' oninput='felling()'> </p>
+      </div>
+    </form>
+    <div class='hylle>'>
+      <p id='fellSlik'>Skriv inn masker du har nå, og fellingar/auker.</p>
+      <p id='fellSlikForklaring'></p>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script>
+  function FML() {
+    let tmpFasthet = document.getElementById('innFasthet').value;
+    let tmpMasker = document.getElementById('innMasker').value;
+    let tmpLengde = document.getElementById('innLengde').value;
+
+    if (tmpFasthet != '' & tmpMasker != '') {
+      let svarLengde = 10 / tmpFasthet * tmpMasker;
+      document.getElementById('omregningSvar').innerHTML = 'Lengde blir: ' + svarLengde.toFixed(1);
+    }
+    if (tmpFasthet != '' & tmpLengde != '') {
+      let svarMasker = tmpFasthet / 10 * tmpLengde;
+      document.getElementById('omregningSvar').innerHTML = 'Antal masker blir: ' + svarMasker.toFixed(1);
+    }
+    if (tmpMasker != '' & tmpLengde != '') {
+      let svarFasthet = tmpMasker / tmpLengde * 10;
+      document.getElementById('omregningSvar').innerHTML = 'Fastheten blir: ' + svarFasthet.toFixed(1);
+    }
+  }
+
+  function felling() {
+    let masker = document.getElementById('felleMasker').value;
+    let fellingar = document.getElementById('felleFellingar').value;
+    let felleAmasker = Math.floor(masker / fellingar);
+    let felleBmasker = felleAmasker + 1;
+    let felleAantall = fellingar;
+    let felleBantall = 0;
+    let r = 0;
+    while (r < 1000) {
+      if (masker == ((felleAmasker * felleAantall) + (felleBmasker * felleBantall))) {
+        document.getElementById('fellSlik').innerHTML = 'Del slik: ' + felleAmasker + ' masker x ' + felleAantall + ' + ' + felleBmasker + ' masker x ' + felleBantall;
+        document.getElementById('fellSlikForklaring').innerHTML = 'Fell/auk ein gong for repitisjon.';
+        r = 1000;
+      }
+      felleAantall--;
+      felleBantall++;
+      r++;
+    }
+  }
+</script>

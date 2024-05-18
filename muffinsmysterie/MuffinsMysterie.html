@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MuffinsMysterie</title>
+<!--  <link rel="manifest" href="/manifest.json"> -->
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+  *{
+    font-family: 'Brush Script MT', cursive;
+  }
+  body{
+    max-width:400px;
+    background-color:black;
+  }
+  #ramme {
+    background-color:#000000;
+    width:100%;
+    height:600px;
+    display: grid;
+    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-columns: 33% 34% 33%;
+  }
+/* f.o.m. rad / f.o.m kol /til rad / t.o.m.kol*/
+  #spelar1{grid-area:1/1/2/2;}
+  #spelar2{grid-area:2/1/3/2;}
+  #spelar3{grid-area:3/1/4/2;}
+  #spelar4{grid-area:4/1/5/2;}
+  #spelar5{grid-area:4/3/5/4;}
+  #spelar6{grid-area:3/3/4/4;}
+  #spelar7{grid-area:2/3/3/4;}
+  #spelar8{grid-area:1/3/2/4;}
+
+  #infoRute{grid-area:1/2/2/3;}
+  #midtKort9{grid-area:2/2/3/3;}
+  #midtKort10{grid-area:3/2/4/3;}
+  #midtKort11{grid-area:4/2/5/3;}
+
+  .vindu{grid-area:1/1/5/4;}
+  
+  .vindu{
+    background-color:#0099ff;
+    background-image:url('logo.png'), url('muffins.png');
+    background-size:contain;
+    background-position:top, bottom;
+    background-repeat:no-repeat;
+    display:flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items:center;
+    border-style:solid;
+    border-width:0px;
+    border-radius:7px;
+    margin:5px;
+    padding:15px;
+  }
+  .rute{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-style:solid;
+    border-width:5px;
+    border-color:#222222;
+    border-radius:7px;
+    margin:5px;
+    color:#ffffff;
+  }
+  .infoRute{
+    border-color:#000000;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .midtKort{
+    border-color:#444444;
+  }
+  .spelarRute{
+    border-color:#449944;
+  }
+  .spelarRuteAktiv{
+    border-color:#ebeb33;
+  }
+  .spelarRuteKlar{
+    border-color:pink;
+  }
+  .spelarRutePassiv{
+    border-color:#222222;
+    color:#222222;
+  }
+ .tjuv{border-color:#d11141;}
+ .sjalussi{border-color:#00b159;}
+ .nusjeriipa{border-color:#00aedb;}
+ .glomski{border-color:#f37735;}
+ .bytti{border-color:#ffc425;}
+ .surriko{border-color:#550000;}
+ .nevrole{border-color:#7700aa;}
+ .venn{border-color:#99aa00;}
+ .uaktiv{border-color:#999900;}
+  </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+  <div id='ramme'>
+    <div id='spelar1'  onclick='spelarAktiver("spelar1")'  class='rute spelarRute'><p class='spelarTekstVenstre'>?</p></div>
+    <div id='spelar2'  onclick='spelarAktiver("spelar2")'  class='rute spelarRute'><p class='spelarTekstVenstre'>?</p></div>
+    <div id='spelar3'  onclick='spelarAktiver("spelar3")'  class='rute spelarRute'><p class='spelarTekstVenstre'>?</p></div>
+    <div id='spelar4'  onclick='spelarAktiver("spelar4")'  class='rute spelarRute'><p class='spelarTekstVenstre'>?</p></div>
+    <div id='spelar5'  onclick='spelarAktiver("spelar5")'  class='rute spelarRute'><p class='spelarTekstHogre'>?</p></div>
+    <div id='spelar6'  onclick='spelarAktiver("spelar6")'  class='rute spelarRute'><p class='spelarTekstHogre'>?</p></div>
+    <div id='spelar7'  onclick='spelarAktiver("spelar7")'  class='rute spelarRute'><p class='spelarTekstHogre'>?</p></div>
+    <div id='spelar8'  onclick='spelarAktiver("spelar8")'  class='rute spelarRute'><p class='spelarTekstHogre'>?</p></div>
+
+
+    <div id='infoRute'  onclick='velgRoller()'  class='rute infoRute'><p>Aktiver kvar si rute og trykk her.</p></div>
+    <div id='midtKort9'  onclick=''  class='rute midtKort'><p></p></div>
+    <div id='midtKort10'  onclick=''  class='rute midtKort'><p></p></div>
+    <div id='midtKort11'  onclick=''  class='rute midtKort'><p></p></div>
+
+    <div id='vindu5' class='vindu' onclick='nesteVindu("vindu5")'>
+      <p class='tekst'>Alle som har truffe Kobolt idag må trykke på kva sin spelar knapp<br>
+    </div>
+
+    <div id='vindu4' class='vindu' onclick='nesteVindu("vindu4")'>
+      <p class='tekst'>Me må gå gjennom dagen og finne muffinsen før nokon et den...</p>
+    </div>
+
+    <div id='vindu3' class='vindu' onclick='nesteVindu("vindu3")'>
+      <p class='tekst'>Endelig er det matpause og Kobolt stråler av glede når han skal ta fram muffinsen...<br>DEN ER VEKK!!!</p>
+    </div>
+    <div id='vindu2' class='vindu' onclick='nesteVindu("vindu2")'>
+      <p class='tekst'>På vei til skulen har han vist muffinsen til alle som vil sjå, og nokre til.</p>
+    </div>
+
+    <div id='vindu1' class='vindu' onclick='nesteVindu("vindu1")'>
+      <p class='tekst'>Idag fyller Kobolt året. Han har ein deilig muffis i matboksen som far har laga til han.</p>
+    </div> 
+  </div>
+
+<audio id='tjuvStart'> <source src='lyd/tjuvStart.mp3' type='audio/mpeg'></audio>
+<audio id='tjuvStopp'> <source src='lyd/tjuvStopp.mp3' type='audio/mpeg'></audio>
+<audio id='nusjerripaStart'> <source src='lyd/nusjerripaStart.mp3' type='audio/mpeg'></audio>
+<audio id='nusjerripaStopp'> <source src='lyd/nusjerripaStopp.mp3' type='audio/mpeg'></audio>
+<audio id='byttiStart'> <source src='lyd/byttiStart.mp3' type='audio/mpeg'></audio>
+<audio id='byttiStopp'> <source src='lyd/byttiStopp.mp3' type='audio/mpeg'></audio>
+<audio id='nevroleStart'> <source src='lyd/nevroleStart.mp3' type='audio/mpeg'></audio>
+<audio id='nevroleStopp'> <source src='lyd/nevroleStopp.mp3' type='audio/mpeg'></audio>
+<audio id='sjalussiStart'> <source src='lyd/sjalussiStart.mp3' type='audio/mpeg'></audio>
+<audio id='sjalussiStopp'> <source src='lyd/sjalussiStopp.mp3' type='audio/mpeg'></audio>
+<audio id='surrikoStart'> <source src='lyd/surrikoStart.mp3' type='audio/mpeg'></audio>
+<audio id='surrikoStopp'> <source src='lyd/surrikoStopp.mp3' type='audio/mpeg'></audio>
+<audio id='slutt'> <source src='lyd/slutt.mp3' type='audio/mpeg'></audio>
+
+</body>
+</html>
+
+
+
+
+<script>
+
+let lyden = '';
+let lydFart = 10;
+//let spelarStatus = {spelar1:'aktiv',spelar2:'aktiv',spelar3:'aktiv',spelar4:'aktiv',spelar5:'aktiv',spelar6:'aktiv',spelar7:'aktiv',spelar8:'aktiv'};
+let spelarStatus = {spelar1:'uaktiv',spelar2:'uaktiv',spelar3:'uaktiv',spelar4:'uaktiv',spelar5:'uaktiv',spelar6:'uaktiv',spelar7:'uaktiv',spelar8:'uaktiv'};
+const roller = ['tjuv','nusjerripa','sjalussi','bytti','surriko','nevrole','SjåPåMeggo','venn','venn','venn'];
+let aktiveRoller = {tjuv:false,sjalussi:false,nusjerripa:false,SjåPåMeggo:false,bytti:false,surriko:false,nevrole:false,venn:false};
+let valgteRoller = [];
+let spelarStartStatus = {spelar1:'uaktiv',spelar2:'uaktiv',spelar3:'uaktiv',spelar4:'uaktiv',spelar5:'uaktiv',spelar6:'uaktiv',spelar7:'uaktiv',spelar8:'uaktiv'};
+
+
+
+function nesteVindu(vinduId){
+  document.getElementById(vinduId).style.display = 'none';
+  document.getElementById('ramme').requestFullscreen();
+  if(vinduId == 'vindu4'){ 
+    for(x=1;x<9;x++){ document.getElementById('spelar'+ x).style.display = 'flex';}
+  }
+}
+
+function spelarAktiver(spelarId){
+  spelarStatus[spelarId] = 'aktiv';
+  document.getElementById(spelarId).classList.add('spelarRuteAktiv');
+  document.getElementById(spelarId).setAttribute('onclick','spelarDeaktiver("' + spelarId + '")');
+  document.getElementById(spelarId).innerHTML = 'Aktiv';
+}
+
+function spelarDeaktiver(spelarId){
+  spelarStatus[spelarId] = 'uaktiv';
+  document.getElementById(spelarId).classList.remove('spelarRuteAktiv');
+  document.getElementById(spelarId).setAttribute('onclick','spelarAktiver("' + spelarId + '")');
+  document.getElementById(spelarId).innerHTML = '?';
+}
+
+
+////////// velgRoller , vis aktive kort //////////////////
+
+
+function velgRoller(){
+  let tmpRoller = [...roller];
+  //Spelar 1 til 8
+  for(x=1;x<9;x++){
+    if(spelarStatus['spelar' + x] == 'aktiv'){
+      let tilfeldigRute = Math.floor(Math.random() * tmpRoller.length);
+      valgteRoller.push(tmpRoller[tilfeldigRute]);
+      aktiveRoller[tmpRoller[tilfeldigRute]] = true;
+      document.getElementById('spelar' + x).classList.add(tmpRoller[tilfeldigRute]);
+      document.getElementById('spelar' + x).classList.remove('spelarRuteAktiv');
+      document.getElementById('spelar' + x).innerHTML = tmpRoller[tilfeldigRute];
+      tmpRoller.splice(tilfeldigRute,1);
+    }else{
+      document.getElementById('spelar' + x).setAttribute('class','rute spelarRutePassiv');
+      document.getElementById('spelar' + x).setAttribute('onclick','');
+    }
+  }
+  //midort 9 og 10
+  for(x=9;x<11;x++){
+    let tilfeldigRute = Math.floor(Math.random() * tmpRoller.length);
+    valgteRoller.push(tmpRoller[tilfeldigRute]);
+    aktiveRoller[tmpRoller[tilfeldigRute]] = true;
+    document.getElementById('midtKort' + x).classList.add(tmpRoller[tilfeldigRute]);
+    document.getElementById('midtKort' + x).classList.remove('midtKort');
+    document.getElementById('midtKort' + x).innerHTML = tmpRoller[tilfeldigRute];
+    tmpRoller.splice(tilfeldigRute,1);
+  }
+  //midort 11 er alltid tjuv
+  valgteRoller.push('tjuv');
+  document.getElementById('midtKort11').classList.add('tjuv');
+  document.getElementById('midtKort11').classList.remove('midtKort');
+  document.getElementById('midtKort11').innerHTML = 'Tjuv';
+  //endre inforute
+  document.getElementById('infoRute').setAttribute('onclick','visDinRolle()');
+  document.getElementById('infoRute').innerHTML = '<p>Dette er dei Kobolt møtte idag. >>> </p>'
+}
+
+
+
+////////// VisDinRolle , stokk om på rollene og vis dei ein ig ein //////////////////
+
+
+
+function visDinRolle(){
+  for(x=1;x<9;x++){
+    if(spelarStatus['spelar' + x] != 'uaktiv'){
+      let tilfeldigRute = Math.floor(Math.random() * valgteRoller.length);
+      spelarStatus['spelar' + x] = valgteRoller[tilfeldigRute];
+      document.getElementById('spelar' + x).innerHTML = '';
+      document.getElementById('spelar' + x).setAttribute('onclick','visRolle("spelar'+ x + '")');
+      document.getElementById('spelar' + x).setAttribute('class','rute spelarRute');
+      valgteRoller.splice(tilfeldigRute,1);
+    }
+  }
+  for(x=9;x<12;x++){
+      let tilfeldigRute = Math.floor(Math.random() * valgteRoller.length);
+      spelarStatus['spelar' + x] = valgteRoller[tilfeldigRute];
+      document.getElementById('midtKort' + x).innerHTML = '';
+      valgteRoller.splice(tilfeldigRute,1);
+      document.getElementById('midtKort' + x).setAttribute('onclick','');
+      document.getElementById('midtKort' + x).setAttribute('class','rute midtKort');
+  }
+  document.getElementById('infoRute').setAttribute('onclick','startSpel()');
+  document.getElementById('infoRute').innerHTML = '<p>Sjå kven de er. START</p>';
+
+  spelarStartStatus =  {...spelarStatus}; 
+}
+
+function visRolle(spelarId){
+  document.getElementById(spelarId).classList.add(spelarStatus[spelarId]);
+  document.getElementById(spelarId).classList.remove('spelarRuteAktiv');
+  document.getElementById(spelarId).innerHTML = spelarStatus[spelarId];
+  document.getElementById(spelarId).setAttribute('onclick','goymRolle("' + spelarId + '")');
+}
+function goymRolle(spelarId){
+  document.getElementById(spelarId).classList.remove(spelarStatus[spelarId]);
+  document.getElementById(spelarId).classList.add('spelarRuteKlar');
+  document.getElementById(spelarId).innerHTML = 'Klar';
+  document.getElementById(spelarId).setAttribute('onclick','');
+}
+
+
+////////////////Start spel, start aktive roller og lyd etter tur
+
+
+
+function startSpel(){
+
+  nullstill()
+  document.getElementById('infoRute').innerHTML = '<p id="overskrift">Tjuv</p>';
+  document.getElementById('infoRute').setAttribute('onclick','');
+////////// TJUV ////////////ser på eit kort i midten om det er bare ein
+  if(aktiveRoller['tjuv'] == false){
+    for(x=9;x<12;x++){ 
+      document.getElementById('midtKort' + x).setAttribute('onclick','startTjuvAktiver("' + x + '")'); 
+      document.getElementById('midtKort' + x).innerHTML = '<p>Sjå på denne</p>'; 
+      }
+  }
+  lyden = document.getElementById('tjuvStart');
+  lyden.play();
+  lyden.addEventListener("ended", stoppTjuv) ;
+}
+function stoppTjuv(){  
+  nullstill()
+  lyden = document.getElementById('tjuvStopp');
+  lyden.play();
+  lyden.addEventListener("ended", startNusjerripa) ;
+}
+
+function startTjuvAktiver(ruteNr){ 
+  nullstill()
+  document.getElementById('midtKort' + ruteNr).innerHTML = spelarStatus['spelar' + ruteNr];
+  document.getElementById('midtKort' + ruteNr).classList.add(spelarStatus['spelar' + ruteNr]);
+}
+
+////////// NUSJERRIPA ////////kikker i ein anna matboks eller to i midten
+
+function startNusjerripa(){
+  if(aktiveRoller['nusjerripa']){
+    document.getElementById('overskrift').innerHTML = 'Nusjerripa';
+    for(x=1;x<9;x++){
+      if(spelarStatus['spelar' + x] != 'uaktiv'){ document.getElementById('spelar' + x).setAttribute('onclick','startNusjerripa2Spelar("' + x + '")'); }
+      if(spelarStartStatus['spelar' + x] == 'nusjerripa'){ document.getElementById('spelar' + x).classList.add(spelarStatus['spelar' + x] ); }
+    }
+    for(x=9;x<12;x++){document.getElementById('midtKort' + x).setAttribute('onclick','startNusjerripa2MidtKort("' + x + '")');}
+    lyden = document.getElementById('nusjerripaStart');
+    lyden.play();
+    lyden.addEventListener("ended", stoppNusjerripa) ;
+    }else{startSjalussi()}
+}
+function stoppNusjerripa(){
+  nullstill()
+  lyden = document.getElementById('nusjerripaStopp');
+  lyden.play();
+  lyden.addEventListener("ended", startSjalussi) ;
+}
+
+function startNusjerripa2Spelar (ruteNr){//vis spelarkort
+  document.getElementById('spelar' + ruteNr).innerHTML = spelarStatus['spelar' + ruteNr];
+  document.getElementById('spelar' + ruteNr).classList.add(spelarStatus['spelar' + ruteNr]);
+  for(x=1;x<9;x++){ document.getElementById('spelar' + x).setAttribute('onclick',''); }
+  for(x=9;x<12;x++){ document.getElementById('midtKort' + x).setAttribute('onclick',''); }
+  document.getElementById('spelar' + ruteNr).setAttribute('onclick','');
+}
+function startNusjerripa2MidtKort (ruteNr){//vis første midtKort
+  document.getElementById('midtKort' + ruteNr).innerHTML = spelarStatus['spelar' + ruteNr];//vis rute
+  document.getElementById('midtKort' + ruteNr).classList.add(spelarStatus['spelar' + ruteNr]);
+  for(x=1;x<9;x++){ document.getElementById('spelar' + x).setAttribute('onclick',''); }//deaktiver spelarruter
+  for(x=9;x<12;x++){ document.getElementById('midtKort' + x).setAttribute('onclick','startNusjerripa3MidtKort("' + x + '")');}//endre midtKort
+  document.getElementById('midtKort' + ruteNr).setAttribute('onclick','');//deaktiver nyklikka midrute
+}
+function startNusjerripa3MidtKort (ruteNr){//vis andre midtkort
+  document.getElementById('midtKort' + ruteNr).innerHTML = spelarStatus['spelar' + ruteNr];//vis rute
+  document.getElementById('midtKort' + ruteNr).classList.add(spelarStatus['spelar' + ruteNr]);
+  for(x=9;x<12;x++){ document.getElementById('midtKort' + x).setAttribute('onclick','');}
+}
+////////// SJALUSSI //////////////////
+
+
+function startSjalussi(){//bytter sin matbok med ein annan 
+  if(aktiveRoller['sjalussi']){
+    document.getElementById('overskrift').innerHTML = 'Sjalussi';
+    for(x=1;x<9;x++){
+      if(spelarStatus['spelar' + x] == 'sjalussi'){ document.getElementById('spelar' + x).classList.add(spelarStatus['spelar' + x] ); }
+      if(spelarStatus['spelar' + x] != 'uaktiv' && spelarStatus['spelar' + x] != 'sjalussi'){ 
+        document.getElementById('spelar' + x).innerHTML = 'Bytt med denne';
+        document.getElementById('spelar' + x).setAttribute('onclick','startSjalussiBytting("' + x + '")'); 
+      }
+    }  
+  lyden = document.getElementById('sjalussiStart');
+  lyden.play();
+  lyden.addEventListener("ended", stoppSjalussi) ;
+  }else{startBytti()}
+}
+
+function stoppSjalussi(){
+  nullstill()
+  lyden = document.getElementById('sjalussiStopp');
+  lyden.play();
+  lyden.addEventListener("ended", startBytti) ;
+}
+
+function startSjalussiBytting(ruteNr){
+  //endre sjalussi sitt kort
+  for(x=1;x<9;x++){
+    if(spelarStartStatus['spelar' + x] == 'sjalussi'){ 
+      document.getElementById('spelar' + x).innerHTML = 'Du er nå: <br>' + spelarStatus['spelar' + ruteNr];
+      document.getElementById('spelar' + x).classList.add(spelarStatus['spelar' + ruteNr]);
+      spelarStatus['spelar' + x] = spelarStatus['spelar' + ruteNr];
+      document.getElementById('spelar' + x).setAttribute('onclick','');
+    }else{
+      document.getElementById('spelar' + x).innerHTML = '';
+      document.getElementById('spelar' + x).setAttribute('onclick','');
+    }
+  }
+//endre kort som blei bytta
+  document.getElementById('spelar' + ruteNr).innerHTML = 'ny id: <br>Sjalussi';
+  document.getElementById('spelar' + ruteNr).classList.add('sjalussi');
+  spelarStatus['spelar' + ruteNr] = 'sjalussi';  
+}
+////////// BYTTI //////////////////
+
+
+
+function startBytti(){//byttar om to matboksar
+  if(aktiveRoller['bytti']){
+    document.getElementById('overskrift').innerHTML = 'Bytti';
+    for(x=1;x<9;x++){
+      if(spelarStartStatus['spelar' + x] == 'bytti'){ document.getElementById('spelar' + x).classList.add('spelarRuteAktiv'); }
+      if(spelarStatus['spelar' + x] != 'uaktiv' && spelarStartStatus['spelar' + x] != 'bytti'){ 
+        document.getElementById('spelar' + x).innerHTML = 'Bytt denne matbksen';
+        document.getElementById('spelar' + x).setAttribute('onclick','startByttiBytting("' + x + '")'); 
+      }
+    }  
+  lyden = document.getElementById('byttiStart');
+  lyden.play();
+  lyden.addEventListener("ended", stoppBytti) ;
+  }else{startSurriko()}
+}
+function stoppBytti(){
+  nullstill()
+  lyden = document.getElementById('byttiStopp');
+  lyden.play();
+  lyden.addEventListener("ended", startSurriko) ;
+}
+
+
+function startByttiBytting(ruteNr){
+  for(x=1;x<9;x++){
+    if(spelarStartStatus['spelar' + x] != 'bytti' && x != ruteNr){ 
+      document.getElementById('spelar' + x).setAttribute('onclick','startByttiBytting2("' + x + '","' + ruteNr + '")');
+    }else if(x == ruteNr){
+      document.getElementById('spelar' + x).innerHTML = 'Velg ein å bytte med';
+      document.getElementById('spelar' + x).setAttribute('onclick','');
+    }
+  }
+}
+function startByttiBytting2(ruteNr,forrigeRute){
+  for(x=1;x<9;x++){ 
+    document.getElementById('spelar' + x).setAttribute('onclick',''); 
+    document.getElementById('spelar' + x).innerHTML = '';
+  }
+  document.getElementById('spelar' + ruteNr).innerHTML = 'Er bytta';
+  document.getElementById('spelar' + forrigeRute).innerHTML = 'Er bytta';
+  let forrige = spelarStatus['spelar' + forrigeRute];
+  spelarStatus['spelar' + forrigeRute] = spelarStatus['spelar' + ruteNr];
+  spelarStatus['spelar' + ruteNr] = forrige;
+}
+////////// SURRIKO //////////////////
+
+//fiksa til her
+
+function startSurriko(){//byttar sin matboks med ein anna utan å sjå
+  if(aktiveRoller['surriko']){
+    document.getElementById('overskrift').innerHTML = 'Surriko';
+    for(x=1;x<9;x++){
+      if(spelarStartStatus['spelar' + x] == 'surriko'){ document.getElementById('spelar' + x).classList.add('spelarRuteAktiv'); }
+      if(spelarStatus['spelar' + x] != 'uaktiv' && spelarStartStatus['spelar' + x] != 'surriko'){ 
+        document.getElementById('spelar' + x).innerHTML = 'Bytt med denne';
+        document.getElementById('spelar' + x).setAttribute('onclick','startSurrikoBytting("' + x + '")'); 
+      }
+    }  
+    lyden = document.getElementById('surrikoStart');
+    lyden.play();
+    lyden.addEventListener("ended", stoppSurriko) ;
+  }else{startNevrole()}
+}
+function stoppSurriko(){
+  nullstill()
+  lyden = document.getElementById('surrikoStopp');
+  lyden.play();
+  lyden.addEventListener("ended", startNevrole) ;
+}
+
+function startSurrikoBytting(ruteNr){
+  //endre surriko sitt kort
+  for(x=1;x<9;x++){
+    if(spelarStartStatus['spelar' + x] == 'surriko'){ 
+      document.getElementById('spelar' + x).innerHTML = 'Du hat nå feil matboks';
+      spelarStatus['spelar' + x] = spelarStatus['spelar' + ruteNr];
+      document.getElementById('spelar' + x).setAttribute('onclick','');
+    }else{
+      document.getElementById('spelar' + x).innerHTML = '';
+      document.getElementById('spelar' + x).setAttribute('onclick','');
+    }
+  }
+//endre kort som blei bytta
+  spelarStatus['spelar' + ruteNr] = 'surriko';  
+}
+
+
+////////// NEVROLE //////////////////
+
+
+
+function startNevrole(){//sjekker matboksen før matfri
+  if(aktiveRoller['nevrole']){
+    document.getElementById('overskrift').innerHTML = 'Nevrole';
+    for(x=1;x<9;x++){
+      if(spelarStartStatus['spelar' + x] == 'nevrole'){
+        document.getElementById('spelar' + x).innerHTML = spelarStatus['spelar' + x];
+        document.getElementById('spelar' + x).classList.add(spelarStatus['spelar' + x]);
+      }
+    }  
+  lyden = document.getElementById('nevroleStart');
+  lyden.play();
+  lyden.addEventListener("ended", stoppNevrole) ;
+  }else{startSlutt()}
+}
+
+function stoppNevrole(){
+  nullstill()
+  lyden = document.getElementById('nevroleStopp');
+  lyden.play();
+  lyden.addEventListener("ended", startSlutt) ;
+}
+
+function startSlutt(){  
+  document.getElementById('overskrift').innerHTML = 'Kven tok matboksen?<br>Stem, og sjå fasit.';
+  document.getElementById('overskrift').setAttribute('onclick','visFasit()');
+  lyden = document.getElementById('slutt');
+  lyden.play();
+}
+
+
+function visFasit(){
+  for(x=1;x<9;x++){ 
+    document.getElementById('spelar' + x).innerHTML = spelarStatus['spelar' + x]; 
+    document.getElementById('spelar' + x).classList.add(spelarStatus['spelar' + x]);
+  }
+  for(x=9;x<12;x++){ 
+    document.getElementById('midtKort' + x).innerHTML = spelarStatus['spelar' + x];
+    document.getElementById('midtKort' + x).classList.add(spelarStatus['spelar' + x]);
+  }
+  document.getElementById('overskrift').innerHTML = 'Start på ny?';
+  document.getElementById('overskrift').setAttribute('onclick','startPaNy()');
+}
+
+
+function startPaNy(){
+  aktiveRoller = {tjuv:true,sjalussi:false,nusjerripa:false,SjåPåMeggo:false,bytti:false,surriko:false,nevrole:false,venn:false};
+  valgteRoller = [];
+  nullstill()
+  document.getElementById('overskrift').setAttribute('onclick','velgRoller()');
+  document.getElementById('overskrift').innerHTML = 'Aktiver kvar si rute og trykk her.';
+
+  for(x=1;x<9;x++){ 
+    document.getElementById('spelar' + x).setAttribute('class','rute spelarRute');
+    if(spelarStatus['spelar' + x] != 'uaktiv'){ spelarAktiver('spelar' + x)
+    }else{ spelarDeaktiver('spelar' + x) }
+  }
+}
+
+/////////////////////7/ Fellesfunksjonar
+function nullstill(){
+  for(x=1;x<9;x++){ 
+    document.getElementById('spelar' + x).setAttribute('onclick',''); 
+    document.getElementById('spelar' + x).innerHTML = '';
+    if(spelarStatus['spelar' + x] == 'uaktiv'){ document.getElementById('spelar' + x).setAttribute('class','rute spelarRutePassiv'); }
+    else{ document.getElementById('spelar' + x).setAttribute('class','rute spelarRute spelarRuteKlar'); }
+  }
+  for(x=9;x<12;x++){ 
+    document.getElementById('midtKort' + x).setAttribute('onclick','');
+    document.getElementById('midtKort' + x).innerHTML = '';
+    document.getElementById('midtKort' + x).setAttribute('class','rute midtKort'); 
+  }
+}
+
+////endre lydfart
+
+function endreFart (minusPluss){
+  if(minusPluss == 'minus' & lydFart > 6){lydFart -= 1;}
+  else if(minusPluss == 'pluss' & lydFart < 14){lydFart = lydFart + 1;}
+  document.getElementById('fart').innerHTML = lydFart - 5;
+
+}
+
+</script>

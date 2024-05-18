@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ovoverorsosetoteror</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  *{
+    box-sizing:border-box;
+    color:black;
+    text-align:center;
+    font-family:"Comic Sans MS", cursive, sans-serif;
+  }
+  body{
+   	background-color:#ff6600;
+   	background-size:cover;
+   	background-repeat:no-repeat;
+  }
+  table{
+    max-width:560px;
+  }
+  h1{
+    font-size:3em;
+    text-align:center;
+  }
+  p{
+    font-size:1em;
+    text-align:center;
+  }
+  .inputboks{
+    width:400px;
+    height:100px;
+    text-align:left;
+    font-size:1,5em;
+    color:black;
+  }
+  .inputFlagg{
+    width:160px;
+    height:100px;
+  }
+  .flagg{
+    width:60px;
+    height:40px;
+    border:1px;
+    border-color:white;
+    border-style:solid;
+  }
+  </style>
+</head>
+
+<body onload='sprak("sosjojororovovaror")'>
+<table align='center'>
+<tr>
+<td colspan='2'>
+<h1 id='tekst0'>tekst0</h1>
+<p>Språk/Sospoproråkok</p>
+<img src='norskFlagg.png' class='flagg' onclick='sprak("norsk")'><img src='sosjojororovoverorFoflolagog.png' class='flagg' onclick='sprak("sosjojororovovaror")'>
+
+<p id='tekst1'>tekst1</p>
+</td></tr>
+<tr>
+<td><img src='norskFlagg.png' class='inputFlagg'></td><td><form>
+<textarea id='inputNorsk' class='inputboks'oninput='oversett("norsk")' rows = "3" cols = "80">Skriv her</textarea>
+</form></td>
+<tr><td colspan='2'><br><br></td></tr>
+<tr>
+<td><img src='sosjojororovoverorFoflolagog.png' class='inputFlagg'></td><td><form>
+<textarea id='inonpoputotSosjojororovoverorsoskok' class='inputboks' oninput='oversett("sosjojororovoverorsoskok")'>Soskokrorivov hoheror</textarea></form></td>
+</tr>
+</table>
+</body>
+</html>
+
+<script>
+
+let norsk = ['Oversetter', 'Skriv inn det du vil oversette:'];
+let sosjojororovovaror = ['Ovoverorsosetoteror', 'Soskokrorivov inon dodetot dodu vovilol ovoverorsosetottote:'];
+//let tekst = {kjoroversprak:'', norsk:'};
+
+let tekstinn = '';
+let format = /[1234567890aAeEiIoOuUyYæØøÆåÅ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+function oversett (sprak){
+  if(sprak == 'norsk'){tekstinn = document.getElementById('inputNorsk').value;}
+  else if(sprak == 'sosjojororovoverorsoskok'){tekstinn = document.getElementById('inonpoputotSosjojororovoverorsoskok').value;}
+  let tekstut = '';
+    for( x = 0 ; x < tekstinn.length ; x++ ){ 
+
+      if(format.test(tekstinn.charAt(x))){
+        tekstut += tekstinn.charAt(x);
+      }else{
+        if(sprak == 'norsk'){ tekstut += tekstinn.charAt(x) + 'o' + (tekstinn.charAt(x)).toLowerCase();}
+        else if(sprak == 'sosjojororovoverorsoskok'){
+          tekstut += tekstinn.charAt(x);
+          x += 2;
+        }
+      }
+  
+      if(sprak == 'norsk'){document.getElementById('inonpoputotSosjojororovoverorsoskok').value = tekstut;}
+      else if(sprak == 'sosjojororovoverorsoskok'){document.getElementById('inputNorsk').value = tekstut;}
+    }
+}
+
+function sprak(spraket){
+  for(x=0 ; x<2; x++){
+    let y = 'tekst'+x;
+    if(spraket == 'norsk'){document.getElementById(y).innerHTML = norsk[x];}
+    if(spraket == 'sosjojororovovaror'){document.getElementById(y).innerHTML = sosjojororovovaror[x];}
+  }
+}
+
+</script>

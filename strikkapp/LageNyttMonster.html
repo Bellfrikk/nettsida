@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>StrikkApp - Nytt mønster</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        max-width: 1000px;
+        margin: auto;
+        background-color: #65BFF8;
+      }
+
+      /*Venstre*/
+      .venstre {
+        float: left;
+        width: 35%;
+      }
+
+      /*Høgre*/
+      .hogre {
+        float: right;
+        width: 65%;
+      }
+
+      /*Mobil*/
+      @media screen and (max-width: 700px) {
+        .venstre, .hogre {
+          width:100%;
+        }
+      }
+
+      /* bilde og garnvalg div*/
+      .info {
+        margin: 25px;
+        background-color: #5CA5F0;
+        color: black;
+        font-size: medium;
+        border-style: solid;
+        border-width: 0px;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: left;
+        max-width: 90%;
+      }
+
+      /* fargevalg boksar */
+      .boksar {
+        width: 100px;
+        height: 20px;
+        background-color: #65BFF8;
+        text-align: center;
+        box-align: stretch;
+        margin: 2px;
+        border: solid 1px;
+      }
+
+      /* sjølve oppskrift div */
+      .oppskrift {
+        margin: 25px;
+        background-color: #5CA5F0;
+        color: black;
+        font-size: medium;
+        border-style: solid;
+        border-width: 0px;
+        padding: 10px;
+        border-radius: 10px;
+      }
+
+      /* Diagram div */
+      .diagram {
+        margin: 25px;
+        background-color: #5CA5F0;
+        color: black;
+        font-size: medium;
+        border-style: solid;
+        border-width: 0px;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      /* Rutene i diagrammet */
+      .ruter {
+        width: 600;
+        height: 600;
+        border: 1px solid #000000;
+      }
+    </style>
+  </head>
+  <body onload="oppdater()">
+    <h1 align="center">
+      StrikkApp - <span id='navn'></span>
+    </h1>
+    <div id='nyOppskrift' class="oppskrift">
+      <h2>Lage oppskrift</h2>
+      <form>
+        <p>Navn: </p>
+        <input class='nyInput' type='text' id='nyNavn' value=''></input>
+        <p>Garntype: </p>
+        <input class='nyInput' type='text' id='nyGarnType' value='Ull'></input>
+        <p>Garnfarger: </p>
+        <input class='nyInput' type='text' id='nygarnFarger' value='hovedfarge,svart,osv,ingen'></input>
+        <p>Strikkefasthet: </p>
+        <input class='nyInput' type='text' id='nyStrikkefasthet' value='28'></input>
+        <p>Pinne størrelse: </p>
+        <input class='nyInput' type='text' id='nyPinner' value='Rundpinne3 80cm og strømpepinner 2,5'></input>
+        <p>Størrelser: </p>
+        <input class='nyInput' type='text' id='nyStorrelser' value='1år,3år,5år,M'></input>
+        <p>Bilde: </p>
+        <input class='nyInput' type='img' id='nyBilde' value='(valgfritt)'></input>
+      </form>
+      <p>Oppskrift: </p>
+      <textarea rows="40" cols="40" id='nyTekst'>ESOKKER:
+Arb strikkes rundt på settp. Legg opp 55-60-65 m på settp 4 med 1 tråd havutsikt + 1 tråd sølvrev (= 2 tråder). Strikk 2 omg rett, videre strikkes det vrbord (= 2 r / 3 vr). HUSK PÅ STRIKKEFASTHETEN! Når arb måler 20-22-23 cm felles alle 3 vr til 2 vr = 44-48-52 m. Fortsett med vrbord (= 2 r / 2 vr) til arb måler 30-31-32 cm. Nå beholdes de første 18-22-22 m på p til hæl (de 2 første og 2 siste m av disse er rett-m), sett de siste 26-26-30 m på 1 tråd (= midt oppå foten). Strikk glstrikk frem og tilbake over hæl-maskene i 5-5½-6 cm – samtidig på 1.p felles det 0-2-0 m jevnt fordelt = 18-20-22 m. Sett 1 merke – HERFRA MÅLES ARB VIDERE! Deretter felles det til hæl – LES HÆLFELLING! Etter hælfellingen strikkes det opp 10-11-12 m på hver side av hælen og de 26-26-30 m fra tråden settes tilbake på p = 56-58-66 m. Sett 1 merke på hver side av de 26-26-30 m oppå foten. Videre strikkes det vrbord over 26-26-30 m oppå foten, de resterende m strikkes i glstrikk - SAMTIDIG felles det i hver side slik: Strikk de 2 siste m før m oppe på foten vridd rett sammen (dvs strikk i bakre del av m istedenfor fremre) og de 2 første m etter m oppå foten strikkes rett sammen. Fell slik på hver 2.omg 8-7-9 ganger = 40-44-48 m. Strikk videre i vrbord over 26-26-30 m oppå foten og glstrikk over 14-18-18 m under foten til arb måler 20-22-24 cm fra merket på hælen (= 4-5-6 cm igjen).
+Nå settes det 1 merke i hver side slik at det blir 20-22-24 m både oppå og under foten. Strikk ferdig i glstrikk – samtidig felles det til tå på hver side av begge merkene.
+Fell slik når det gjenstår 3 m før merket:
+2 rett sammen, 2 r (merket sitter midt mellom disse), 2 vridd rett sammen. Fell i hver side på hver 2.omg totalt 3-4-5 ganger og videre på hver omg 4-4-4 ganger = 12-12-12 m tilbake på p. På neste omg strikkes alle m sammen 2 og 2. Klipp tråden og trekk den gjennom de resterende m, snurp sammen </textarea>
+      <br>
+      <br>
+      <button onclick="tolkTekst()">Start Utskrift</button>
+      <p id='utSkrift'></p>
+    </div>
+    <!--
+    
+    <div class="venstre">
+      <div class="info">
+        <br>
+        <img id='bilde' src="" style="max-width:90%; ">
+        <h2 align="center">Info</h2>
+        <p>
+        <form>
+          <label for="velghovedfarge">
+            <b>Hovedfarge: </b>
+          </label>
+          <br>
+          <input class="boksar" type="text" id="velghovedfarge" value="Grå" oninput="oppdater()">
+          <input class="boksar" style="width:40px" type="color" id="velgdiagramhovedfarge" value="#999999" oninput="oppdater()">
+          <br>
+          <br>
+          <label for="velgtraktorfarge">
+            <b>Traktorfarge: </b>
+          </label>
+          <br>
+          <input class="boksar" type="text" id="velgtraktorfarge" value="Rød" oninput="oppdater()">
+          <input class="boksar" style="width:40px" type="color" id="velgdiagramtraktorfarge" value="#ff0000" oninput="oppdater()">
+          <br>
+          <br>
+          <label for="velgstorrelse">
+            <b>Størrelse: </b>
+          </label>
+          <br>
+          <select class="boksar" id="velgstorrelse" oninput="oppdater()">
+            <option>1</option>
+            <option>2</option>
+            <option>4</option>
+            <option>6</option>
+            <option>8</option>
+          </select>
+          <br>
+          <br>
+          <b>Garnmengde:</b>
+          <span class="hovedfarge">X</span>
+          : <span id="m0">X</span>
+          , <span class="traktorfarge">X</span>
+          : 1, Koksgrå: 1, Svart: 1
+      <br>
+          <br>
+          <b>Pinnar:</b>
+          Stor og liten rundpinne og strømpepinne 3,5 og 4
+	  <br>
+          <br>
+          <b>Strikkefasthet:</b>
+          22 m glattstrikk på pinne 4 = 10 cm og 29 omganger glattstrikk på p nr 4 = 10 cm
+  
+        </form>
+</p></div></div>
+<div class="hogre">
+  <div class="oppskrift">
+    <h2 align="center">BOLEN</h2>
+    <p onclick="ferdig(this)">
+      Legg opp <span id="m1">#M1</span>
+      masker med <span class="hovedfarge">X</span>
+      på pinne 3,5.
+    
+    </p>
+    <p onclick="ferdig(this)">
+      Skift til <span class="traktorfarge">X</span>
+      og strikk 2 omganger vrangbord rundt med 1 vriddrett, 1 vrang.
+    
+    </p>
+    <p onclick="ferdig(this)">
+      Skift til <span class="hovedfarge">X</span>
+      og strikk videre med 1 vridd r,1 vr til arbeidet måler <span id="m2">#M2</span>
+      cm.
+    
+    </p>
+    <p onclick="ferdig(this)">
+      Sett et merke i hver side med <span id="m3">#M3</span>
+      m til forog bakstykket. Skift til p nr 4 og strikk glattstrikk til arbeidetmåler <span id="m4">#M4</span>
+      cm.
+    
+    </p>
+    <p onclick="ferdig(this)">
+      Fell av <span id="m5">#M5</span>
+      m på hver sideav merket) i hver side til ermehull = <span id="m15">#M15</span>
+      m til for- og bakstykket.
+    
+    </p>
+    <p onclick="ferdig(this)">Legg arbeidet til side og strikk ermene.</p>
+    <p onclick="ferdig(this)"></p>
+  </div>
+  <div class="oppskrift">
+    <h2 align="center">ARMER</h2>
+    <p onclick="ferdig(this)">
+      Legg opp <span id="m6">#M6</span>
+      masker med koks på p nr 3,5 og strikk vrangbord rundt som på bolen.
+    
+    </p>
+    <p onclick="ferdig(this)">Sett et merke rundt 2 masker midt under ermet = merke-maske.</p>
+    <p onclick="ferdig(this)">Skift til pinne 4 og fortsett i glattstrikk.</p>
+    <p onclick="ferdig(this)">
+      Når arbeidet måler <span id="m7">#M7</span>
+      cm, økes 1 maske på hver side av merke-masken.
+    
+    </p>
+    <p onclick="ferdig(this)">
+      Gjenta økningene på hver <span id="m8">#M8</span>
+      cm = i alt <span id="m9">#M9</span>
+      ganger 
+     <span id="m10">#M10</span>
+      masker.
+    
+    </p>
+    <p onclick="ferdig(this)">
+      Strikk til arbeidet måler <span id="m11">#M11</span>
+      cm, samtidig som det på siste omgang felles 
+     <span id="m12">#M12</span>
+      masker av (= merke-maske + <span id="m13">#M13</span>
+      masker på hver side av merke-masken) midt under ermet = <span id="m14">#M14</span>
+      masker.
+    
+    </p>
+    <p onclick="ferdig(this)">Legg arbeidet til side og strikk et erme til.</p>
+  </div>
+  <div class="oppskrift">
+    <h2 align="center">BÆRESTYKKET</h2>
+    <p onclick="ferdig(this)">
+      Sett venstre erme, forstykket, høyre erme og bakstykket inn på p nr 4 = <span id="m16">#M16</span>
+      m.
+    
+    </p>
+    <p onclick="ferdig(this)">Omgangen begynner mellom bakstykket og venstre erme. Sett et merke i hver sammenføyning (= 4 merker).</p>
+    <p onclick="ferdig(this)">
+      Strikk <span id="m17">#M17</span>
+      omganger glattstrikk.
+    
+    </p>
+    <p onclick="ferdig(this)">På neste omgang felles det til raglan ved hvert merke slik: 
+    Strikk til 2 m før hvert merke. Ta neste m løs av, strikk 1 r, løft den løse m over, 2 r sammen.</p>
+    <p onclick="ferdig(this)">
+      Gjenta raglanfellingene på hver 2. omgang i alt <span id="m18">#M18</span>
+      ganger = <span id="m19">#M19</span>
+      masker.
+    
+    </p>
+    <p onclick="ferdig(this)">
+      Strikk etter <a href="#diagram">diagram A</a>
+      og fell som diagrammet viser = <span id="m20">#M20</span>
+      masker.
+    
+    </p>
+  </div>
+  <div class="oppskrift">
+    <h2 align="center">HALSKANT</h2>
+    <p onclick="ferdig(this)">Fortsett med lys grå melert og pinne 3,5.</p>
+    <p onclick="ferdig(this)">
+      Strikk <span id="m21">#M21</span>
+      cm vrangbordstrikk rundt med 1 vriddrett, 1 vriddvrang.
+    
+    </p>
+    <p onclick="ferdig(this)">Fell løst av med r og vr m.</p>
+    <p onclick="ferdig(this)">Brett halskanten dobbel mot vrangen og sy til.</p>
+    <p onclick="ferdig(this)">Sy sammen under ermene.</p>
+    <p onclick="ferdig(this)"></p>
+    <p onclick="ferdig(this)"></p>
+  </div>
+  <div id="diagram" class="diagram">
+    <h2 align="center">Diagram</h2>
+    <canvas id="diagramA" height="630px" width="330px" onclick="overstrekDiagram(1)"></canvas>
+    <h1>
+      <a onclick="overstrekDiagram(1)">+  </a>
+      <a onclick="overstrekDiagram(0)">↺ </a>
+      <a onclick="overstrekDiagram(-1)">-  </a>
+    </h1>
+  </div>
+</div>-->
+  </body>
+</html>
+<!--  PLAN
+
+
+javascript:
+lagre og oppdater dokument med: overskrigt, garntype, strikkefasthet, pinner, og bilde.
+lagestørrelse variabler og garnmengde variabler
+skrille ut størrelser i oppskrifta
+-->
+<script>
+  let antallOppskrifter = 1;
+  let oppskrift1 = {
+    navn: 'Traktorgenser',
+    bilde: 'https://gjestal.no/wp-content/uploads/2019/07/GG_B130.jpg'
+  }
+
+  /*function lagreOppskrift() {
+    let tmp = {};
+    //navn
+    tmp.navn = document.getElementById('nyNavn').value;
+    //garn type
+    tmp.garnType = document.getElementById('nyGarnType').value;
+    //garn farge
+    for(x=0, a=100;x<a;x++){
+      let tmpInn = document.getElementById('nyGarnFarger').value;
+      let tmpSplitta = tmpInn.splice(',');
+      if(a==100){a = tmpSplitta.length;}
+      tmp.['garnFargeNavn' + x] = tmpSplitta[x];
+    }
+    //strikkefasthet
+    tmp.strikkeFasthet = document.getElementById('nyStrikkeFasthet').value;
+    //Pinne størrelse
+    tmp.pinner = document.getElementById('nyPinner').value;
+    //størrelser
+      for (x = 0 a = 100; x < a; x++) {
+      let tmpInn = document.getElementById('nyStorrelser').value;
+      let tmpSplitta = tmpInn.splice(',');
+      if (a == 100) { a = tmpSplitta.length; }
+      tmp.['storrelse' + x] = tmpSplitta[x];
+    }
+    //oppskrifta
+    let tmpInn = document.getElementById('nyOppskrift').value;
+
+  }
+*/
+  function tolkTekst() {
+    const ut = document.getElementById('utSkrift');
+
+    let tmpInn = document.getElementById('nyTekst').value;
+    let tmpUt = tmpInn.split(' ');
+    ut.innerHTML = '';
+    for (x = 0; x < tmpUt.length; x++) {
+      if(tmpUt[x] == '/\d\d-\d\d-\d\d/'){alert('bø');}
+      ut.innerHTML = ut.innerHTML + tmpUt[x] + '<br>';
+    }
+  }
+  function henteOppskrift(oppskrift) {
+    document.getElementById('navn').innerHTML = oppskrift.navn;
+
+  }
+
+  var hovedfargen;
+  var traktorfargen;
+  var diagramferdig = 0;
+
+  /*Mønster*/
+  var diagramfarge = {
+    monsterstrek: "#000000",
+    ferdigstrek: "#006600",
+    b: "#5CA5F0",
+    h: "#999999",
+    t: "#ff0000",
+    k: "#333333",
+    s: "#666666"
+  };
+  var diagram = ["b", "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "RettSammen", "b", "b", "b", "nylinje", // Linje 1 / Første boks 0
+  "b", "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "b", "nylinje", // Linje 2 / Første boks 18
+  "b", "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "b", "nylinje", // Linje 3 / Første boks 35
+  "b", "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "b", "nylinje", // Linje 4 / Første boks 52
+  "b", "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "b", "nylinje", // Linje 5 / Første boks 69
+  "b", "b", "b", "h", "h", "VriddRettSammen", "h", "h", "h", "h", "h", "h", "h", "h", "h", "RettSammen", "b", "b", "nylinje", // Linje 6 / Første boks 86
+  "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "nylinje", // Linje 7 / Første boks 105
+  "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "nylinje", // Linje 8 / Første boks 122
+  "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "nylinje", // Linje 9 / Første boks 139
+  "b", "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "b", "nylinje", // Linje 10 / Første boks 156
+  "b", "b", "h", "h", "VriddRettSammen", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "RettSammen", "b", "nylinje", // Linje 11 / Første boks 173
+  "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "nylinje", // Linje 12 / Første boks 192
+  "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "nylinje", // Linje 13 / Første boks 209
+  "b", "b", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "b", "nylinje", // Linje 14 / Første boks 226
+  "b", "b", "h", "h", "h", "h", "h", "s", "h", "h", "h", "h", "h", "h", "h", "b", "nylinje", // Linje 15 / Første boks 243
+  "b", "h", "h", "VriddRettSammen", "h", "h", "h", "s", "h", "h", "h", "h", "h", "h", "h", "h", "h", "RettSammen", "nylinje", // Linje 16 / Første boks 260
+  "b", "h", "h", "h", "h", "s", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "nylinje", // Linje 17 / Første boks 279
+  "b", "h", "h", "h", "h", "s", "h", "h", "h", "t", "t", "t", "t", "t", "t", "h", "nylinje", // Linje 18 / Første boks 296
+  "b", "h", "h", "h", "h", "h", "h", "h", "t", "t", "h", "h", "h", "t", "h", "h", "nylinje", // Linje 19 / Første boks 313
+  "b", "h", "h", "h", "h", "t", "h", "h", "t", "t", "h", "h", "h", "t", "h", "h", "nylinje", // Linje 20 / Første boks 330
+  "h", "h", "VriddRettSammen", "h", "h", "h", "t", "h", "h", "t", "t", "h", "h", "h", "t", "h", "h", "nylinje", // Linje 21 / Første boks 347
+  "h", "h", "h", "h", "h", "t", "h", "h", "t", "t", "h", "h", "h", "t", "h", "h", "nylinje", // Linje 22 / Første boks 365
+  "h", "h", "h", "h", "h", "t", "h", "t", "t", "t", "h", "t", "t", "t", "h", "h", "nylinje", // Linje 23 / Første boks 382
+  "h", "h", "t", "t", "t", "t", "t", "t", "t", "h", "t", "t", "t", "t", "t", "h", "nylinje", // Linje 24 / Første boks 399
+  "h", "t", "t", "t", "t", "t", "t", "t", "h", "t", "t", "k", "k", "k", "t", "t", "nylinje", // Linje 25 / Første boks 416
+  "h", "t", "t", "t", "t", "t", "t", "h", "t", "t", "k", "k", "k", "k", "k", "t", "nylinje", // Linje 26 / Første boks 433
+  "h", "t", "k", "k", "k", "t", "t", "h", "t", "k", "k", "k", "s", "k", "k", "k", "nylinje", // Linje 27 / Første boks 450
+  "h", "k", "k", "s", "k", "k", "t", "t", "t", "k", "k", "s", "s", "s", "k", "k", "nylinje", // Linje 28 / Første boks 467
+  "h", "k", "s", "s", "s", "k", "h", "h", "h", "k", "k", "k", "s", "k", "k", "k", "nylinje", // Linje 29 / Første boks 484
+  "h", "k", "k", "s", "k", "k", "h", "h", "h", "h", "k", "k", "k", "k", "k", "h", "nylinje", // Linje 30 / Første boks 501
+  "h", "h", "k", "k", "k", "h", "h", "h", "h", "h", "h", "k", "k", "k", "h", "h", "nylinje", // Linje 31 / Første boks 518
+  "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "nylinje", // Linje 32 / Første boks 535 Siste boks 548
+  ];
+
+  /*Masketal*/
+  var st1 = {
+    m0: 4,
+    m1: 124,
+    m2: 4,
+    m3: 62,
+    m4: 19,
+    m5: "8 masker = 4",
+    m6: 32,
+    m7: 5,
+    m8: "1,5",
+    m9: 7,
+    m10: 46,
+    m11: 19,
+    m12: 8,
+    m13: 3,
+    m14: 38,
+    m15: 54,
+    m16: 184,
+    m17: 1,
+    m18: 3,
+    m19: 160,
+    m20: 80,
+    m21: 5,
+    m22: 0,
+    m23: 0
+  };
+  var st2 = {
+    m0: 5,
+    m1: 132,
+    m2: 4,
+    m3: 66,
+    m4: 23,
+    m5: "8 masker = 4",
+    m6: 32,
+    m7: 5,
+    m8: 2,
+    m9: 9,
+    m10: 50,
+    m11: 24,
+    m12: 8,
+    m13: 3,
+    m14: 42,
+    m15: 58,
+    m16: 200,
+    m17: 1,
+    m18: 5,
+    m19: 160,
+    m20: 80,
+    m21: 5,
+    m22: 0,
+    m23: 0
+  };
+  var st4 = {
+    m0: 6,
+    m1: 144,
+    m2: 5,
+    m3: 72,
+    m4: 27,
+    m5: "10 masker = 5",
+    m6: 36,
+    m7: 6,
+    m8: 2,
+    m9: 10,
+    m10: 56,
+    m11: 27,
+    m12: 10,
+    m13: 4,
+    m14: 46,
+    m15: 62,
+    m16: 216,
+    m17: 2,
+    m18: 5,
+    m19: 176,
+    m20: 88,
+    m21: 6,
+    m22: 0,
+    m23: 0
+  };
+  var st6 = {
+    m0: 7,
+    m1: 152,
+    m2: 5,
+    m3: 76,
+    m4: 31,
+    m5: "10 masker = 5",
+    m6: 36,
+    m7: 6,
+    m8: 2,
+    m9: 12,
+    m10: 60,
+    m11: 33,
+    m12: 10,
+    m13: 4,
+    m14: 50,
+    m15: 66,
+    m16: 232,
+    m17: 2,
+    m18: 5,
+    m19: 192,
+    m20: 96,
+    m21: 6,
+    m22: 0,
+    m23: 0
+  };
+  var st8 = {
+    m0: 8,
+    m1: 160,
+    m2: 5,
+    m3: 80,
+    m4: 34,
+    m5: "12 masker = 6",
+    m6: 40,
+    m7: 7,
+    m8: "2,5",
+    m9: 12,
+    m10: 64,
+    m11: 36,
+    m12: 12,
+    m13: 5,
+    m14: 52,
+    m15: 68,
+    m16: 240,
+    m17: 1,
+    m18: 6,
+    m19: 192,
+    m20: 96,
+    m21: 6,
+    m22: 0,
+    m23: 0
+  };
+  var maksm = 21;
+
+  function oppdater() {
+    /*Henter størrelse*/
+    var st = document.getElementById("velgstorrelse");
+    st = st.options[st.selectedIndex].text;
+
+    if (st == 1) {
+      stx = st1;
+    }
+    if (st == 2) {
+      stx = st2;
+    }
+    if (st == 4) {
+      stx = st4;
+    }
+    if (st == 6) {
+      stx = st6;
+    }
+    if (st == 8) {
+      stx = st8;
+    }
+
+    //Henter farger
+    hovedfargen = document.getElementById("velghovedfarge").value;
+    var ele = document.getElementsByClassName("hovedfarge");
+    for (var i = 0; i < ele.length; i++) {
+      ele[i].innerHTML = hovedfargen;
+    }
+
+    traktorfargen = document.getElementById("velgtraktorfarge").value;
+    var ele = document.getElementsByClassName("traktorfarge");
+    for (var i = 0; i < ele.length; i++) {
+      ele[i].innerHTML = traktorfargen;
+    }
+
+    //Henter diagramfarger
+    diagramfarge.h = document.getElementById("velgdiagramhovedfarge").value;
+    diagramfarge.t = document.getElementById("velgdiagramtraktorfarge").value;
+
+    //Skriv masketall 
+    for (x = 0; x <= maksm; x++) {
+      var mx = "m" + x;
+      document.getElementById(mx).innerHTML = stx[mx];
+    }
+
+    //Lag diagram tilpassa størrelse ced å slette aktuelle linjer
+    var diagramX = [...diagram];
+    // lag ein kopi av diagram, bruker ... for å lage ein kopi, i staden for link til gammel array
+    var diagramlinjer = 31;
+
+    // OBS! husk å fjern den siste rekka først slik at antall ikkje forskyver seg
+
+    if (st == 1) //ved størrelse 1
+    {
+      diagramX.splice(534, 17);
+      //Fjerner linje 32
+      diagramlinjer -= 1;
+      //Reduserer antall linjer i diagramlinjer
+    }
+
+    if (st < 4) //ved størrelse 1 og 2
+    {
+      diagramX.splice(209, 17);
+      //Fjerner linje 13
+      diagramlinjer -= 1;
+      //Reduserer antall linjer i diagramlinjer
+    }
+
+    if (st < 6) //ved størrelse 1,2 og 4
+    {
+      diagramX.splice(122, 17);
+      //Fjerner linje 8
+      diagramX.splice(35, 17);
+      //Fjerner linje 3
+      diagramlinjer -= 2;
+      //Reduserer antall linjer i diagramlinjer
+    }
+
+    /*Tegner mønster*/
+    var canvas = document.getElementById("diagramA");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, 600, 700);
+    //Sletter canvas
+    ctx.beginPath();
+    //Sletter linjer
+
+    var x = 0
+      , y = 0;
+    for (f in diagramX) {
+      if (diagramX[f] == "nylinje") {
+        y++;
+        x = 0;
+      }//legg inn enkelt linjeskift
+
+      else if (diagramX[f] == "VriddRettSammen") {
+        //lag skrå oppover strek over to siste ruter
+        ctx.strokeStyle = diagramfarge["monsterstrek"];
+        ctx.moveTo(x * 20 - 40, y * 20 + 16);
+        ctx.lineTo(x * 20 - 4, y * 20);
+        ctx.stroke();
+      } else if (diagramX[f] == "RettSammen") {
+        //lag skrå nedover strek over to siste ruter
+        ctx.strokeStyle = diagramfarge["monsterstrek"];
+        ctx.moveTo(x * 20 - 40, y * 20);
+        ctx.lineTo(x * 20 - 4, y * 20 + 16);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = diagramfarge[diagramX[f]];
+        //henter farge for aktuell maskeboks
+        ctx.fillRect(x * 20, y * 20, 16, 16);
+        //tegner maskeboks
+
+        if (y > (diagramlinjer - diagramferdig)) {
+          //tegner ferdigstrek over maskeboks
+          ctx.strokeStyle = diagramfarge["ferdigstrek"];
+          ctx.moveTo(x * 20 - 2, y * 20 + 8);
+          ctx.lineTo(x * 20 + 18, y * 20 + 8);
+          ctx.stroke();
+        }
+        x++;
+      }
+    }
+  }
+  //Overstreking oppskrift
+  function ferdig(x) {
+    var y = x.style.textDecoration;
+    if (y == "line-through") {
+      x.style.textDecoration = "none";
+    } else {
+      x.style.textDecoration = "line-through";
+    }
+  }
+  //Overstreking diagram
+  function overstrekDiagram(x) {
+    if (x == 0) {
+      diagramferdig = 0;
+    } else {
+      diagramferdig += x;
+      if (diagramferdig < 0) {
+        diagramferdig = 0;
+      }
+    }
+    oppdater();
+  }
+</script>

@@ -1,0 +1,2116 @@
+<!--LOGG
+22.08.22 Dyrking OK
+23.08.22 0700 Fiksa på gravemaskin
+23.08.22 1230 Fiksa på gravemaskin
+23.08.22 Versjon 31 lagt ut på nett
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>BONDEN - Har fått lappen..V31</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <style type="text/css">
+    body {
+      display: flex;
+      background-color: #222;
+      justify-content: center;
+    }
+
+    .verden {
+      z-index: 0;
+      margin: 0;
+      width: 100vmin;
+      height: 100vmin;
+    }
+
+    .rekke {
+      display: flex;
+      justify-content: center;
+      width: 100vmin;
+      height: 5vmin;
+    }
+
+    .rekke>div {
+      width: 5vmin;
+      height: 5vmin;
+      background-repeat: no-repeat;
+    }
+
+    .doningRamme {
+      position: absolute;
+      width: fit-content;
+      height: fit-content;
+      z-index: 1;
+      display: flex;
+    }
+
+    #doning {
+      background-image: url('bilde/bondePassiv0.gif');
+      height: 3vmin;
+      width: 6vmin;
+      background-size: contain;
+      background-repeat: no-repeat;
+      border-width: 0;
+    }
+
+    #redskap {
+      width: 4vmin;
+      height: 3vmin;
+      background-size: contain;
+      background-repeat: no-repeat;
+      border-width: 0;
+    }
+
+    .rekke>div:NOT(.traktor, .plog, .såmaskin, .sprøyte, .skurtreskar, .balleklype, .ballemaskin, .slåmaskin, .gravemaskin) {
+      background-size: cover;
+    }
+
+    .butikk:hover .tipstekst,
+    .bensinstasjon:hover .tipstekst,
+    .siloKorn:hover .tipstekst,
+    .siloGras:hover .tipstekst,
+    .siloSprøyte:hover .tipstekst,
+    .siloSkurtreskar:hover .tipstekst,
+    .kyr:hover .tipstekst,
+    .traktor:hover .tipstekst,
+    .plog:hover .tipstekst,
+    .såmaskin:hover .tipstekst,
+    .sprøyte:hover .tipstekst,
+    .slåmaskin:hover .tipstekst,
+    .ballemaskin:hover .tipstekst,
+    .balleklype:hover .tipstekst,
+    .gravemaskin:hover .tipstekst,
+    .skurtreskar:hover .tipstekst {
+      visibility: visible;
+    }
+
+    .tipstekst {
+      visibility: hidden;
+      max-width: 100vmin;
+      background-color: black;
+      color: #f08b00;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 3;
+    }
+
+    .traktor,
+    .ballemaskin,
+    .gravemaskin {
+      background-position: center;
+      background-size: 4vmin 3vmin, cover;
+    }
+
+    .plog,
+    .såmaskin,
+    .sprøyte,
+    .slåmaskin,
+    .balleklype {
+      background-position: left;
+      background-size: 4vmin 3vmin, cover;
+    }
+
+    .tingIBruk {
+      filter: brightness(0.6);
+    }
+
+    .skurtreskar {
+      background-size: 9vmin 3vmin, cover;
+      background-position: right;
+      padding-right: 2vmin;
+      margin-right: -2vmin;
+    }
+
+    #infoLinje {
+      position: absolute;
+      top: 0px;
+      width: 100vmin;
+      height: fit-content;
+      font-size: 2vmin;
+      color: #f08b00;
+      background-color: black;
+      border-radius: 0px 0px 5px 5px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 4px 0px;
+      margin: 0;
+    }
+
+    #infoLinje>div {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #dieselMålar,
+    #lastMålar {
+      display: none;
+      height: 0.4vmin;
+      width: 9vmin;
+      justify-content: flex-start;
+      background-color: #999;
+      border-radius: 1vmin;
+      margin-left: 1vmin;
+    }
+
+    #dieselMålarStrek,
+    #lastMålarStrek {
+      background-color: #f08b00;
+      height: 0.4vmin;
+      width: 5vmin;
+      border-radius: 1vmin;
+    }
+
+    .skjul {
+      display: none;
+    }
+
+    #butikk,
+    #beskjed {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      top: 50%;
+      min-width: max-content;
+      transform: translate(-50%, -50%);
+      height: fit-content;
+      background-color: #f08b00;
+      padding: 0 0.5vw 0.5vw 0.5vw;
+      display: none;
+    }
+
+    .butikkRamme {
+      position: relative;
+      overflow-x: scroll;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .butikkRute {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 3px;
+      background-color: #000000;
+      margin: 4px 4px 2px 4px;
+      padding: 4px;
+    }
+
+    .butikkRute>div {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+      padding: 4px;
+    }
+
+    .butikkRute>p {
+      color: #f08b00;
+      font-size: large;
+      font-family: cursive;
+      margin: 2px;
+    }
+
+    #lastingAvBilder {
+      position: absolute;
+      left: 40vmin;
+      width: 1vmin;
+      top: 0;
+      z-index: -1;
+      background-image:
+        url('bilde/bondeAktiv0.gif'),
+        url('bilde/bondePassiv0.gif'),
+        url('bilde/bondeAktiv1.gif'),
+        url('bilde/bondePassiv1.gif'),
+        url('bilde/bondeAktivVenstre1.gif'),
+        url('bilde/bondeAktivHøgre1.gif'),
+        url('bilde/eng0.gif'),
+        url('bilde/eng1.gif'),
+        url('bilde/eng2.gif'),
+        url('bilde/eng3.gif'),
+        url('bilde/dyrke0.gif'),
+        url('bilde/dyrke1.gif'),
+        url('bilde/dyrke2.gif'),
+        url('bilde/dyrke3.gif'),
+        url('bilde/kornDårlig.gif'),
+        url('bilde/kornHausta.gif'),
+        url('bilde/kornKlart.gif'),
+        url('bilde/kornModent.gif'),
+        url('bilde/kornSprøytaHorisontal.gif'),
+        url('bilde/kornSprøytaVertikal.gif'),
+        url('bilde/kornSådd.gif'),
+        url('bilde/kornVeks.gif'),
+        url('bilde/grasball.gif'),
+        url('bilde/grasHausta.gif'),
+        url('bilde/grasKlart.gif'),
+        url('bilde/grasSlåttHorisontal.gif'),
+        url('bilde/grasSlåttVertikal.gif'),
+        url('bilde/grasSådd.gif'),
+        url('bilde/grasVeks.gif'),
+        url('bilde/plogAktiv0.gif'),
+        url('bilde/plogAktiv1.gif'),
+        url('bilde/plogAktiv2.gif'),
+        url('bilde/plogAktiv3.gif'),
+        url('bilde/plogPassiv0.gif'),
+        url('bilde/plogPassiv1.gif'),
+        url('bilde/plogPassiv2.gif'),
+        url('bilde/plogPassiv3.gif'),
+        url('bilde/pløyd.gif'),
+        url('bilde/skurtreskarAktiv0.gif'),
+        url('bilde/skurtreskarAktiv1.gif'),
+        url('bilde/skurtreskarAktiv2.gif'),
+        url('bilde/skurtreskarAktivHøgre0.gif'),
+        url('bilde/skurtreskarAktivHøgre1.gif'),
+        url('bilde/skurtreskarAktivHøgre2.gif'),
+        url('bilde/skurtreskarAktivVenstre0.gif'),
+        url('bilde/skurtreskarAktivVenstre1.gif'),
+        url('bilde/skurtreskarAktivVenstre2.gif'),
+        url('bilde/skurtreskarKjøre0.gif'),
+        url('bilde/skurtreskarKjøre1.gif'),
+        url('bilde/skurtreskarKjøre2.gif'),
+        url('bilde/skurtreskarKjøreHøgre0.gif'),
+        url('bilde/skurtreskarKjøreHøgre1.gif'),
+        url('bilde/skurtreskarKjøreHøgre2.gif'),
+        url('bilde/skurtreskarKjøreVenstre0.gif'),
+        url('bilde/skurtreskarKjøreVenstre1.gif'),
+        url('bilde/skurtreskarKjøreVenstre2.gif'),
+        url('bilde/skurtreskarPassiv0.gif'),
+        url('bilde/skurtreskarPassiv1.gif'),
+        url('bilde/skurtreskarPassiv2.gif'),
+        url('bilde/skurtreskarPassivHøgre0.gif'),
+        url('bilde/skurtreskarPassivHøgre1.gif'),
+        url('bilde/skurtreskarPassivHøgre2.gif'),
+        url('bilde/skurtreskarPassivVenstre2.gif'),
+        url('bilde/skurtreskarPassivVenstre0.gif'),
+        url('bilde/skurtreskarPassivVenstre1.gif'),
+        url('bilde/skurtreskarTømmes0.gif'),
+        url('bilde/skurtreskarTømmes1.gif'),
+        url('bilde/gravemaskinPassiv.gif'),
+        url('bilde/gravemaskinKjøre.gif'),
+        url('bilde/gravemaskinKjøreVenstre.gif'),
+        url('bilde/gravemaskinKjøreHøgre.gif'),
+        url('bilde/gravemaskinAktiv.gif'),
+        url('bilde/sprøyteAktiv0.gif'),
+        url('bilde/sprøyteAktiv1.gif'),
+        url('bilde/sprøyteAktiv1.gif'),
+        url('bilde/sprøyteAktiv2.gif'),
+        url('bilde/sprøyteAktiv3.gif'),
+        url('bilde/sprøytePassiv0.gif'),
+        url('bilde/sprøytePassiv1.gif'),
+        url('bilde/sprøytePassiv2.gif'),
+        url('bilde/sprøytePassiv3.gif'),
+        url('bilde/såmaskinAktiv0.gif'),
+        url('bilde/såmaskinAktiv1.gif'),
+        url('bilde/såmaskinAktiv2.gif'),
+        url('bilde/såmaskinAktiv3.gif'),
+        url('bilde/såmaskinPassiv0.gif'),
+        url('bilde/såmaskinPassiv1.gif'),
+        url('bilde/såmaskinPassiv2.gif'),
+        url('bilde/såmaskinPassiv3.gif'),
+        url('bilde/slåmaskinAktiv0.gif'),
+        url('bilde/slåmaskinAktiv1.gif'),
+        url('bilde/slåmaskinAktiv2.gif'),
+        url('bilde/slåmaskinPassiv0.gif'),
+        url('bilde/slåmaskinPassiv1.gif'),
+        url('bilde/slåmaskinPassiv2.gif'),
+        url('bilde/ballemaskinAktiv0.gif'),
+        url('bilde/ballemaskinAktiv1.gif'),
+        url('bilde/ballemaskinAktiv2.gif'),
+        url('bilde/ballemaskinPassiv0.gif'),
+        url('bilde/ballemaskinPassiv1.gif'),
+        url('bilde/ballemaskinPassiv2.gif'),
+        url('bilde/balleklype0Ballar0.gif'),
+        url('bilde/balleklype0Ballar1.gif'),
+        url('bilde/balleklype1Ballar0.gif'),
+        url('bilde/balleklype1Ballar1.gif'),
+        url('bilde/balleklype1Ballar2.gif'),
+        url('bilde/traktorAktiv0.gif'),
+        url('bilde/traktorAktivHøgre0.gif'),
+        url('bilde/traktorAktivVenstre0.gif'),
+        url('bilde/traktorAktiv1.gif'),
+        url('bilde/traktorAktivHøgre1.gif'),
+        url('bilde/traktorAktivVenstre1.gif'),
+        url('bilde/traktorAktiv2.gif'),
+        url('bilde/traktorAktivHøgre2.gif'),
+        url('bilde/traktorAktivVenstre2.gif'),
+        url('bilde/traktorAktiv3.gif'),
+        url('bilde/traktorAktivHøgre3.gif'),
+        url('bilde/traktorAktivVenstre3.gif'),
+        url('bilde/traktorAktiv4.gif'),
+        url('bilde/traktorAktivHøgre4.gif'),
+        url('bilde/traktorAktivVenstre4.gif'),
+        url('bilde/traktorPassiv0.gif'),
+        url('bilde/traktorPassivHøgre0.gif'),
+        url('bilde/traktorPassivVenstre0.gif'),
+        url('bilde/traktorPassiv1.gif'),
+        url('bilde/traktorPassivHøgre1.gif'),
+        url('bilde/traktorPassivVenstre1.gif'),
+        url('bilde/traktorPassiv2.gif'),
+        url('bilde/traktorPassivHøgre2.gif'),
+        url('bilde/traktorPassivVenstre2.gif'),
+        url('bilde/traktorPassiv3.gif'),
+        url('bilde/traktorPassivHøgre3.gif'),
+        url('bilde/traktorPassivVenstre3.gif'),
+        url('bilde/traktorPassiv4.gif'),
+        url('bilde/traktorPassivHøgre4.gif'),
+        url('bilde/traktorPassivVenstre4.gif'),
+        url('bilde/kyr1Passiv.gif'),
+        url('bilde/kyr1Aktiv.gif'),
+        url('bilde/kyr2Passiv.gif'),
+        url('bilde/kyr2Aktiv.gif'),
+        url('bilde/kyr3Passiv.gif'),
+        url('bilde/kyr3Aktiv.gif'),
+        url('bilde/kyr4Passiv.gif'),
+        url('bilde/kyr4Aktiv.gif')
+    }
+
+    #test {
+      display: block;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      background-color: f08b00;
+      z-index: 5;
+      margin: 10px;
+    }
+
+    .styringFart,
+      .styringSving {
+        display: flex;
+        position: absolute;
+        z-index: 2;
+        bottom: 2vh;
+        width: 75px;
+        height: 150px;
+        border-radius: 100px;
+        background-color: #999;
+        opacity: 0.5;
+      }
+
+      .styringFart {
+        flex-direction: column;
+        left: 2vw;
+        width: 75px;
+        height: 150px;
+      }
+
+      .styringSving {
+        flex-direction: row;
+        right: 2vw;
+        width: 150px;
+        height: 75px;
+      }
+
+      .StyringsKnapp {
+        width: 75px;
+        height: 75px;
+      }
+
+      #styringVenstre {
+        border-right: 1px solid black;
+      }
+
+      #styringFram {
+        border-bottom: 1px solid black;
+      }
+
+    @media screen and (hover: hover) and (min-width: 400px) {
+
+      .styring {
+        display: none;
+      }
+    }
+
+    /*
+      z-index tabell:
+      -1 forlasting av bilder
+      0 verden
+      1 doning
+      2
+      3 burikk, tipstekst
+      4
+      5 testboks
+      */
+  </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+<body>
+  <!--   <div id='forLastingAvBilder'></div> -->
+  <div id="verden" class="verden">
+
+    <div id="infoLinje">BONDEN <span id="brukarTekst" onclick='velgBrukar()'>Trykk her for å lagra</span>
+      <div><span id='peng'>150</span> KR</div>
+      <div><span id='dieselMålarTekst'></span>
+        <div id="dieselMålar">
+          <div id="dieselMålarStrek"></div>
+        </div>
+      </div>
+      <div>
+        <span id='lastMålarTekst'></span>
+        <div id="lastMålar">
+          <div id="lastMålarStrek"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="doningRamme" class="doningRamme">
+      <div id="redskap"></div>
+      <div id="doning"></div>
+    </div>
+
+    <div id="rekke0" class="rekke"></div>
+  </div>
+
+
+    <!--   Styreknappar   -->
+    <div class='styringFart'>
+      <div id='styringFram' class='StyringsKnapp'></div>
+      <div id='styringBak' class='StyringsKnapp'></div>
+    </div>
+    <div class='styringSving'>
+      <div id='styringVenstre' class='StyringsKnapp'></div>
+      <div id='styringHogre' class='StyringsKnapp'></div>
+    </div>
+
+  <!--   Butikk  -->
+
+  <div id='butikk'>
+    <div class='butikkRute' onclick='kjøpe("bonde")'>
+      <p>Ståhjuling: Fart:+1 Pris:300</p>
+      <div>
+        <img src=bilde/bondePassiv0.gif alt='bonde 0'>
+        <img src=bilde/bondePassiv1.gif alt='bonde 1'>
+        <img src=bilde/bondePassiv2.gif alt='bonde 2'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("traktor")'>
+      <p>Traktor: Fart:+1 Pris:1000</p>
+      <div>
+        <img src=bilde/traktorPassiv0.gif alt='traktor 0'>
+        <img src=bilde/traktorPassiv1.gif alt='traktor 1'>
+        <img src=bilde/traktorPassiv2.gif alt='traktor 2'>
+        <img src=bilde/traktorPassiv3.gif alt='traktor 3'>
+        <img src=bilde/traktorPassiv4.gif alt='traktor 3'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("skurtreskar")'>
+      <p>Skurtreskar: Tank:+3 Fart:+1 Pris:1000</p>
+      <div>
+        <img src=bilde/skurtreskarPassiv0.gif alt='skurtreskar 0'>
+        <img src=bilde/skurtreskarPassiv1.gif alt='skurtreskar 1'>
+        <img src=bilde/skurtreskarPassiv2.gif alt='skurtreskar 2'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("plog")'>
+      <p>Plog: Fart:+1 Pris:200</p>
+      <div>
+        <img src=bilde/plogPassiv0.gif alt='såmaskin 0'>
+        <img src=bilde/plogPassiv1.gif alt='såmaskin 1'>
+        <img src=bilde/plogPassiv2.gif alt='såmaskin 2'>
+        <img src=bilde/plogPassiv3.gif alt='såmaskin 3'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("såmaskin")'>
+      <p>Såmaskin: Fart:+1 Tank:+3 Pris:400</p>
+      <div>
+        <img src=bilde/såmaskinPassiv0.gif alt='såmaskin 0'>
+        <img src=bilde/såmaskinPassiv1.gif alt='såmaskin 1'>
+        <img src=bilde/såmaskinPassiv2.gif alt='såmaskin 2'>
+        <img src=bilde/såmaskinPassiv3.gif alt='såmaskin 3'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("sprøyte")'>
+      <p>Sprøyte: Fart:+1 Tank:+3 Pris:300</p>
+      <div>
+        <img src=bilde/sprøytePassiv0.gif alt='sprøyte 0'>
+        <img src=bilde/sprøytePassiv1.gif alt='sprøyte 1'>
+        <img src=bilde/sprøytePassiv2.gif alt='sprøyte 2'>
+        <img src=bilde/sprøytePassiv3.gif alt='sprøyte 3'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("slåmaskin")'>
+      <p>Slåmaskin: Fart:+1 Pris:400</p>
+      <div>
+        <img src=bilde/slåmaskinPassiv0.gif alt='slåmaskin 0'>
+        <img src=bilde/slåmaskinPassiv1.gif alt='slåmaskin 1'>
+        <img src=bilde/slåmaskinPassiv2.gif alt='slåmaskin 2'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("ballemaskin")'>
+      <p>Ballemaskin: Fart:+1 Pris:600</p>
+      <div>
+        <img src=bilde/ballemaskinPassiv0.gif alt='ballemaskin 0'>
+        <img src=bilde/ballemaskinPassiv1.gif alt='ballemaskin 1'>
+        <img src=bilde/ballemaskinPassiv2.gif alt='ballemaskin 2'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("balleklype")'>
+      <p>Balleklype: Antal:+1 Pris:200</p>
+      <div>
+        <img src=bilde/balleklype0Ballar0.gif alt='balleklype 0'>
+        <img src=bilde/balleklype1Ballar0.gif alt='balleklype 1'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='kjøpe("kyr")'>
+      <p>Kyr: Antal:+1 Pris:1000</p>
+      <div>
+        <img src=bilde/kyr1Passiv.gif alt='kyr 1'>
+        <img src=bilde/kyr2Passiv.gif alt='kyr 2'>
+        <img src=bilde/kyr3Passiv.gif alt='kyr 3'>
+        <img src=bilde/kyr4Passiv.gif alt='kyr 4'>
+      </div>
+    </div>
+    <div class='butikkRute' onclick='steng("butikk")'>
+      <p>Tilbake</p>
+    </div>
+  </div>
+  <div id="beskjed">
+    <div class='butikkRute' onclick='steng("beskjed")'>
+      <p id="beskjedTekst">Beskjed</p>
+    </div>
+  </div>
+  <div id='lastingAvBilder'></div>
+  <!--ruta ligger bak og skal ikkje vise. Den har bakgrunnen til alle bildene som skal forlastast. Den har og bredde som brukast for å kalibrere bedden av kanten.
+  -->
+  <!--
+    <div id='test'>
+      <p>Testar:</p>
+      <p onclick="test('veksingUtenSprøyte')">Test Veksing UTEN sprøyte</p>
+      <p onclick="test('veksingMedSprøyte')">Test Veksing MED sprøyte</p>
+
+    </div>
+  -->
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+<script>
+  let ruter = [
+    'grus', 'grus', 'grus', 'grus', 'veiSvingNedH', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssNed', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiSvingNedV', 'radStopp',
+    'kyr', 'grus', 'grus', 'bensinstasjon', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'butikk', 'radStopp',
+    'grus', 'grus', 'grus', 'grus', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'balleklype', 'grus', 'grus', 'siloSkurtreskar', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'ballemaskin', 'grus', 'grus', 'grus', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'slåmaskin', 'grus', 'grus', 'grus', 'veiKryssH', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssNed', 'veiHorisontal', 'veiKryssOpp', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssV', 'radStopp',
+    'traktor', 'grus', 'grus', 'grus', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'plog', 'grus', 'grus', 'siloGras', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'såmaskin', 'grus', 'grus', 'siloSprøyte', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'sprøyte', 'grus', 'grus', 'siloKorn', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'skurtreskar', 'grus', 'grus', 'gravemaskin', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiSvingNedH', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssOpp', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryss', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssV', 'radStopp',
+    'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'veiSvingOppH', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssOpp', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiSvingOppV'
+  ];
+  let versjon = { denne: 32, krav: 31 };
+  let kartKant = { left: 0, top: 0, right: 0, bottom: 0 };
+  let brukar = 'Pelle';
+  const doningOgRedskap = document.getElementById("doningRamme");
+  const doning = document.getElementById("doning");
+  const redskap = document.getElementById("redskap");
+  let fart = { valgt: 'bonde', aktiv: 2, bonde: 2, traktor: 4, plog: 0, såmaskin: 0, sprøyte: 0, slåmaskin: 0, ballemaskin: 0, balleklype: 2, gravemaskin: 1, skurtreskar: 3, tomForDiesel: 0.5, jobbe: -2, vei: 1, faktor: 1, ingen: 0 };//ingen er for skurtreskar i jobbemodus ikkje skal lage feil
+  let posisjon = { x: 300, y: 300, doningX: null, doningY: null, styringStartY: null, styringStartX: null, traktorX: null, traktorY: null, plogX: null, plogY: null, såmaskinX: null, såmaskinY: null };
+  let retning = 0;
+  let retningGrov = '';
+  let tasteStatus = { ArrowUp: false, w: false, ArrowDown: false, s: false, ArrowLeft: false, a: false, ArrowRight: false, kartKant: false, };
+  let aktivDoning = "bonde", aktivRedskap = 'ingen';
+  let ruterTilSjekk = [127, 105, 106, 107, 126, 128, 147, 148, 149]; //aktiv rute,over/venstre, over, over/høgre,venstre,høgre,under/venstre,under,under/høgre
+  let vekseTid = { dyrkeStart: 20, kornStart: 200, grasStart: 150, kornVeks: 150, grasVeks: 75, kornModent: 80};
+  let vekseTidRuter = [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+  let peng = 500;
+  let autoLagreTid = 0;
+  let bytteForsinkelse = 0;
+  let bytteTid = 3;
+  let aktivFylling = { traktor: 0, skurtreskar: 0, gravemaskin: 0, såmaskin: 0, sprøyte: 0, korn: 0 };
+  let pris = { traktor: 3, skurtreskar: 3, gravemaskin: 6, såmaskin: 10, sprøyte: 2, korn: 40, melk: 1, grasball: 120, kjøpeKyr: 1000, kjøpBonde: 300, kjøpTraktor: 1000, kjøpPlog: 200, kjøpSåmaskin: 400, kjøpSprøyte: 300, kjøpSlåmaskin: 400, kjøpBallemaskin: 600, kjøpBalleklype: 200, kjøpSkurtreskar: 1000 };
+  let tankNiva = { traktor: 200, skurtreskar: 300, gravemaskin: 300, såmaskin: 1, sprøyte: 1, ballemaskin: 0, balleklype: 0, korn: 0, kyr: 0 };
+  let tankFull = { traktor: 200, skurtreskar: 300, gravemaskin: 300, såmaskin: 15, sprøyte: 15, ballemaskin: 3, balleklype: 1, korn: 30 };
+  let bildePassiv = {
+    bondeBeint: 'url(bilde/bondePassiv0.gif)',
+    bondeVenstre: 'url(bilde/bondePassiv0.gif)',
+    bondeHøgre: 'url(bilde/bondePassiv0.gif)',
+    traktorBeint: 'url(bilde/traktorPassiv0.gif)',
+    traktorVenstre: 'url(bilde/traktorPassivVenstre0.gif)',
+    traktorHøgre: 'url(bilde/traktorPassivHøgre0.gif)',
+    plog: 'url(bilde/plogPassiv0.gif)',
+    såmaskin: 'url(bilde/såmaskinPassiv0.gif)',
+    sprøyte: 'url(bilde/sprøytePassiv0.gif)',
+    ballemaskin: 'bilde/url(ballemaskinPassiv0.gif)',
+    slåmaskin: 'url(bilde/slåmaskinPassiv0)',
+    balleklype: 'url(bilde/balleklypePassiv0.gif)',
+    skurtreskarBeint: 'url(bilde/skurtreskarPassiv0.gif)',
+    skurtreskarVenstre: 'url(bilde/skurtreskarPassiv0.gif)',
+    skurtreskarHøgre: 'url(bilde/skurtreskarPassiv0.gif)',
+    skurtreskarTømmes: 'url(bilde/skurtreskarTømmes0.gif)',
+    gravemaskinBeint: 'url(bilde/gravemaskinPassiv.gif)',
+    gravemaskinVenstre: 'url(bilde/gravemaskinPassiv.gif)',
+    gravemaskinHøgre: 'url(bilde/gravemaskinPassiv.gif)'
+  }
+  let bildeKjøre = {
+    bondeBeint: 'url(bilde/bondeAktiv0.gif)',
+    bondeVenstre: 'url(bilde/bondeAktiv0.gif)',
+    bondeHøgre: 'url(bilde/bilde/bondeAktiv0.gif)',
+    traktorBeint: 'url(bilde/traktorAktiv0.gif)',
+    traktorVenstre: 'url(bilde/traktorAktivVenstre0.gif)',
+    traktorHøgre: 'url(bilde/traktorAktivHøgre0.gif)',
+    plog: 'url(bilde/plogPassiv0.gif)',
+    såmaskin: 'url(bilde/såmaskinAktiv0.gif)',
+    sprøyte: 'url(bilde/sprøytePassiv0.gif)',
+    ballemaskin: 'url(bilde/ballemaskinKjøre0.gif)',
+    slåmaskin: 'url(bilde/slåmaskinPassiv0)',
+    balleklype: 'url(bilde/balleklypeAktiv0.gif)',
+    skurtreskarBeint: 'url(bilde/skurtreskarKjøre0.gif)',
+    skurtreskarVenstre: 'url(bilde/skurtreskarKjøre0.gif)',
+    skurtreskarHøgre: 'url(bilde/skurtreskarKjøre0.gif)',
+    skurtreskarTømmes: 'url(bilde/skurtreskarTømmes0.gif)',
+    gravemaskinBeint: 'url(bilde/gravemaskinKjøre.gif)',
+    gravemaskinVenstre: 'url(bilde/gravemaskinKjøreVenstre.gif)',
+    gravemaskinHøgre: 'url(bilde/gravemaskinKjøreHøgre.gif)'
+  }
+  let bildeJobbe = {
+    bondeBeint: 'url(bilde/bondeAktiv0.gif)',
+    bondeVenstre: 'url(bilde/bondeAktiv0.gif)',
+    bondeHøgre: 'url(bilde/bondeAktiv0.gif)',
+    traktorBeint: 'url(bilde/traktorAktiv0.gif)',
+    traktorVenstre: 'url(bilde/traktorAktivVenstre0.gif)',
+    traktorHøgre: 'url(bilde/traktorAktivHøgre0.gif)',
+    plog: 'url(bilde/plogPassiv0.gif)',
+    såmaskin: 'url(bilde/såmaskinAktiv0.gif)',
+    sprøyte: 'url(bilde/sprøyteAktiv0.gif)',
+    ballemaskin: 'url(bilde/ballemaskinAktiv0.gif)',
+    slåmaskin: 'url(bilde/slåmaskinAktiv0)',
+    balleklype: 'url(bilde/balleklypeDobbelAktiv0.gif)',
+    skurtreskarBeint: 'url(bilde/skurtreskarAktiv0.gif)',
+    skurtreskarVenstre: 'url(bilde/skurtreskarAktiv0.gif)',
+    skurtreskarHøgre: 'url(bilde/skurtreskarAktiv0.gif)',
+    skurtreskarTømmes: 'url(bilde/skurtreskarTømmes0.gif)',
+    gravemaskinBeint: 'url(bilde/gravemaskinAktiv.gif)',
+    gravemaskinVenstre: 'url(bilde/gravemaskinAktiv.gif)',
+    gravemaskinHøgre: 'url(bilde/gravemaskinAktiv.gif)'
+  }
+  let typeKjøring = 'parkert';
+  let flytting = {venstre:false, hogre:false, fram:false, bak:false};
+  let kjøpteTing = { kyr: 1, bonde: 0, traktor: 0, plog: 0, såmaskin: 0, sprøyte: 0, slåmaskin: 0, ballemaskin: 0, balleklype: 0, skurtreskar: 0 };
+  let valgtFrø = null;
+  let tipstekstar = {
+    siloSprøyte: 'Her flyller du sprøtemiddel i sprøyta. Pris: ',
+    siloGras: 'Her fyller du Grasfrø i såmakinen Pris: ',
+    siloKorn: 'Her fyller du Kornfrø i såmakinen Pris: ',
+    siloSkurtreskar: 'Her tømmer du skurtreskaren Pris: ',
+    kyr: 'Gi grasballar til kyrne og tjen peng. Pris: ',
+    bensinstasjon: 'Bensinstasjon Pris: ',
+    butikk: 'Butikk',
+    traktor: 'Traktor',
+    plog: 'Plog. Du må pløya før du kan så',
+    såmaskin: 'Såmaskin. Fyll såmaskin i ein frøsilo',
+    sprøyte: 'Sprøyte. Sprøyt kornet når det er modent for å unngå dårlig korn',
+    slåmaskin: 'Slåmaskin. Slå graset.',
+    ballemaskin: 'Ballemaskin. Pakk graset til ballar.',
+    balleklype: 'balleklype. Hent grasballar og selg dei.',
+    skurtreskar: 'Skurtreskar. Tøm den når den er full',
+    gravemaskin: 'Gravemaskin. Bruk den til å dyrke nye jorde'
+  }
+
+  window.onload = oppstart();
+
+  function velgBrukar() {
+    // Spør om brukarnavn
+    brukar = prompt('Skriv inn brukarnavnet ditt, dette blir brukt for å lagra spelet i ein kjeks på denne maskina.', 'McDonald');
+    brukar = String(brukar);
+    document.getElementById('brukarTekst').innerText = brukar;
+
+    // Last in brukar om den finst
+    tmp = document.cookie;
+    if (tmp.search(brukar) != -1) {
+      let tmp = document.cookie;
+      console.log('fant denne kjeksen: ' + tmp);
+      let brukarStart = tmp.search(brukar);
+      let brukarSlutt = brukar + 'slutt';
+      brukarSlutt = tmp.search(brukarSlutt);
+      tmp = tmp.slice(brukarStart, brukarSlutt);
+      tmp = tmp.split('$');
+      let nr = 1;
+      peng = Number(tmp[nr]); nr++;
+      if (tmp[nr] != 'BondenMedLappen' && Number(tmp[nr + 1]) < versjon.krav) {
+        document.getElementById('beskjed').style.display = 'flex';
+        document.getElementById('beskjedTekst').innerHTML = 'Hei ' + brukar + '!<br><br>Det har kom ny brann forskrift: ' + versjon.denne + '. <br>Din gard følger brann forskrift: ' + tmp[nr] + '<br>Staten har derfor jevna den med jorda, <br>men heldigvis har du ennå pengane og fått <br>1000kr som trøst òg eit nytt småbruk.<br>(Du har for gammal spel versjon)<br><br>Lukk';
+        console.log('gammal versjion');
+
+        oppdaterPeng(1000)
+        lagreBrukar()
+      } else {
+        nr++;
+        nr++;
+        console.log('versjion ok ');
+
+        oppdaterPeng(0)
+        nr++;//hopp over overskift
+        fart.bonde = Number(tmp[nr]); nr++;
+        fart.traktor = Number(tmp[nr]); nr++;
+        fart.plog = Number(tmp[nr]); nr++;
+        fart.såmaskin = Number(tmp[nr]); nr++;
+        fart.sprøyte = Number(tmp[nr]); nr++;
+        fart.slåmaskin = Number(tmp[nr]); nr++;
+        fart.ballemaskin = Number(tmp[nr]); nr++;
+        fart.balleklype = Number(tmp[nr]); nr++;
+        fart.skurtreskar = Number(tmp[nr]); nr++;
+        fart.jobbe = Number(tmp[nr]); nr++;
+        fart.vei = Number(tmp[nr]); nr++;
+        nr++;//hopp over overskift
+        tankNiva.traktor = Number(tmp[nr]); nr++;
+        tankNiva.skurtreskar = Number(tmp[nr]); nr++;
+        tankNiva.gravemaskin = Number(tmp[nr]); nr++;
+        tankNiva.såmaskin = Number(tmp[nr]); nr++;
+        tankNiva.sprøyte = Number(tmp[nr]); nr++;
+        tankNiva.ballemaskin = Number(tmp[nr]); nr++;
+        tankNiva.balleklype = Number(tmp[nr]); nr++;
+        tankNiva.korn = Number(tmp[nr]); nr++;
+        tankNiva.kyr = Number(tmp[nr]); nr++;
+        oppdaterTank(aktivDoning)
+        oppdaterTank(aktivRedskap)
+        nr++;//hopp over overskift
+        kjøpteTing.traktor = Number(tmp[nr]); nr++;
+        kjøpteTing.plog = Number(tmp[nr]); nr++;
+        kjøpteTing.såmaskin = Number(tmp[nr]); nr++;
+        kjøpteTing.sprøyte = Number(tmp[nr]); nr++;
+        kjøpteTing.slåmaskin = Number(tmp[nr]); nr++;
+        kjøpteTing.ballemaskin = Number(tmp[nr]); nr++;
+        kjøpteTing.balleklype = Number(tmp[nr]); nr++;
+        kjøpteTing.skurtreskar = Number(tmp[nr]); nr++;
+        kjøpteTing.kyr = Number(tmp[nr]); nr++;
+        oppdaterBilder('alt')
+        nr++;//hopp over overskift
+        for (x = 0; x < ruter.length; x++) {
+          ruter[x] = String(tmp[nr]); nr++;
+          if (ruter[x] != "radStopp") {
+            document.getElementById("R" + x).className = ruter[x];
+          }
+        }
+        nr++;//hopp over overskift
+        console.log('før henting: ' + vekseTidRuter);
+
+        for (x = 0; x < vekseTidRuter.length; x++) {
+          vekseTidRuter[x] = Number(tmp[nr]); nr++;
+        }
+        console.log('etter henting: ' + vekseTidRuter);
+
+        oppdaterBilder('alt')
+      }
+    } else {
+      lagreBrukar()
+    }
+    autoLagreTid = 10;
+    oppsett()
+  }
+
+
+  function lagreBrukar() {
+
+    nykjeks = brukar + '='
+      + '$' + peng
+
+      + '$' + 'BondenMedLappen'
+      + '$' + versjon.denne
+      + '$' + 'fart'
+      + '$' + fart.bonde
+      + '$' + fart.traktor
+      + '$' + fart.plog
+      + '$' + fart.såmaskin
+      + '$' + fart.sprøyte
+      + '$' + fart.slåmaskin
+      + '$' + fart.ballemaskin
+      + '$' + fart.balleklype
+      + '$' + fart.skurtreskar
+      + '$' + fart.jobbe
+      + '$' + fart.vei
+      + '$' + 'tankNiva'
+      + '$' + tankNiva.traktor
+      + '$' + tankNiva.skurtreskar
+      + '$' + tankNiva.gravemaskin
+      + '$' + tankNiva.såmaskin
+      + '$' + tankNiva.sprøyte
+      + '$' + tankNiva.ballemaskin
+      + '$' + tankNiva.balleklype
+      + '$' + tankNiva.korn
+      + '$' + tankNiva.kyr
+      + '$' + 'kjoptTing'
+      + '$' + kjøpteTing.traktor
+      + '$' + kjøpteTing.plog
+      + '$' + kjøpteTing.såmaskin
+      + '$' + kjøpteTing.sprøyte
+      + '$' + kjøpteTing.slåmaskin
+      + '$' + kjøpteTing.ballemaskin
+      + '$' + kjøpteTing.balleklype
+      + '$' + kjøpteTing.skurtreskar
+      + '$' + kjøpteTing.kyr
+      + '$' + 'ruter';
+
+    for (x = 0; x < ruter.length; x++) {
+      nykjeks += '$' + ruter[x];
+    }
+    nykjeks += '$' + 'vekseTidRuter';
+    for (x = 0; x < vekseTidRuter.length; x++) {
+      nykjeks += '$' + vekseTidRuter[x];
+
+    }
+    nykjeks += brukar + 'slutt; max-age=310000; path=/;';//slutten på kjeksen, gir ei levetid på ca 1 år
+
+
+    document.cookie = nykjeks;
+console.log('lagra dette: ' + nykjeks);
+  }
+  //Oppstart----------------------------------------Oppstart
+  function oppstart() {
+    //Oppdater pris testar
+    oppdaterPeng(0)
+    tipstekstar.siloSprøyte += pris.sprøyte + ' kr ';
+    tipstekstar.siloKorn += pris.såmaskin + ' kr ';
+    tipstekstar.siloGras += pris.såmaskin + ' kr ';
+    tipstekstar.siloSkurtreskar += pris.korn + ' kr ';
+    tipstekstar.bensinstasjon += pris.traktor + ' kr ';
+
+    //Teiner brettet
+    let rekkeNr = 0;
+    for (let nr = 0; nr < ruter.length; nr++) {
+      if (ruter[nr] === "radStopp") {
+        //lag ein rekke div
+        rekkeNr++;
+        let nyRekke = document.createElement("Div");
+        nyRekke.id = "rekke" + rekkeNr;
+        nyRekke.class = "rekke";
+        document.getElementById("verden").appendChild(nyRekke);
+        document.getElementById("rekke" + rekkeNr).className = "rekke";
+      } else {
+        let nyRute = document.createElement("Div"); //Teiner rute
+        nyRute.id = "R" + nr;
+        aktuellRekke = "rekke" + rekkeNr;
+        document.getElementById(aktuellRekke).appendChild(nyRute);
+        if (tipstekstar.hasOwnProperty(ruter[nr])) {
+          document.getElementById("R" + nr).innerHTML = '<span class="tipstekst">' + tipstekstar[ruter[nr]] + '</span>';
+        }
+        if (ruter[nr] === 'eng') {
+          document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/eng' + Math.floor(Math.random() * 3) + '.gif)';
+        } else if (ruter[nr] === 'dyrke') {
+          document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke3.gif)';
+        } else {
+          document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/' + ruter[nr] + '.gif)';
+        }
+        document.getElementById("R" + nr).className = ruter[nr];
+      }
+    }
+    oppdaterBilder('alt')
+    oppsett()
+    vekseSløyfe(); //starter veksing loop
+  }
+
+  function oppsett() {//kjører ved oppstart og endring av størrelse på vindu
+    console.log('oppsett');
+    fart.faktor = verden.offsetWidth / 2000;//justerer farten til skjermbredden
+    //definer yttergrensene på spelet slik at ein ikkje kan kjøre utenfor, burker rammen til lastingAvBilder som mal
+    let kant = document.getElementById('verden').getBoundingClientRect();
+    let justering = document.getElementById('lastingAvBilder').getBoundingClientRect();
+    kartKant.left = kant.left - justering.width * 3;
+    kartKant.top = kant.top;
+    kartKant.right = kant.right - justering.width * 7;
+    kartKant.bottom = kant.bottom - justering.width * 4;
+    //plasserer doning i rute R127
+    kant = document.getElementById('R' + ruterTilSjekk[0]).getBoundingClientRect();
+    posisjon.x = Math.floor(kant.left);
+    document.getElementById('doningRamme').style.left = posisjon.x + '.px';
+    posisjon.y = Math.floor(kant.top);
+    document.getElementById('doningRamme').style.top = posisjon.y + '.px';
+  }
+
+
+
+  //VEKSE SLØYFE---------------------------------------------------------VEKSE SLØYFE
+  function vekseSløyfe() {
+    // Veksing
+    for (let nr = 0; nr < ruter.length; nr++) {
+      if (vekseTidRuter[nr] != null) {
+        //-----------dyrking
+        if (ruter[nr] === "dyrke" && ruterTilSjekk[0] === nr && aktivDoning === 'gravemaskin') {
+          if (vekseTidRuter[nr] > 0) { vekseTidRuter[nr] -= 1; }// reduser veksetida med 1
+          typeKjøring = 'gravemaskinGrave';
+          kjørestil()
+          oppdaterTank('gravemaskin', -1);
+
+          if (vekseTidRuter[nr] === Math.floor(vekseTid.dyrkeStart * 2 / 3)) {
+            document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke1.gif)';
+          } else if (vekseTidRuter[nr] === Math.floor(vekseTid.dyrkeStart * 1 / 3)) {
+            document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke2.gif)';
+          } else if (vekseTidRuter[nr] === 0) {
+            document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke3.gif)';
+            typeKjøring = 'parkert';
+            kjørestil()
+          }
+        } else if (vekseTidRuter[nr] > 0 && ruter[nr] !== "dyrke") {// reduser veksetida med 1
+          vekseTidRuter[nr] -= 1;
+
+          //--------------korn
+          if (ruter[nr] === "kornSådd") {
+            if (vekseTidRuter[nr] === vekseTid.kornVeks) {
+              ruter[nr] = "kornVeks";
+              document.getElementById("R" + nr).className = 'kornVeks';
+              document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/kornVeks.gif)';
+            }
+          } else if (ruter[nr] === "kornVeks") {
+            if (vekseTidRuter[nr] === vekseTid.kornModent) {
+              ruter[nr] = "kornModent";
+              document.getElementById("R" + nr).className = 'kornModent';
+              document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/kornModent.gif)';
+            }
+          } else if (ruter[nr] === "kornModent") {
+            if (vekseTidRuter[nr] == 0) {
+              if (Math.random() < 0.5) {//endrer til ferdig korn visst du har flaks
+                ruter[nr] = "kornKlart";
+              } else {//endrer til dårlig korn visst du har Uflaks
+                ruter[nr] = 'kornDårlig';
+              }
+              document.getElementById("R" + nr).className = ruter[nr];
+              document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/' + ruter[nr] + '.gif)';
+            }
+          } else if (ruter[nr] === "kornSprøyta") {
+            if (vekseTidRuter[nr] == 0) {
+              ruter[nr] = "kornKlart";
+              document.getElementById("R" + nr).className = 'kornKlart';
+              document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/kornKlart.gif)';
+            }
+            //------------gras
+          } else if (ruter[nr] === "grasSådd") {
+            if (vekseTidRuter[nr] === vekseTid.grasVeks) {
+              ruter[nr] = "grasVeks";
+              document.getElementById("R" + nr).className = 'grasVeks';
+              document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/grasVeks.gif)';
+            }
+          } else if (ruter[nr] === "grasVeks") {
+            if (vekseTidRuter[nr] == 0) {
+              ruter[nr] = "grasKlart";
+              document.getElementById("R" + nr).className = 'grasKlart';
+              document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/grasKlart.gif)';
+            }
+          }
+        }
+
+      }
+    }
+
+    fylleSløyfe()//starter fyllesløyfe
+
+    // Endre bilde av kyr når dei går tom for mat
+
+    if (tankNiva.kyr > 0) {
+      document.getElementsByClassName('kyr')[0].style.backgroundImage = 'url("bilde/kyr' + kjøpteTing.kyr + 'Aktiv.gif")';
+      tankNiva.kyr -= kjøpteTing.kyr;
+      oppdaterPeng(pris.melk * kjøpteTing.kyr)
+    } else {
+      document.getElementsByClassName('kyr')[0].style.backgroundImage = 'url("bilde/kyr' + kjøpteTing.kyr + 'Passiv.gif")';
+    }
+
+
+
+    //Lagre brukar
+    if (autoLagreTid === 1) {
+      lagreBrukar()
+      document.getElementById('brukarTekst').innerHTML = 'Lagrar..';
+      autoLagreTid = 11;
+    } else if (autoLagreTid === 11) {
+      document.getElementById('brukarTekst').innerHTML = brukar;
+      autoLagreTid -= 1;
+    } else {
+      autoLagreTid -= 1;
+    }
+
+
+    setTimeout(vekseSløyfe, 1000); //kjører evigLoop functionen kvart sekund
+  } //slutt evigLoop
+
+  function fylleSløyfe() {
+
+    //fylling av tankarsløyfe kjører kvart 0.1 sekund
+    if (aktivFylling.traktor) {
+      oppdaterTank('traktor', 1,)
+      setTimeout(fylleSløyfe, 100); //kjører evigLoop functionen kvart sekund
+    } else if (aktivFylling.skurtreskar) {
+      oppdaterTank('skurtreskar', 1,)
+      setTimeout(fylleSløyfe, 100); //kjører evigLoop functionen kvart sekund
+    } else if (aktivFylling.gravemaskin) {
+      oppdaterTank('gravemaskin', 1,)
+      setTimeout(fylleSløyfe, 100); //kjører evigLoop functionen kvart sekund 
+    } else if (aktivFylling.såmaskin) {
+      oppdaterTank('såmaskin', 0.3,)
+      setTimeout(fylleSløyfe, 100); //kjører evigLoop functionen kvart sekund
+    } else if (aktivFylling.sprøyte) {
+      oppdaterTank('sprøyte', 0.3,)
+      setTimeout(fylleSløyfe, 100); //kjører evigLoop functionen kvart sekund
+    } else if (aktivFylling.korn) {
+      oppdaterTank('korn', -0.2,)
+      setTimeout(fylleSløyfe, 100); //kjører evigLoop functionen kvart sekund
+    }
+
+  } //slutt evigLoop
+
+  /**
+   * ! POSISJON DONING
+  */
+  function posisjonDoning(framEllerBak) {
+    let kant;
+    if (aktivRedskap === 'ingen') {
+      kant = document.getElementById('doning').getBoundingClientRect();
+    } else {
+      kant = document.getElementById('redskap').getBoundingClientRect();
+    }
+    posisjon['doningX'] = kant.left + kant.width / 2;
+    posisjon['doningY'] = kant.top + kant.height / 2;
+
+    for (r = 1; r < 9; r++) {
+      let nr = ruterTilSjekk[r];
+      if (nr > 0 && nr < 418 && (ruter[nr] != 'radStopp')) {//-sjekker om rute er på brettet
+        let jordeKant = document.getElementById("R" + nr).getBoundingClientRect();
+        if (
+          posisjon['doningX'] < jordeKant.right &
+          posisjon['doningX'] > jordeKant.left &&
+          posisjon['doningY'] < jordeKant.bottom &&
+          posisjon['doningY'] > jordeKant.top
+        ) {
+          sjekkVeiRuter(nr)
+          if (framEllerBak === 'fram') { sjekkJordeRuter1(nr) }
+          if (framEllerBak === 'bak') { sjekkJordeRuter2(nr) }
+          sjekkRedskapRuter(nr, framEllerBak)
+          sjekkTankRuter1(nr)
+          if (framEllerBak === 'bak') { sjekkTankRuter2(nr) }
+          sjekkButikkRute(nr)
+
+          //Oppdaterer kva ruter som skal sjekkast
+          let forskjell = nr - ruterTilSjekk[0];
+          for (x = 0; x < 9; x++) { ruterTilSjekk[x] += forskjell; }
+          console.log(ruterTilSjekk);
+          return;
+        }
+      }
+    }
+  }
+
+  function sjekkVeiRuter(nr) {
+    if (ruter[nr] === 'veiHorisontal' || ruter[nr] === 'veiVertikal' || ruter[nr] === 'veiKryss') {
+      typeKjøring = 'vei';
+    }
+
+
+
+  }//---------------------------------------------------------------------------------sjekk Jorde ruter
+  function sjekkJordeRuter1(nr) {
+    // pløyer jorde
+    if (aktivRedskap === 'plog' && (ruter[nr] === "kornHausta" || ruter[nr] === "dyrke" || ruter[nr] === "kornSådd" || ruter[nr] === "kornVeks" || ruter[nr] === "kornModent" || ruter[nr] === "kornSprøyta" || ruter[nr] === "kornDårlig" || ruter[nr] === "kornKlart" || ruter[nr] === "grasSådd" || ruter[nr] === "grasVeks" || ruter[nr] === "grasKlart" || ruter[nr] === "GrasSlåttVertikal" || ruter[nr] === "grasSlåttHorisontal" || ruter[nr] === "grasHausta")) {
+      document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/pløyd.gif)';
+      ruter[nr] = "pløyd";
+      oppdaterTank("traktor", -1);
+      typeKjøring = 'jobbe';
+      // sår jorde korn eller gras
+    } else if (aktivRedskap === 'såmaskin' && ruter[nr] === "pløyd" && peng > 0 && tankNiva.såmaskin > 0) {
+      if (valgtFrø === 'korn') {
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/kornSådd.gif)';
+        ruter[nr] = "kornSådd";
+        vekseTidRuter[nr] = vekseTid.kornStart; // aktiver nedtellingstid
+      } else if (valgtFrø === 'gras') {
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/grasSådd.gif)';
+        ruter[nr] = "grasSådd";
+        vekseTidRuter[nr] = vekseTid.grasStart; // aktiver nedtellingstid
+      }
+      oppdaterTank("traktor", -1);// kornSådd kornVeks kornModent konrSprøyta KontKlart
+      oppdaterTank("såmaskin", -1);
+      typeKjøring = 'jobbe';
+      // sprøyte jorde korn
+    } else if (aktivRedskap === "sprøyte" && ruter[nr] === "kornModent" && peng > 0 && tankNiva.sprøyte > 0) {
+      if (retningGrov === 'horisontal') {
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/kornSprøytaHorisontal.gif)';
+      } else {
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/kornSprøytaVertikal.gif)';
+      }
+      ruter[nr] = "kornSprøyta";
+      oppdaterTank("traktor", -1);
+      oppdaterTank("sprøyte", -1);
+      typeKjøring = 'jobbe';
+      // haustar jorde korn
+    } else if (aktivDoning === "skurtreskar" && ruter[nr] === "kornKlart" && tankNiva.korn < tankFull.korn) {
+      document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/kornHausta.gif)';
+      ruter[nr] = "kornHausta";
+      oppdaterTank("korn", 1);
+      oppdaterTank("skurtreskar", -1);
+      typeKjøring = 'jobbe';
+
+      // slå gras
+    } else if (aktivRedskap === 'slåmaskin' && ruter[nr] === 'grasKlart') {
+      if (retningGrov == 'vertikal') {//retning er vertikal
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/grasSlåttVertikal.gif)';
+        ruter[nr] = "grasSlåttVertikal";
+      } else if (retningGrov = 'horisontal') {
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/grasSlåttHorisontal.gif)';
+        ruter[nr] = "grasSlåttHorisontal";
+      }
+      oppdaterTank("traktor", -1);
+      typeKjøring = 'jobbe';
+
+      // balla gras
+    } else if (aktivRedskap === 'ballemaskin' && ((ruter[nr] === 'grasSlåttVertikal' && retningGrov == 'vertikal') || (ruter[nr] === 'grasSlåttHorisontal' && retningGrov == 'horisontal'))) {
+      if (tankNiva.ballemaskin < tankFull.ballemaskin) {//fyller opp med gras
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/grasHausta.gif)';
+        ruter[nr] = 'grasHausta';
+        vekseTidRuter[nr] = vekseTid.grasStart; // aktiver nedtellingstid
+        tankNiva.ballemaskin += 1;
+      } else if (tankNiva.ballemaskin === tankFull.ballemaskin) {//ballemaskin er full og legg igjen ein grasball
+        document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/grasball.gif)';
+        ruter[nr] = 'grasball';
+        tankNiva.ballemaskin = 0;
+      }
+      oppdaterTank('traktor', -1);
+      typeKjøring = 'jobbe';
+    }
+  }
+  function sjekkJordeRuter2(nr) {
+    //hente ballar
+    if (aktivRedskap === 'balleklype' && ruter[nr] === 'grasball' && tankNiva.balleklype < tankFull.balleklype) {
+      document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/grasHausta.gif)';
+      ruter[nr] = 'grasHausta';
+      vekseTidRuter[nr] = vekseTid.grasStart; // aktiver nedtellingstid
+      tankNiva.balleklype += 1;
+      oppdaterBilder('balleklype');
+      redskap.style.backgroundImage = bildeJobbe.balleklype;
+      oppdaterTank('traktor', -1);
+      typeKjøring = 'jobbe';
+    }
+  }
+
+
+
+
+
+  // -----------------------------------------------------------------endring av redkap
+  function sjekkRedskapRuter(nr, framEllerBak) {
+    if (bytteForsinkelse === 0) {
+      // inn og ut av traktor
+      if (ruter[nr] === 'traktor') {
+        if (aktivDoning === 'bonde') {
+          //bonde går inn i traktor
+          doning.style.backgroundImage = bildePassiv.traktor;
+          aktivDoning = 'traktor';
+          fart.valgt = 'traktor';
+          fart.aktiv = fart[fart.valgt];
+          oppdaterTank('traktor', 0, 'vis')
+          bytteForsinkelse = bytteTid;
+          document.getElementsByClassName('traktor')[0].classList.add('tingIBruk');
+          retning = 0;
+          doningOgRedskap.style.transform = "rotate(" + retning + "deg)";
+        } else if (aktivDoning === "traktor" && aktivRedskap === 'ingen') {
+          //bonde går ut av traktor
+          doning.style.backgroundImage = bildePassiv.bonde;
+          aktivDoning = 'bonde';
+          aktivRedskap = 'ingen';
+          fart.valgt = 'bonde';
+          fart.aktiv = fart[fart.valgt];
+          oppdaterTank('traktor', 0, 'fjern')
+          bytteForsinkelse = bytteTid;
+          document.getElementsByClassName('traktor')[0].classList.remove('tingIBruk');
+        }
+      }
+      // er på skurtreskar Parkering
+      if (ruter[nr] === "skurtreskar") {
+        if (aktivDoning === "bonde") {
+          //bonde går inn i skurkreskar
+          doning.style.backgroundImage = bildePassiv.skurtreskar;
+          redskap.style.display = 'none';
+          document.getElementById('doning').style.width = "9vmin";
+          aktivDoning = "skurtreskar";
+          fart.valgt = 'skurtreskar';
+          fart.aktiv = fart[fart.valgt];
+          oppdaterTank('skurtreskar', 0, 'vis')
+          oppdaterTank('korn', 0, 'vis')
+          bytteForsinkelse = bytteTid;
+          document.getElementsByClassName('skurtreskar')[0].classList.add('tingIBruk');
+          retning = 0;
+          doningOgRedskap.style.transform = "rotate(" + retning + "deg)";
+        } else if (aktivDoning === "skurtreskar") {
+          //bonde går ut av skurtreskar
+          document.getElementById('doning').style.width = '6vmin';
+          doning.style.backgroundImage = bildePassiv.bonde;
+          redskap.style.display = 'flex';
+          aktivDoning = "bonde";
+          fart.valgt = 'bonde';
+          fart.aktiv = fart[fart.valgt];
+          oppdaterTank('skurtreskar', 0, 'fjern')
+          oppdaterTank('korn', 0, 'fjern')
+          bytteForsinkelse = bytteTid;
+          document.getElementsByClassName('skurtreskar')[0].classList.remove('tingIBruk');
+        }
+      }
+      // inn og ut av gravemaskin
+      if (ruter[nr] === 'gravemaskin') {
+        if (aktivDoning === 'bonde') {
+          //bonde går inn i gravemaskin
+          doning.style.backgroundImage = bildePassiv.gravemaskin;
+          aktivDoning = 'gravemaskin';
+          fart.valgt = 'gravemaskin';
+          fart.aktiv = fart[fart.valgt];
+          oppdaterTank('gravemaskin', 0, 'vis')
+          bytteForsinkelse = bytteTid;
+          document.getElementsByClassName('gravemaskin')[0].classList.add('tingIBruk');
+          retning = 0;
+          doningOgRedskap.style.transform = "rotate(" + retning + "deg)";
+        } else if (aktivDoning === "gravemaskin" && aktivRedskap === 'ingen') {
+          //bonde går ut av traktor
+          doning.style.backgroundImage = bildePassiv.bonde;
+          aktivDoning = 'bonde';
+          aktivRedskap = 'ingen';
+          fart.valgt = 'bonde';
+          fart.aktiv = fart[fart.valgt];
+          oppdaterTank('gravemaskin', 0, 'fjern')
+          bytteForsinkelse = bytteTid;
+          document.getElementsByClassName('gravemaskin')[0].classList.remove('tingIBruk');
+        }
+      }
+      if (framEllerBak === 'bak' && ((retning > 330 && retning < 361) || (retning >= 0 && retning < 30))) {//rygge mot venste
+        // er på plog Parkering
+        if (ruter[nr] === 'plog') {
+          if (aktivDoning === "traktor" && aktivRedskap === 'ingen') {
+            //traktor tar på plog
+            redskap.style.backgroundImage = bildePassiv.plog;
+            aktivRedskap = 'plog';
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('plog')[0].classList.add('tingIBruk');
+          } else if (aktivRedskap === 'plog') {
+            //traktor tar av plog
+            redskap.style.backgroundImage = 'url("")';
+            aktivRedskap = 'ingen';
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('plog')[0].classList.remove('tingIBruk');
+          }
+        }
+        // er på såmaskin Parkering
+        if (ruter[nr] === "såmaskin") {
+          if (aktivDoning === "traktor" && aktivRedskap === 'ingen') {
+            //traktor tar på såmaskin
+            redskap.style.backgroundImage = bildePassiv.såmaskin;
+            aktivRedskap = "såmaskin";
+            oppdaterTank('såmaskin', 0, 'vis')
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('såmaskin')[0].classList.add('tingIBruk');
+          } else if (aktivRedskap === "såmaskin") {
+            //traktor tar av såmaskin
+            redskap.style.backgroundImage = 'url("")';
+            aktivRedskap = 'ingen';
+            aktivRedskap = 'ingen';
+            oppdaterTank('såmaskin', 0, 'fjern')
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('såmaskin')[0].classList.remove('tingIBruk');
+          }
+        }
+        // er på sprøyte Parkering
+        if (ruter[nr] === 'sprøyte') {
+          if (aktivDoning === 'traktor' && aktivRedskap === 'ingen') {
+            //traktor tar på sprøyte
+            redskap.style.backgroundImage = bildePassiv.sprøyte;
+            aktivRedskap = 'sprøyte';
+            oppdaterTank('sprøyte', 0, 'vis')
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('sprøyte')[0].classList.add('tingIBruk');
+          } else if (aktivRedskap === "sprøyte") {
+            //traktor tar av sprøyte
+            redskap.style.backgroundImage = 'url("")';
+            aktivRedskap = 'ingen';
+            oppdaterTank('sprøyte', 0, 'fjern')
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('sprøyte')[0].classList.remove('tingIBruk');
+          }
+        }
+
+        // er på slåmaskin Parkering
+        if (ruter[nr] === 'slåmaskin') {
+          if (aktivDoning === 'traktor' && aktivRedskap === 'ingen') {
+            //traktor tar på slåmaskin
+            redskap.style.backgroundImage = bildePassiv.slåmaskin;
+            aktivRedskap = 'slåmaskin';
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('slåmaskin')[0].classList.add('tingIBruk');
+          } else if (aktivRedskap === "slåmaskin") {
+            //traktor tar av slåmaskin
+            redskap.style.backgroundImage = 'url("")';
+            aktivRedskap = 'ingen';
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('slåmaskin')[0].classList.remove('tingIBruk');
+          }
+        }
+
+        // er på ballemaskin
+        if (ruter[nr] === 'ballemaskin') {
+          if (aktivDoning === 'traktor' && aktivRedskap === 'ingen') {
+            //traktor tar på ballemaskin
+            redskap.style.backgroundImage = bildePassiv.ballemaskin;
+            aktivRedskap = 'ballemaskin';
+            oppdaterTank('ballemaskin', 0, 'vis')
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('ballemaskin')[0].classList.add('tingIBruk');
+          } else if (aktivRedskap === 'ballemaskin') {
+            //traktor tar av sprøyte
+            redskap.style.backgroundImage = 'url("")';
+            aktivRedskap = 'ingen';
+            oppdaterTank('ballemaskin', 0, 'fjern')
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('ballemaskin')[0].classList.remove('tingIBruk');
+          }
+        }
+
+        // er på balleklype Parkering
+        if (ruter[nr] === 'balleklype') {
+          if (aktivDoning === 'traktor' && aktivRedskap === 'ingen') {
+            //traktor tar på balleklype
+            redskap.style.backgroundImage = bildePassiv.balleklype;
+            aktivRedskap = 'balleklype';
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('balleklype')[0].classList.add('tingIBruk');
+          } else if (aktivRedskap === "balleklype") {
+            //traktor tar av balleklype
+            redskap.style.backgroundImage = 'url("")';
+            aktivRedskap = 'ingen';
+            bytteForsinkelse = bytteTid;
+            document.getElementsByClassName('balleklype')[0].classList.remove('tingIBruk');
+          }
+        }
+
+      }//slutt bakover mot venstre
+    }//slutt bytteForsinkelse
+  }//slutt sjekk redskapRuter
+
+
+
+
+
+
+  function sjekkTankRuter1(nr) {
+    // fylle diesel
+    if (ruter[nr] === 'bensinstasjon' && (aktivDoning === 'traktor' || aktivDoning === 'skurtreskar' || aktivDoning === 'gravemaskin')) {
+      aktivFylling[aktivDoning] = true;
+    } else {
+      aktivFylling[aktivDoning] = false;
+    }
+    if ((ruter[nr] === 'siloGras' || ruter[nr] === 'siloKorn') && aktivRedskap === 'såmaskin') {
+      aktivFylling['såmaskin'] = true;
+
+      if (ruter[nr] === 'siloGras') {
+        valgtFrø = 'gras';
+      } else if (ruter[nr] === 'siloKorn') {
+        valgtFrø = 'korn';
+      }
+    } else {
+      aktivFylling['såmaskin'] = false;
+    }
+
+    if (ruter[nr] === "siloSprøyte" && aktivRedskap === 'sprøyte') {
+      aktivFylling['sprøyte'] = true;
+    } else {
+      aktivFylling['sprøyte'] = false;
+    }
+    if (ruter[nr] === "siloSkurtreskar" && aktivDoning === 'skurtreskar') {
+      aktivFylling['korn'] = true;
+      typeKjøring = 'skurtreskarTømming';
+    } else if (ruter[nr] != "siloSkurtreskar" && aktivDoning === 'skurtreskar') {
+      aktivFylling['korn'] = false;
+    }
+    if ((ruter[nr] === "eng") && aktivDoning === 'gravemaskin') {
+      typeKjøring = 'gravemaskinGrave';
+      document.getElementById("R" + nr).style.backgroundImage = document.getElementById("R" + nr).style.backgroundImage + 'url(dyrke0.gif)';
+      ruter[nr] = 'dyrke';
+      document.getElementById("R" + nr).className = 'dyrke';
+      document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke0.gif)';
+      vekseTidRuter[nr] = vekseTid.dyrkeStart; // aktiver nedtellingstid
+    }
+  }
+  function sjekkTankRuter2(nr) {
+    if (ruter[nr] === "kyr" && aktivRedskap === 'balleklype') {
+      tankNiva.kyr += pris.grasball * tankNiva.balleklype; // Aukar formengden til kyr som forlenger tida dei selg melk
+      tankNiva.balleklype = 0;
+      oppdaterBilder('balleklype');
+    }
+  }
+
+
+
+
+
+  //------------------------------------------------------------------------------------PENG oG TANKAR
+
+  function oppdaterPeng(endring) {
+    peng += endring;
+    document.getElementById("peng").innerHTML = Math.floor(peng);
+  }
+
+  function oppdaterTank(aktivTank, endring, visFjernStolpe) {
+    if (endring < 0) {//tømming av tank
+      if (tankNiva[aktivTank] > 0) {
+        if ((endring + tankNiva[aktivTank]) < 0) {//Set tank til 0 ved for stor endring
+          if (aktivTank === 'korn') {
+            oppdaterPeng(tankNiva.korn * pris.korn * -1)
+            typeKjøring = 'kjøre';
+            kjørestil()
+          }
+          tankNiva[aktivTank] = 0;
+        } else {
+          tankNiva[aktivTank] += endring;//utføre endring
+          if (aktivTank === 'korn') {
+            oppdaterPeng(endring * pris.korn * -1)
+          }
+        }
+      }
+    } else {//fylling av tank
+      if ((tankNiva[aktivTank] + endring) > tankFull[aktivTank]) {//er ikkje plass til heile endring i tank
+        if (aktivTank === 'korn') {
+          tankNiva.korn = fullTank.korn;// fyller opp tank
+        } else if (peng >= (tankFull[aktivTank] - tankNiva[aktivTank])) {//sjekker at ein har peng
+          tankNiva[aktivTank] = tankFull[aktivTank];//fyller tank full
+          oppdaterPeng(tankFull[aktivTank] - tankNiva[aktivTank])//tekk peng for det ein har fyllt
+        }
+      } else {//er plass til heile endring i tank
+        if (aktivTank != 'korn') {
+          if (peng > (pris[aktivTank] * endring)) {//sjekk om det er nok peng
+            tankNiva[aktivTank] += endring;//fyller tank med endring
+            oppdaterPeng(endring * pris[aktivTank] * -1)//trekk peng for endring
+          }
+        } else {
+          tankNiva.korn += endring;
+        }
+      }
+    }
+
+
+    if (aktivTank === 'traktor' || aktivTank === 'skurtreskar' || aktivTank === 'gravemaskin') {
+      document.getElementById('dieselMålarStrek').style.width = (tankNiva[aktivTank] / tankFull[aktivTank] * 9) + 'vmin';// juster dieselmålar
+      if (visFjernStolpe === 'vis') {
+        document.getElementById('dieselMålar').style.display = 'flex';//vis dieselmålar
+        document.getElementById('dieselMålarTekst').innerHTML = 'DIESEL';//endre tekst på diesel målar
+      } else if (visFjernStolpe === 'fjern') {
+        document.getElementById('dieselMålar').style.display = 'none';//fjern dieselmålar
+        document.getElementById('dieselMålarTekst').innerHTML = ' ';//fjerntekst på lastmålar
+      }
+      if (tankNiva[aktivTank] === 0) {
+        fart.valgt = 'tomForDiesel';
+      }
+      if (tankNiva[aktivTank] > 0 && fart.valgt === 'tomForDiesel') {
+        fart.valgt = aktivDoning;
+        fart.aktiv = fart[fart.valgt];
+      }
+
+    } else if (aktivTank === 'sprøyte' || aktivTank === 'såmaskin' || aktivTank === 'korn') {
+      document.getElementById('lastMålarStrek').style.width = (tankNiva[aktivTank] / tankFull[aktivTank] * 9) + 'vmin';//juster last målar
+      if (visFjernStolpe === 'vis') {
+        document.getElementById('lastMålar').style.display = 'flex';//vis last målar
+        document.getElementById('lastMålarTekst').innerHTML = aktivTank.toUpperCase() + ' ';//endre tekst på last målar
+      } else if (visFjernStolpe === 'fjern') {
+        document.getElementById('lastMålar').style.display = 'none';//fjern last målar
+        document.getElementById('lastMålarTekst').innerHTML = ' ';//fjerntekst på lastmålar
+      }
+    }
+
+  }
+  //------------------------------------------------------------------------------------------- KJØRESTIL
+
+  function kjørestil() {
+    if (typeKjøring === 'jobbe') {
+      if (flytting.venstre) {
+        doning.style.backgroundImage = bildeJobbe[aktivDoning + 'Venstre'];
+      } else if (flytting.hogre) {
+        doning.style.backgroundImage = bildeJobbe[aktivDoning + 'Høgre'];
+      } else {
+        doning.style.backgroundImage = bildeJobbe[aktivDoning + 'Beint'];
+      }
+      redskap.style.backgroundImage = bildeJobbe[aktivRedskap];
+
+    } else if (typeKjøring === 'parkert') {
+      if (flytting.venstre) {
+        doning.style.backgroundImage = bildePassiv[aktivDoning + 'Venstre'];
+      } else if (flytting.hogre) {
+        doning.style.backgroundImage = bildePassiv[aktivDoning + 'Høgre'];
+      } else {
+        doning.style.backgroundImage = bildePassiv[aktivDoning + 'Beint'];
+      }
+      redskap.style.backgroundImage = bildePassiv[aktivRedskap];
+
+    } else if (typeKjøring === 'kjøre' || typeKjøring === 'vei') {
+      if (flytting.venstre) {
+        doning.style.backgroundImage = bildeKjøre[aktivDoning + 'Venstre'];
+      } else if (flytting.hogre) {
+        doning.style.backgroundImage = bildeKjøre[aktivDoning + 'Høgre'];
+      } else {
+        doning.style.backgroundImage = bildeKjøre[aktivDoning + 'Beint'];
+      }
+      redskap.style.backgroundImage = bildeKjøre[aktivRedskap];
+
+    } else if (typeKjøring === 'skurtreskarTømming') {
+      doning.style.backgroundImage = bildePassiv['skurtreskarTømmes'];
+    } else if (typeKjøring === 'gravemaskinGrave') {
+      doning.style.backgroundImage = bildeJobbe['gravemaskinBeint'];
+    }
+
+    if (fart.valgt === 'tomForDiesel') {
+      fart.aktiv = fart.tomForDiesel;
+    } else if (typeKjøring === 'jobbe') {
+      fart.aktiv = fart[fart.valgt] + fart.jobbe + fart[aktivRedskap];
+    } else if (typeKjøring === 'vei') {
+      fart.aktiv = fart[fart.valgt] + fart.vei;
+    } else {
+      fart.aktiv = fart[fart.valgt];
+    }
+  }
+  //------------------------------------------------------------------------------------------- BUTIKK
+  function sjekkButikkRute(nr) {
+    if (ruter[nr] === 'butikk') { visButikk() }
+  }
+  function visButikk() {
+    document.getElementById('butikk').style.display = 'block';
+  }
+
+  document.getElementsByClassName('butikk')[0].addEventListener("click", visButikk, false);
+
+
+
+  function kjøpe(ting) {
+    if (ting === 'bonde') {
+      if (kjøpteTing.bonde < 2) {
+        if (peng >= pris.kjøpBonde) {
+          oppdaterPeng(pris.kjøpBonde * -1)
+          fart.bonde += 2;
+          fart.aktiv = fart[fart.valgt];
+          kjøpteTing.bonde++;
+          oppdaterBilder('bonde')
+          steng("butikk")
+
+        }
+      }
+    } else if (ting === 'traktor') {
+      if (kjøpteTing.traktor < 4) {
+        if (peng >= pris.kjøpTraktor) {
+          oppdaterPeng(pris.kjøpTraktor * -1)
+          fart.traktor += 1;
+          fart.aktiv = fart[fart.valgt];
+          kjøpteTing.traktor++;
+          oppdaterBilder('traktor')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'skurtreskar') {
+      if (kjøpteTing.skurtreskar < 2) {
+        if (peng >= pris.kjøpSkurtreskar) {
+          oppdaterPeng(pris.kjøpSkurtreskar * -1)
+          fart.skurtreskar += 1;
+          fart.aktiv = fart[fart.valgt];
+          kjøpteTing.skurtreskar++;
+          tankFull.skurtreskar += 3;
+          oppdaterBilder('skurtreskar')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'plog') {
+      if (kjøpteTing.plog < 3) {
+        if (peng >= pris.kjøpPlog) {
+          oppdaterPeng(pris.kjøpPlog * -1)
+          fart.plog += 1;
+          fart.aktiv = fart[fart.valgt];
+          kjøpteTing.plog++;
+          oppdaterBilder('plog')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'såmaskin') {
+      if (kjøpteTing.såmaskin < 3) {
+        if (peng >= pris.kjøpSåmaskin) {
+          oppdaterPeng(pris.kjøpSåmaskin * -1)
+          kjøpteTing.såmaskin++;
+          tankFull.såmaskin += 3;
+          fart.såmaskin += 1;
+          oppdaterBilder('såmaskin')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'sprøyte') {
+      if (kjøpteTing.sprøyte < 3) {
+        if (peng >= pris.kjøpSprøyte) {
+          oppdaterPeng(pris.kjøpSprøyte * -1)
+          kjøpteTing.sprøyte++;
+          tankFull.sprøyte += 3;
+          fart.sprøyte += 1;
+          oppdaterBilder('sprøyte')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'slåmaskin') {
+      if (kjøpteTing.slåmaskin < 2) {
+        if (peng >= pris.kjøpSlåmaskin) {
+          oppdaterPeng(pris.kjøpSlåmaskin * -1)
+          fart.slåmaskin += 1;
+          fart.aktiv = fart[fart.valgt];
+          kjøpteTing.slåmaskin++;
+          oppdaterBilder('slåmaskin')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'ballemaskin') {
+      if (kjøpteTing.ballemaskin < 2) {
+        if (peng >= pris.kjøpBallemaskin) {
+          oppdaterPeng(pris.kjøpBallemaskin * -1)
+          fart.ballemaskin += 1;
+          fart.aktiv = fart[fart.valgt];
+          kjøpteTing.ballemaskin++;
+          oppdaterBilder('ballemaskin')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'balleklype') {
+      if (kjøpteTing.balleklype < 2) {
+        if (peng >= pris.kjøpBalleklype) {
+          oppdaterPeng(pris.kjøpBalleklype * -1)
+          fart.balleklype += 1;
+          tankFull.balleklype += 1;
+          fart.aktiv = fart[fart.valgt];
+          kjøpteTing.balleklype++;
+          oppdaterBilder('balleklype')
+          steng("butikk")
+        }
+      }
+    } else if (ting === 'kyr') {
+      if (kjøpteTing.kyr < 4) {
+        if (peng >= pris.kjøpeKyr) {
+          oppdaterPeng(pris.kjøpeKyr * -1)
+          kjøpteTing.kyr++;
+          oppdaterBilder('kyr')
+          steng("butikk")
+        }
+      }
+    }
+  }
+
+  function oppdaterBilder(ting) {//...........................................................................jobbe her
+    if (ting === 'bonde' || ting === 'alt') {
+      bildePassiv.bondeBeint = 'url(bilde/bondePassiv' + kjøpteTing.bonde + '.gif)';
+      bildeKjøre.bondeBeint = 'url(bilde/bondeAktiv' + kjøpteTing.bonde + '.gif)';
+      bildeJobbe.bondeBeint = 'url(bilde/bondeAktiv' + kjøpteTing.bonde + '.gif)';
+
+      bildePassiv.bondeVenstre = 'url(bilde/bondePassivVenstre' + kjøpteTing.bonde + '.gif)';
+      bildeKjøre.bondeVenstre = 'url(bilde/bondeAktivVenstre' + kjøpteTing.bonde + '.gif)';
+      bildeJobbe.bondeVenstre = 'url(bilde/bondeAktivVenstre' + kjøpteTing.bonde + '.gif)';
+
+      bildePassiv.bondeHøgre = 'url(bilde/bondePassivHøgre' + kjøpteTing.bonde + '.gif)';
+      bildeKjøre.bondeHøgre = 'url(bilde/bondeAktivHøgre' + kjøpteTing.bonde + '.gif)';
+      bildeJobbe.bondeHøgre = 'url(bilde/bondeAktivHøgre' + kjøpteTing.bonde + '.gif)';
+    }
+    if (ting === 'traktor' || ting === 'alt') {
+      bildePassiv.traktorBeint = 'url(bilde/traktorPassiv' + kjøpteTing.traktor + '.gif)';
+      bildeKjøre.traktorBeint = 'url(bilde/traktorAktiv' + kjøpteTing.traktor + '.gif)';
+      bildeJobbe.traktorBeint = 'url(bilde/traktorAktiv' + kjøpteTing.traktor + '.gif)';
+
+      bildePassiv.traktorVenstre = 'url(bilde/traktorPassivVenstre' + kjøpteTing.traktor + '.gif)';
+      bildeKjøre.traktorVenstre = 'url(bilde/traktorAktivVenstre' + kjøpteTing.traktor + '.gif)';
+      bildeJobbe.traktorVenstre = 'url(bilde/traktorAktivVenstre' + kjøpteTing.traktor + '.gif)';
+
+      bildePassiv.traktorHøgre = 'url(bilde/traktorPassivHøgre' + kjøpteTing.traktor + '.gif)';
+      bildeKjøre.traktorHøgre = 'url(bilde/traktorAktivHøgre' + kjøpteTing.traktor + '.gif)';
+      bildeJobbe.traktorHøgre = 'url(bilde/traktorAktivHøgre' + kjøpteTing.traktor + '.gif)';
+
+      document.getElementsByClassName('traktor')[0].style.backgroundImage = 'url(bilde/traktorPassiv' + kjøpteTing.traktor + '.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på traktor parkeing
+    }
+    if (ting === 'plog' || ting === 'alt') {
+      bildePassiv.plog = 'url(bilde/plogPassiv' + kjøpteTing.plog + '.gif)';
+      bildeKjøre.plog = 'url(bilde/plogPassiv' + kjøpteTing.plog + '.gif)';
+      bildeJobbe.plog = 'url(bilde/plogAktiv' + kjøpteTing.plog + '.gif)';
+
+      document.getElementsByClassName('plog')[0].style.backgroundImage = 'url(bilde/plogPassiv' + kjøpteTing.plog + '.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på plog parkeing
+    }
+    if (ting === 'såmaskin' || ting === 'alt') {
+      bildePassiv.såmaskin = 'url(bilde/såmaskinPassiv' + kjøpteTing.såmaskin + '.gif)';
+      bildeKjøre.såmaskin = 'url(bilde/såmaskinPassiv' + kjøpteTing.såmaskin + '.gif)';
+      bildeJobbe.såmaskin = 'url(bilde/såmaskinAktiv' + kjøpteTing.såmaskin + '.gif)';
+
+      document.getElementsByClassName('såmaskin')[0].style.backgroundImage = 'url(bilde/såmaskinPassiv' + kjøpteTing.såmaskin + '.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på såmaskin parkeing
+    }
+    if (ting === 'sprøyte' || ting === 'alt') {
+      bildePassiv.sprøyte = 'url(bilde/sprøytePassiv' + kjøpteTing.sprøyte + '.gif)';
+      bildeKjøre.sprøyte = 'url(bilde/sprøytePassiv' + kjøpteTing.sprøyte + '.gif)';
+      bildeJobbe.sprøyte = 'url(bilde/sprøyteAktiv' + kjøpteTing.sprøyte + '.gif)';
+
+      document.getElementsByClassName('sprøyte')[0].style.backgroundImage = 'url(bilde/sprøytePassiv' + kjøpteTing.sprøyte + '.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på sprøyte parkeing
+    }
+    if (ting === 'skurtreskar' || ting === 'alt') {
+      bildePassiv.skurtreskarBeint = 'url(bilde/skurtreskarPassiv' + kjøpteTing.skurtreskar + '.gif)';
+      bildeKjøre.skurtreskarBeint = 'url(bilde/skurtreskarKjøre' + kjøpteTing.skurtreskar + '.gif)';
+      bildeJobbe.skurtreskarBeint = 'url(bilde/skurtreskarAktiv' + kjøpteTing.skurtreskar + '.gif)';
+
+      bildePassiv.skurtreskarVenstre = 'url(bilde/skurtreskarPassivVenstre' + kjøpteTing.skurtreskar + '.gif)';
+      bildeKjøre.skurtreskarVenstre = 'url(bilde/skurtreskarKjøreVenstre' + kjøpteTing.skurtreskar + '.gif)';
+      bildeJobbe.skurtreskarVenstre = 'url(bilde/skurtreskarAktivVenstre' + kjøpteTing.skurtreskar + '.gif)';
+
+      bildePassiv.skurtreskarHøgre = 'url(bilde/skurtreskarPassivHøgre' + kjøpteTing.skurtreskar + '.gif)';
+      bildeKjøre.skurtreskarHøgre = 'url(bilde/skurtreskarKjøreHøgre' + kjøpteTing.skurtreskar + '.gif)';
+      bildeJobbe.skurtreskarHøgre = 'url(bilde/skurtreskarAktivHøgre' + kjøpteTing.skurtreskar + '.gif)';
+
+      bildePassiv.skurtreskarTømmes = 'url(bilde/skurtreskarTømmes' + kjøpteTing.skurtreskar + '.gif)';
+
+      document.getElementsByClassName('skurtreskar')[0].style.backgroundImage = 'url(bilde/skurtreskarPassiv' + kjøpteTing.skurtreskar + '.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på skurtreskar parkeing
+    }
+    if (ting === 'slåmaskin' || ting === 'alt') {
+      bildePassiv.slåmaskin = 'url(bilde/slåmaskinPassiv' + kjøpteTing.slåmaskin + '.gif)';
+      bildeKjøre.slåmaskin = 'url(bilde/slåmaskinPassiv' + kjøpteTing.slåmaskin + '.gif)';
+      bildeJobbe.slåmaskin = 'url(bilde/slåmaskinAktiv' + kjøpteTing.slåmaskin + '.gif)';
+
+      document.getElementsByClassName('slåmaskin')[0].style.backgroundImage = 'url(bilde/slåmaskinPassiv' + kjøpteTing.slåmaskin + '.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på slåmaskin parkeing
+    }
+    if (ting === 'ballemaskin' || ting === 'alt') {
+      bildePassiv.ballemaskin = 'url(bilde/ballemaskinPassiv' + kjøpteTing.ballemaskin + '.gif)';
+      bildeKjøre.ballemaskin = 'url(bilde/ballemaskinKjøre' + kjøpteTing.ballemaskin + '.gif)';
+      bildeJobbe.ballemaskin = 'url(bilde/ballemaskinAktiv' + kjøpteTing.ballemaskin + '.gif)';
+
+      document.getElementsByClassName('ballemaskin')[0].style.backgroundImage = 'url(bilde/ballemaskinPassiv' + kjøpteTing.ballemaskin + '.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på ballemaskin parkeing
+    }
+    if (ting === 'balleklype' || ting === 'alt') {
+      bildePassiv.balleklype = 'url(bilde/balleklype' + kjøpteTing.balleklype + 'Ballar' + tankNiva.balleklype + '.gif)';
+      bildeKjøre.balleklype = 'url(bilde/balleklype' + kjøpteTing.balleklype + 'Ballar' + tankNiva.balleklype + '.gif)';
+      bildeJobbe.balleklype = 'url(bilde/balleklype' + kjøpteTing.balleklype + 'Ballar' + tankNiva.balleklype + '.gif)';
+
+      document.getElementsByClassName('balleklype')[0].style.backgroundImage = 'url(bilde/balleklype' + kjøpteTing.balleklype + 'Ballar0.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på balleklype parkeing
+    }
+    if (ting === 'kyr' || ting === 'alt') {
+
+      document.getElementsByClassName('kyr')[0].style.backgroundImage = 'url(bilde/kyr' + kjøpteTing.kyr + 'Passiv.gif)'; //oppdaterer bilde på kyr parkeing
+    }
+    if (ting === 'gravemaskin' || ting === 'alt') {
+
+      document.getElementsByClassName('gravemaskin')[0].style.backgroundImage = 'url(bilde/gravemaskinPassiv.gif), url(bilde/grusParkeing.gif)'; //oppdaterer bilde på kyr parkeing
+    }
+    kjørestil()
+  }
+
+  function steng(ting) {
+    document.getElementById(ting).style.display = 'none';
+  }
+
+  function fram() {
+    if (typeKjøring === 'parkert') { typeKjøring = 'kjøre'; }
+    posisjonDoning('fram')
+    kjørestil()
+
+    bytteForsinkelse = bytteForsinkelse > 0 ? bytteForsinkelse - 0.1 : 0; // reduserer forsinkelsen med 1 visst den ikkje er null.
+    if (retning < 180) {
+      posisjon.x -= (retning / 90 - 1) * fart.aktiv * fart.faktor;
+    } else {
+      posisjon.x -= (retning / -90 + 3) * fart.aktiv * fart.faktor;
+    }
+    if (posisjon.x < kartKant.left) {
+      //sjekker om du kjører utfor banen til venstre eller høgre
+      posisjon.x = kartKant.left + 1; // legg til 1 px så du ikkje blir ståande fast
+    } else if (posisjon.x > kartKant.right) {
+      posisjon.x = kartKant.right - 1;
+    } else {
+      doningOgRedskap.style.left = Math.floor(posisjon.x) + ".px";
+    }
+    if (retning < 90) {
+      posisjon.y -= (retning / -90) * fart.aktiv * fart.faktor;
+    } else if ((retning > 89) & (retning < 270)) {
+      posisjon.y -= (retning / 90 - 2) * fart.aktiv * fart.faktor;
+    } else if (retning > 269) {
+      posisjon.y -= (retning / -90 + 4) * fart.aktiv * fart.faktor;
+    }
+    if (posisjon.y < kartKant.top) {
+      //sjekker om du kjører utfor banen i topp eller bunn
+      posisjon.y = kartKant.top + 1; // legg til 1 px så du ikkje blir ståande fast
+    } else if (posisjon.y > kartKant.bottom) {
+      posisjon.y = kartKant.bottom - 1;
+    } else {
+      doningOgRedskap.style.top = Math.floor(posisjon.y) + ".px";
+    }
+  }
+
+  function bak() {
+    if (typeKjøring === 'parkert') { typeKjøring = 'kjøre'; }
+    posisjonDoning('bak')
+    kjørestil()
+    if (retning < 180) {
+      posisjon.x += (retning / 90 - 1) * fart.aktiv * fart.faktor;
+    } else {
+      posisjon.x += (retning / -90 + 3) * fart.aktiv * fart.faktor;
+    }
+    if (posisjon.x < kartKant.left) {
+      //sjekker om du kjører utfor banen til venstre eller høgre
+      posisjon.x = kartKant.left + 1; // legg til 1 px så du ikkje blir ståande fast
+    } else if (posisjon.x > kartKant.right) {
+      posisjon.x = kartKant.right - 1;
+    } else {
+      doningOgRedskap.style.left = Math.floor(posisjon.x) + ".px";
+    }
+    if (retning < 90) {
+      posisjon.y += (retning / -90) * fart.aktiv * fart.faktor;
+    } else if ((retning > 89) & (retning < 270)) {
+      posisjon.y += (retning / 90 - 2) * fart.aktiv * fart.faktor;
+    } else if (retning > 269) {
+      posisjon.y += (retning / -90 + 4) * fart.aktiv * fart.faktor;
+    }
+    if (posisjon.y < kartKant.top) {
+      //sjekker om du kjører utfor banen i topp eller bunn
+      posisjon.y = kartKant.top + 1; // legg til 1 px så du ikkje blir ståande fast
+    } else if (posisjon.y > kartKant.bottom) {
+      posisjon.y = kartKant.bottom - 1;
+    } else {
+      doningOgRedskap.style.top = Math.floor(posisjon.y) + ".px";
+    }
+  }
+
+  function venstre() {
+    if (retning < 1) {
+      retning = 359;
+    } else {
+      retning -= 2;
+    }
+    doningOgRedskap.style.transform = "rotate(" + retning + "deg)";
+
+    if (retning < 45 || (retning > 135 && retning < 225) || retning > 315) {//retning er vertikal
+      retningGrov = 'horisontal';
+    } else {
+      retningGrov = 'vertikal';
+    }
+  }
+
+  function hogre() {
+    if (retning > 359) {
+      retning = 0;
+    } else {
+      retning += 2;
+    }
+    doningOgRedskap.style.transform = "rotate(" + retning + "deg)";
+
+    if (retning < 45 || (retning > 135 && retning < 225) || retning > 315) {//retning er vertikal
+      retningGrov = 'horisontal';
+    } else {
+      retningGrov = 'vertikal';
+    }
+  }
+  window.addEventListener("resize", oppsett);
+  
+    // 𝘀𝘁𝘆𝗿𝗶𝗻𝗴​⁡
+      document.addEventListener('keydown', function (knapp) {
+        knapp.preventDefault();
+        if (knapp.key === 'ArrowUp' || knapp.key === 'w') {
+          flytting['fram'] = true;
+        } else if (knapp.key === 'ArrowDown' || knapp.key === 's') {
+          flytting['bak'] = true;
+        } else if (knapp.key === 'ArrowLeft' || knapp.key === 'a') {
+          flytting['venstre'] = true;
+        } else if (knapp.key === 'ArrowRight' || knapp.key === 'd') {
+          flytting['hogre'] = true;
+        }
+      });
+      document.addEventListener('keyup', function tastSlepp(knapp) {
+        knapp.preventDefault();
+        if (knapp.key === 'ArrowUp' || knapp.key === 'w') {
+          flytting['fram'] = false;
+        } else if (knapp.key === 'ArrowDown' || knapp.key === 's') {
+          flytting['bak'] = false;
+        } else if (knapp.key === 'ArrowLeft' || knapp.key === 'a') {
+          flytting['venstre'] = false;
+        } else if (knapp.key === 'ArrowRight' || knapp.key === 'd') {
+          flytting['hogre'] = false;
+        }
+      });
+      document.querySelector('#styringFram').addEventListener('mousedown', function skjermTrykkFram(knapp) { knapp.preventDefault(); flytting['fram'] = true; flytting['bak'] = false; }, false);
+      document.querySelector('#styringFram').addEventListener('mouseup', function skjermSleppFram(knapp) { knapp.preventDefault(); flytting['fram'] = false; }, false);
+      document.querySelector('#styringFram').addEventListener('mouseleave', function skjermSleppFram(knapp) { knapp.preventDefault(); flytting['fram'] = false; }, false);
+      document.querySelector('#styringFram').addEventListener('touchstart', function skjermTrykkFram(knapp) { knapp.preventDefault(); flytting['fram'] = true; flytting['bak'] = false; }, false);
+      document.querySelector('#styringFram').addEventListener('touchend', function skjermSleppFram(knapp) { knapp.preventDefault(); flytting['fram'] = false; }, false);
+      document.querySelector('#styringBak').addEventListener('mousedown', function skjermTrykkBak(knapp) { knapp.preventDefault(); flytting['bak'] = true; flytting['fram'] = false; }, false);
+      document.querySelector('#styringBak').addEventListener('mouseup', function skjermSleppBak(knapp) { knapp.preventDefault(); flytting['bak'] = false; }, false);
+      document.querySelector('#styringBak').addEventListener('mouseleave', function skjermSleppBak(knapp) { knapp.preventDefault(); flytting['bak'] = false; }, false);
+      document.querySelector('#styringBak').addEventListener('touchstart', function skjermTrykkBak(knapp) { knapp.preventDefault(); flytting['bak'] = true; flytting['fram'] = false; }, false);
+      document.querySelector('#styringBak').addEventListener('touchend', function skjermSleppBak(knapp) { knapp.preventDefault(); flytting['bak'] = false; }, false);
+      document.querySelector('#styringVenstre').addEventListener('mousedown', function skjermTrykkVenstre(knapp) { knapp.preventDefault(); flytting['venstre'] = true; flytting['hogre'] = false; }, false);
+      document.querySelector('#styringVenstre').addEventListener('mouseup', function skjermSleppVenstre(knapp) { knapp.preventDefault(); flytting['venstre'] = false; }, false);
+      document.querySelector('#styringVenstre').addEventListener('mouseleave', function skjermSleppVenstre(knapp) { knapp.preventDefault(); flytting['venstre'] = false; }, false);
+      document.querySelector('#styringVenstre').addEventListener('touchstart', function skjermTrykkVenstre(knapp) { knapp.preventDefault(); flytting['venstre'] = true; flytting['hogre'] = false; }, false);
+      document.querySelector('#styringVenstre').addEventListener('touchend', function skjermSleppVenstre(knapp) { knapp.preventDefault(); flytting['venstre'] = false; }, false);
+      document.querySelector('#styringHogre').addEventListener('mousedown', function skjermTrykkHogre(knapp) { knapp.preventDefault(); flytting['hogre'] = true; flytting['venstre'] = false; }, false);
+      document.querySelector('#styringHogre').addEventListener('mouseup', function skjermSleppHogre(knapp) { knapp.preventDefault(); flytting['hogre'] = false; }, false);
+      document.querySelector('#styringHogre').addEventListener('mouseleave', function skjermSleppHogre(knapp) { knapp.preventDefault(); flytting['hogre'] = false; }, false);
+      document.querySelector('#styringHogre').addEventListener('touchstart', function skjermTrykkHogre(knapp) { knapp.preventDefault(); flytting['hogre'] = true; flytting['venstre'] = false; }, false);
+      document.querySelector('#styringHogre').addEventListener('touchend', function skjermSleppHogre(knapp) { knapp.preventDefault(); flytting['hogre'] = false; }, false);
+      kontroller()
+
+      //system lokke
+    function kontroller() {//kjoring
+      if (flytting.fram) { fram(); }//fram
+      if (flytting.bak) { bak(); }//Bak
+      if (flytting.fram && flytting.venstre) { venstre(); }//Fram til venstre
+      if (flytting.fram && flytting.hogre) { hogre(); }//Fram til hogre
+      if (flytting.bak && flytting.venstre) { hogre(); }//bak til venstre
+      if (flytting.bak && flytting.hogre) { venstre(); }//bak til hogre
+
+          //endring av kjørestil - bilde
+    if (flytting.venstre || flytting.hogre) { kjørestil() }
+    if (typeKjøring != 'parkert' && typeKjøring != 'skurtreskarTømming' && typeKjøring != 'gravemaskinGrave' && tasteStatus["ArrowUp"] === false && tasteStatus["w"] === false && tasteStatus["ArrowDown"] === false && tasteStatus["s"] === false) {
+      typeKjøring = 'parkert';
+      kjørestil()
+    }
+
+      window.requestAnimationFrame(kontroller);
+    }
+
+
+
+
+
+
+
+
+  function test(type) {
+    if (type === 'veksingUtenSprøyte' || type === 'veksingMedSprøyte') {
+
+      let alleRutene = [22];
+      for (a = 23; a < ruter.length; a++) {
+        if (ruter[a] === 'eng') {
+          alleRutene.push(a);
+        }
+      }
+      console.log(alleRutene);
+
+      //pløyetest
+      let rapport = null;
+      aktivRedskap = 'plog';
+      for (let a = 0; a < alleRutene.length; a++) {
+        testRute = alleRutene[a];
+        sjekkJordeRuter(testRute)
+        if (ruter[testRute] !== 'pløyd') {
+          rapport += ' , ' + testRute;
+        }
+      }
+      if (rapport === null) {
+        console.log('OK Pløye test');
+      } else {
+        console.log('FEIL på pløyetest' + rapport);
+      }
+
+      //såtest
+      rapport = null;
+      aktivRedskap = 'såmaskin';
+      peng = 1000000;
+      tankNiva.såmaskin = 1000;
+      for (let a = 0; a < alleRutene.length; a++) {
+        testRute = alleRutene[a];
+        sjekkJordeRuter(testRute)
+        if (ruter[testRute] !== 'kornSådd') {
+          rapport += ' , ' + testRute;
+        }
+      }
+      if (rapport === null) {
+        console.log('OK Så test');
+      } else {
+        console.log('FEIL på såtest:' + rapport);
+      }
+
+      //veksetest korn 
+      rapport = null;
+      let t = vekseTid.kornStart;
+      for (; t >= 100; t--) {
+        vekseSløyfe()
+      }
+      //test om noko har vokse for tidlig
+      for (let a = 0; a < alleRutene.length; a++) {
+        testRute = alleRutene[a];
+        sjekkJordeRuter(testRute)
+        if (ruter[testRute] === 'kornVeks') {
+          rapport += ' , ' + testRute;
+        }
+      }
+      if (rapport === null) {
+        console.log('OK kornVeks ikkje for tidlig Test');
+      } else {
+        console.log('FEIL på korn Veks for tidlig test:' + rapport);
+      }
+      //test om alt har vokse
+      rapport = null;
+      vekseSløyfe()
+      for (let a = 0; a < alleRutene.length; a++) {
+        testRute = alleRutene[a];
+        sjekkJordeRuter(testRute)
+        if (ruter[testRute] !== 'kornVeks') {
+          rapport += ' , ' + testRute;
+        }
+      }
+
+      if (rapport === null) {
+        console.log('OK kornVeks Test');
+      } else {
+        console.log('FEIL på korn Veks test:' + rapport);
+      }
+
+    }
+    if (type === 'veksingUtenSprøyte') {
+      //veksetest korn 
+      rapport = null;
+      for (; t < vekseTid.kornVeks; t++) {
+        vekseSløyfe()
+      }
+      //test om noko har vokse for tidlig
+      for (let a = 0; a < alleRutene.length; a++) {
+        testRute = alleRutene[a];
+        sjekkJordeRuter(testRute)
+        if (ruter[testRute] !== 'kornSådd') {
+          rapport += ' Rute vaks for tidlig:' + testRute;
+        }
+      }
+
+      //test om alt har vokse
+      vekseSløyfe()
+      for (let a = 0; a < alleRutene.length; a++) {
+        testRute = alleRutene[a];
+        sjekkJordeRuter(testRute)
+        if (ruter[testRute] !== 'kornVeks') {
+          rapport += ' Rute har ikkje vokse:' + testRute;
+        }
+      }
+
+      if (rapport === null) {
+        console.log('OK kornVeks Test');
+      } else {
+        console.log('FEIL på korn Veks test:' + rapport);
+      }
+
+    }
+    if (type === 'veksingMedSprøyte') {
+    }
+
+
+  }
+</script>
