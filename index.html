@@ -35,12 +35,13 @@
       height: 100dvh;
       background-color: black;  
       overflow: hidden;
-
+display: flex;
+justify-content: center;
 
     }
     .ytterRamme{
-      width: 98vw;
-      height: 98dvh;
+      width: 98vmin;
+      height: 98vh;
       box-sizing: border-box;
       border-style: double;
       border-width: 5px;
@@ -52,17 +53,18 @@
       flex-direction: column;
     }
     .innerRamme{
-      width: 90vw;
-      height: 82dvh;
+      width: 90vmin;
+      height: 82vh;
       box-sizing: border-box;
       background-color: var(--hovedfarge);
       border-radius: 20px;
       padding:1vh;
+
       overflow-y: srcoll;
-      overflow-x: hidden;
+      overflow-x: hidden; 
       scroll-snap-type: y mandatory;
   }
-    .boks{
+  .boks{
       width: 100%;
       height: 100%;
       background-color: var(--hovedfarge);
@@ -75,8 +77,8 @@
       justify-content:space-around;
     }
     .bilde{
-      width: 30%;
-      height: 30%;
+      width: 40vmin;
+      height: 40vmin;
       border-radius: 10px;
       border: solid black 5p;
     }
@@ -115,74 +117,58 @@
   <a target='_blank' href='bonden3/'>
     <div class="boks" >
       <h2>Bonden</h2>
-      <div>
-        <img class="bilde" src="indexBilder/bonden.png">
-        <p>Lek bonde, dyrk i vei. Kjør sjølv!</p>
-      </div>
+      <p>Lek bonde, dyrk i vei. Kjør sjølv!</p>
+      <img class="bilde" src="indexBilder/bonden.png">
     </div>
   </a>
   <a target='_blank' href='bonden1/'>
     <div class="boks" >
       <h2>Bonden</h2>
-      <div>
-        <img class="bilde" src="indexBilder/bonden.png">
-        <p>Lek bonde, dyrk i vei. Første versjon.</p>
-      </div>
+      <p>Lek bonde, dyrk i vei. Første versjon.</p>
+      <img class="bilde" src="indexBilder/bonden.png">
     </div>
   </a>
   <a target='_blank' href='happymilliardsekund/'>
     <div class="boks">
       <h2>Happy Milliard Sekund</h2>
-      <div>
-        <img class="bilde" src="indexBilder/hms.png">
-        <p>Kva tid blir du 1000000000 sekund ?!</p>
-      </div>
+      <p>Kva tid blir du 1000000000 sekund ?!</p>
+      <img class="bilde" src="indexBilder/hms.png">
     </div>
   </a>
 
   <a target='_blank' href='ovoverorsosetottoteror/'>
     <div class="boks">
       <h2>Oversetter</h2>
-      <div>
-        <img class="bilde" src="indexBilder/oversetter.png">
-        <p>Oversett til og fra Kjørøvespråk</p>
-      </div>
+      <p>Oversett til og fra Kjørøvespråk</p>
+      <img class="bilde" src="indexBilder/oversetter.png">
     </div>
   </a>
   <a target='_blank' href='strikkapp/'>
     <div class="boks">
       <h2>StrikkApp</h2>
-      <div>
-        <img class="bilde" src="indexBilder/strikkApp.png">
-        <p>Velg fargar og størrelse og få ei ferdig tilpassa oppskrift og mønster. Merk at kor lang du har komt underveis.</p>
-      </div>
+      <p>Velg fargar og størrelse og få ei ferdig tilpassa oppskrift og mønster. Merk at kor lang du har komt underveis.</p>
+      <img class="bilde" src="indexBilder/strikkApp.png">
     </div>
   </a>
   <a target='_blank' href='strikkulator/'>
     <div class="boks">
       <h2>Strikkulator</h2>
-      <div>
-        <img class="bilde" src="indexBilder/strikkulator.png">
-        <p>Auk eller mink masker lett  med denne strikkulatoren.</p>
-      </div>
+      <p>Auk eller mink masker lett  med denne strikkulatoren.</p>
+      <img class="bilde" src="indexBilder/strikkulator.png">
     </div>
   </a>
   <a target='_blank' href='varulv/'>
     <div class="boks">
       <h2>Varulv</h2>
-      <div>
-        <img class="bilde" src="indexBilder/varulv.png">
-        <p>One Night Warewolf app på norsk.</p>
-      </div>
+      <p>One Night Warewolf app på norsk.</p>
+      <img class="bilde" src="indexBilder/varulv.png">
     </div>
   </a>
   <a target='_blank' href='muffinsmysterie/'>
     <div class="boks">
       <h2>Muffins mysteriet</h2>
-      <div>
-        <img class="bilde" src="indexBilder/muffinsMysteriet.png">
-        <p>Finn ut kven som stjal muffinsen saman med dine vennar.</p>
-      </div>
+      <p>Finn ut kven som stjal muffinsen saman med dine vennar.</p>
+      <img class="bilde" src="indexBilder/muffinsMysteriet.png">
     </div>
   </div>
 </div>
