@@ -947,9 +947,9 @@ console.log('lagra dette: ' + nykjeks);
     //plasserer doning i rute R127
     kant = document.getElementById('R' + ruterTilSjekk[0]).getBoundingClientRect();
     posisjon.x = Math.floor(kant.left);
-    document.getElementById('doningRamme').style.left = posisjon.x + '.px';
+    document.getElementById('doningRamme').style.left = posisjon.x + 'px';
     posisjon.y = Math.floor(kant.top);
-    document.getElementById('doningRamme').style.top = posisjon.y + '.px';
+    document.getElementById('doningRamme').style.top = posisjon.y + 'px';
   }
 
 
@@ -1837,7 +1837,7 @@ console.log('lagra dette: ' + nykjeks);
     } else if (posisjon.x > kartKant.right) {
       posisjon.x = kartKant.right - 1;
     } else {
-      doningOgRedskap.style.left = Math.floor(posisjon.x) + ".px";
+      doningOgRedskap.style.left = Math.floor(posisjon.x) + "px";
     }
     if (retning < 90) {
       posisjon.y -= (retning / -90) * fart.aktiv * fart.faktor;
@@ -1852,7 +1852,7 @@ console.log('lagra dette: ' + nykjeks);
     } else if (posisjon.y > kartKant.bottom) {
       posisjon.y = kartKant.bottom - 1;
     } else {
-      doningOgRedskap.style.top = Math.floor(posisjon.y) + ".px";
+      doningOgRedskap.style.top = Math.floor(posisjon.y) + "px";
     }
   }
 
@@ -1871,7 +1871,7 @@ console.log('lagra dette: ' + nykjeks);
     } else if (posisjon.x > kartKant.right) {
       posisjon.x = kartKant.right - 1;
     } else {
-      doningOgRedskap.style.left = Math.floor(posisjon.x) + ".px";
+      doningOgRedskap.style.left = Math.floor(posisjon.x) + "px";
     }
     if (retning < 90) {
       posisjon.y += (retning / -90) * fart.aktiv * fart.faktor;
@@ -1886,7 +1886,7 @@ console.log('lagra dette: ' + nykjeks);
     } else if (posisjon.y > kartKant.bottom) {
       posisjon.y = kartKant.bottom - 1;
     } else {
-      doningOgRedskap.style.top = Math.floor(posisjon.y) + ".px";
+      doningOgRedskap.style.top = Math.floor(posisjon.y) + "px";
     }
   }
 
