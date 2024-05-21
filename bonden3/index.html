@@ -618,11 +618,11 @@
     'balleklype', 'grus', 'grus', 'siloSkurtreskar', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
     'ballemaskin', 'grus', 'grus', 'grus', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
     'slåmaskin', 'grus', 'grus', 'grus', 'veiKryssH', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssNed', 'veiHorisontal', 'veiKryssOpp', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssV', 'radStopp',
-    'traktor', 'grus', 'grus', 'grus', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
-    'plog', 'grus', 'grus', 'siloGras', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
-    'såmaskin', 'grus', 'grus', 'siloSprøyte', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
-    'sprøyte', 'grus', 'grus', 'siloKorn', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
-    'skurtreskar', 'grus', 'grus', 'gravemaskin', 'veiVertikal', 'dyrke', 'dyrke', 'dyrke', 'dyrke', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'traktor', 'grus', 'grus', 'grus', 'veiVertikal', 'erDyrka', 'erDyrka', 'erDyrka', 'erDyrka', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'plog', 'grus', 'grus', 'siloGras', 'veiVertikal', 'erDyrka', 'erDyrka', 'erDyrka', 'erDyrka', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'såmaskin', 'grus', 'grus', 'siloSprøyte', 'veiVertikal', 'erDyrka', 'erDyrka', 'erDyrka', 'erDyrka', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'sprøyte', 'grus', 'grus', 'siloKorn', 'veiVertikal', 'erDyrka', 'erDyrka', 'erDyrka', 'erDyrka', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
+    'skurtreskar', 'grus', 'grus', 'gravemaskin', 'veiVertikal', 'erDyrka', 'erDyrka', 'erDyrka', 'erDyrka', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
     'veiSvingNedH', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssOpp', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryss', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssV', 'radStopp',
     'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
     'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
@@ -921,7 +921,7 @@ console.log('lagra dette: ' + nykjeks);
         }
         if (ruter[nr] === 'eng') {
           document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/eng' + Math.floor(Math.random() * 3) + '.gif)';
-        } else if (ruter[nr] === 'dyrke') {
+        } else if (ruter[nr] === 'erDyrka') {
           document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke3.gif)';
         } else {
           document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/' + ruter[nr] + '.gif)';
@@ -972,6 +972,7 @@ console.log('lagra dette: ' + nykjeks);
             document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke2.gif)';
           } else if (vekseTidRuter[nr] === 0) {
             document.getElementById("R" + nr).style.backgroundImage = 'url(bilde/dyrke3.gif)';
+            ruter[nr] = "erDyrka";
             typeKjøring = 'parkert';
             kjørestil()
           }
@@ -1132,7 +1133,7 @@ console.log('lagra dette: ' + nykjeks);
   }//---------------------------------------------------------------------------------sjekk Jorde ruter
   function sjekkJordeRuter1(nr) {
     // pløyer jorde
-    if (aktivRedskap === 'plog' && (ruter[nr] === "kornHausta" || ruter[nr] === "dyrke" || ruter[nr] === "kornSådd" || ruter[nr] === "kornVeks" || ruter[nr] === "kornModent" || ruter[nr] === "kornSprøyta" || ruter[nr] === "kornDårlig" || ruter[nr] === "kornKlart" || ruter[nr] === "grasSådd" || ruter[nr] === "grasVeks" || ruter[nr] === "grasKlart" || ruter[nr] === "GrasSlåttVertikal" || ruter[nr] === "grasSlåttHorisontal" || ruter[nr] === "grasHausta")) {
+    if (aktivRedskap === 'plog' && (ruter[nr] === "kornHausta" || ruter[nr] === "erDyrka" || ruter[nr] === "kornSådd" || ruter[nr] === "kornVeks" || ruter[nr] === "kornModent" || ruter[nr] === "kornSprøyta" || ruter[nr] === "kornDårlig" || ruter[nr] === "kornKlart" || ruter[nr] === "grasSådd" || ruter[nr] === "grasVeks" || ruter[nr] === "grasKlart" || ruter[nr] === "GrasSlåttVertikal" || ruter[nr] === "grasSlåttHorisontal" || ruter[nr] === "grasHausta")) {
       document.getElementById('R' + nr).style.backgroundImage = 'url(bilde/pløyd.gif)';
       ruter[nr] = "pløyd";
       oppdaterTank("traktor", -1);
@@ -1717,7 +1718,7 @@ console.log('lagra dette: ' + nykjeks);
     }
   }
 
-  function oppdaterBilder(ting) {//...........................................................................jobbe her
+  function oppdaterBilder(ting) {
     if (ting === 'bonde' || ting === 'alt') {
       bildePassiv.bondeBeint = 'url(bilde/bondePassiv' + kjøpteTing.bonde + '.gif)';
       bildeKjøre.bondeBeint = 'url(bilde/bondeAktiv' + kjøpteTing.bonde + '.gif)';
