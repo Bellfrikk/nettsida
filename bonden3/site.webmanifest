@@ -16,9 +16,8 @@
     "theme_color": "#f08b00",
     "background_color": "#000000",
     "display": "standalone",
-    "start_url": "https://www.kjetilaardal.no/bonden3/index.html",
+    "start_url": "https://kjetilaardal.no/bonden3",
     "scope": "/",
     "description": "Lek bonde",
     "id": "/bondenmedlappen/index.html"
   }
-  
