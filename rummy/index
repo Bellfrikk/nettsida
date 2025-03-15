@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rummy!</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      background-color: #09171d;
+      color: #13c510;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    #ramme {
+      display: border-box;
+      width: 400px;
+      height: 96dvh;
+      margin:auto;
+      padding: 15px;;
+      border:solid 1px #FFF;
+      border-radius: 50px;
+    }
+    #topp{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin:0;
+
+    }
+    #rundeboks{
+      display: flex;
+      flex-direction: row;
+      align-items: left;
+      justify-content: left;
+    }
+    h1 {
+      font-size: 5dvh;
+      margin:1dvh;
+      color: #f9fd1b;
+
+
+    }
+    p{
+      padding-left: 0,5em;
+      margin:0;
+      font-size: 3dvh;
+    }
+    .rad{
+      margin:0;
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+    hr{
+      width: 40%;
+      margin:0;
+      border: 1px solid #11900f85;
+    }
+    .poeng{
+      margin-left:0.4dvh;
+    }
+    .rundar{
+      margin-left:1dvh;
+    }
+    
+    #spelar1 {color: #38da89;}
+    #spelar2 {color: #f14040;}
+    #spelar3 {color: #298ae5;}
+    #spelar4 {color: #ffff00bb;}
+  </style>
+</head>
+<body>
+  <div id='ramme'>
+    <div id="topp"><h1>Rummy!</h1></div>
+    <div id="rundeboks">
+      <div class='rad'>
+      <p class='poeng'>🍓</p>
+      <p class='poeng' id='s1r1' >-</p>
+      <p class='poeng' id='s1r2' >-</p>
+      <p class='poeng' id='s1r3' >-</p>
+      <p class='poeng' id='s1r4' >-</p>
+      <p class='poeng' id='s1r5' >-</p>
+      <p class='poeng' id='s1r6' >-</p>
+      <p class='poeng' id='s1r7' >-</p>
+      <p class='poeng' id='s1r8' >-</p>
+      <p class='poeng' id='s1r9' >-</p>
+      <p class='poeng' id='s1r10'>-</p>
+      <p class='poeng' id='s1r11'>-</p>
+    </div>
+    <div class='rad'>
+      <p class='poeng'>🌞</p>
+      <p class='poeng' id='s2r1' >-</p>
+      <p class='poeng' id='s2r2' >-</p>
+      <p class='poeng' id='s2r3' >-</p>
+      <p class='poeng' id='s2r4' >-</p>
+      <p class='poeng' id='s2r5' >-</p>
+      <p class='poeng' id='s2r6' >-</p>
+      <p class='poeng' id='s2r7' >-</p>
+      <p class='poeng' id='s2r8' >-</p>
+      <p class='poeng' id='s2r9' >-</p>
+      <p class='poeng' id='s2r10'>-</p>
+      <p class='poeng' id='s2r11'>-</p>
+    </div>
+    <div class='rad' id="rad3">
+      <p class='poeng'>🚜</p>
+      <p class='poeng' id='s3r1' >-</p>
+      <p class='poeng' id='s3r2' >-</p>
+      <p class='poeng' id='s3r3' >-</p>
+      <p class='poeng' id='s3r4' >-</p>
+      <p class='poeng' id='s3r5' >-</p>
+      <p class='poeng' id='s3r6' >-</p>
+      <p class='poeng' id='s3r7' >-</p>
+      <p class='poeng' id='s3r8' >-</p>
+      <p class='poeng' id='s3r9' >-</p>
+      <p class='poeng' id='s3r10'>-</p>
+      <p class='poeng' id='s3r11'>-</p>
+    </div>
+    <div class='rad' id="rad4">
+      <p class='poeng'>🐬</p>
+      <p class='poeng' id='s4r1' >-</p>
+      <p class='poeng' id='s4r2' >-</p>
+      <p class='poeng' id='s4r3' >-</p>
+      <p class='poeng' id='s4r4' >-</p>
+      <p class='poeng' id='s4r5' >-</p>
+      <p class='poeng' id='s4r6' >-</p>
+      <p class='poeng' id='s4r7' >-</p>
+      <p class='poeng' id='s4r8' >-</p>
+      <p class='poeng' id='s4r9' >-</p>
+      <p class='poeng' id='s4r10'>-</p>
+      <p class='poeng' id='s4r11'>-</p>
+    </div>
+    <div class='rad'>
+      <p class='rundar'>.</p>
+      <p class='rundar' id='runde1'>4 REKKE H1</p>
+      <p class='rundar' id='runde2'>5 LIKE  H1</p>
+      <p class='rundar' id='runde3'>3+3 LIKE 2H</p>
+      <p class='rundar' id='runde4'>4 REKKE + 3 LIKE H2</p>
+      <p class='rundar' id='runde5'>3+3+3 LIKE H3</p>
+      <p class='rundar' id='runde6'>5 REKKE + 3 LIKE H3</p>
+      <p class='rundar' id='runde7'>7 REKKE H3</p>
+      <p class='rundar' id='runde8'>6STIGE + 3 LIKE H3</p>
+      <p class='rundar' id='runde9'>4+4STIGE H2</p>
+      <p class='rundar' id='runde10'>5+5 LIKE H4</p>
+      <p class='rundar' id='runde11'>9 REKKE H4</p>
+    </div>
+  </div>
+  <div id="splar">
+    <p class='rundar' id='spelar1'>🍓:<span id='poeng1'>0</span></p>
+    <p class='rundar' id='spelar2'>🌞:<span id='poeng2'>0</span></p>
+    <p class='rundar' id='spelar3'>🚜:<span id='poeng3'>0</span></p>
+    <p class='rundar' id='spelar4'>🐬:<span id='poeng4'>0</span></p>
+  </div>
+  <button onclick="nesteRunde()">NESTE RUNDE</button>
+  <button onclick="nyttSpel()">NYTT SPEL</button>
+  </div>
+</body>
+<script>
+  let ikon = [null,'🍓','🌞','🚜','🐬']
+  let poeng = [null,0,0,0,0];
+  let rundar = [null,0,0,0,0];
+  let spelar = 2;
+
+  function nyttSpel(){
+    poeng = [null,0,0,0,0];
+    rundar = [null,0,0,0,0];
+    for(let r=1;r<12;r++){
+      document.getElementById('s1r'+r).innerText = '-';
+      document.getElementById('s2r'+r).innerText = '-';
+      document.getElementById('s3r'+r).innerText = '-';
+      document.getElementById('s4r'+r).innerText = '-';
+    }
+    for(let s=1;s<5;s++){
+      document.getElementById('poeng1').innerText = 0;
+      document.getElementById('poeng2').innerText = 0;
+      document.getElementById('poeng3').innerText = 0;
+      document.getElementById('poeng4').innerText = 0;
+    }
+    if(confirm('Er spelar 4 med?')) {
+      spelar = 4;
+      document.getElementById('rad4').style.display = '';
+      document.getElementById('spelar4').display = '';
+      return;
+    }else if(confirm('Er spelar 3 med?')) {
+      spelar = 3;
+      document.getElementById('rad3').style.display = '';
+      document.getElementById('spelar3').display = '';
+      document.getElementById('rad4').style.display = 'none';
+      document.getElementById('spelar4').display = 'none';
+    }else{
+      seplar = 2;
+      document.getElementById('rad3').style.display = 'none';
+      document.getElementById('spelar3').display = 'none';
+      document.getElementById('rad4').style.display = 'none';
+      document.getElementById('spelar4').display = 'none';
+    }
+  }
+  function nesteRunde(){
+    for(let s=1;s<=spelar;s++){
+      let tall = 0;
+      tall = beOmTal(s);
+      poeng[s] += tall;
+      document.getElementById('poeng'+s).innerText = poeng[s];  
+    }
+    for(let s=1;s<=spelar;s++){
+      klarteRunden(s);
+    }  
+  }
+
+  function beOmTal(spelar) {
+    let input 
+    input = prompt('Skriv poeng for '+ikon[spelar],0);
+    if (input === null) {
+        return 0;
+    }
+    let tall = parseFloat(input);
+    if (isNaN(tall)) {
+        alert("Du må skrive inn et gyldig tall!");
+        return beOmTal(); // Prøver igjen hvis input ikke er et tall
+    }
+    return tall
+}
+
+function klarteRunden(spelar){
+  if(confirm('Klarte '+ikon[spelar]+' runden?')){
+    rundar[spelar]++ 
+    document.getElementById('s'+spelar+'r'+rundar[spelar]).innerText = 'X';
+  }
+}
+</script>
+</html>
