@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rummy!</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .runde-liste {
+            padding: 0;
+            text-align: left;
+        }
+        .runde-liste ul {
+            margin: 5px 0;
+        }
+        .utheva {
+            font-weight: bold;
+            color: yellow;
+        }
+        .spelar-liste {
+            margin-top: 10px;
+            align: left;
+        }
+        .spelar {
+            display: flex;
+            align-items: left;
+            gap: 10px;
+        }
+        .grøn { color: lightgreen; }
+        .blå { color: lightskyblue; }
+        .gul { color: gold; }
+        .knapp-container {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .poeng-input{
+         width:30px;   
+            background-color:#999;
+        }
+        .runde-avkryssing{
+            background-color:#999;
+            
+        }
+    </style>
+</head>
+<body>
+    <h1>Rummy!</h1>
+    <ol class="runde-liste" id="rundeListe"></ol>
+    <div class="spelar-liste" id="spelarListe"></div>
+    <div class="knapp-container">
+        <button onclick="leggTilSpelar()">+</button>
+        <button onclick="nesteRunde()">→</button>
+    </div>
+    <script>
+        const rundar = [
+            "4 straight 5H", 
+            "5 like tal 1H", 
+            "2x tress 2H", 
+            "4 straight og tress 2H",
+            "3x tress 3H", 
+            "5 straight og tress 3H", 
+            "7 straight 3H", 
+            "6 straight og tress 3H",
+            "2x 4 straight 2H", 
+            "2x 5 like 4H", 
+            "9 straight 4H"
+        ];
+        let spelarar = [];
+        let noverandeRunde = 0;
+        let fargar = ["grøn", "blå", "gul"];
+        
+        function oppdaterRundar() {
+            const rundeListe = document.getElementById("rundeListe");
+            rundeListe.innerHTML = "";
+            rundar.forEach((runde, indeks) => {
+                const li = document.createElement("ul");
+                li.innerText = runde;
+                if (indeks === noverandeRunde) li.classList.add("utheva");
+                rundeListe.appendChild(li);
+            });
+            oppdaterSpelarar();
+        }
+        
+        function oppdaterSpelarar() {
+            const spelarListe = document.getElementById("spelarListe");
+            spelarListe.innerHTML = "";
+            spelarar.forEach((spelar, indeks) => {
+                const spelarDiv = document.createElement("div");
+                spelarDiv.classList.add("spelar", spelar.farge);
+                spelarDiv.innerHTML = `${spelar.namn}: ${spelar.poeng} <input type='number' class='poeng-input' data-indeks='${indeks}'> <input type='radio' class='runde-avkryssing' data-indeks='${indeks}'>`;
+                spelarListe.appendChild(spelarDiv);
+            });
+        }
+        
+        function leggTilSpelar() {
+            const namn = prompt("Spelarnamn?");
+            if (namn) {
+                let spelar = { namn, poeng: 0, farge: fargar[spelarar.length % fargar.length] };
+                spelarar.push(spelar);
+                oppdaterRundar();
+            }
+        }
+        
+        function nesteRunde() {
+            if (spelarar.length === 0) return alert("Legg til minst ein spelar fyrst!");
+            
+            document.querySelectorAll('.spelar').forEach((spelarDiv, indeks) => {
+                let poengInput = spelarDiv.querySelector(".poeng-input");
+                let avkryssing = spelarDiv.querySelector(".runde-avkryssing");
+                let poeng = parseInt(poengInput.value, 10);
+                if (!isNaN(poeng) && avkryssing.checked) {
+                    spelarar[indeks].poeng += poeng;
+                }
+                poengInput.value = "";
+                avkryssing.checked = false;
+            });
+            
+            noverandeRunde++;
+            oppdaterRundar();
+        }
+        
+        oppdaterRundar();
+    </script>
+</body>
+</html>
