@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      background: #111;
+      background: #585;
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -62,13 +62,13 @@
       <!-- Bilkropp -->
       <rect x="20" y="20" width="60" height="40" rx="10" ry="10" fill="darkblue" stroke="black" stroke-width="2"/>
       <!-- Bakrute -->
-      <rect x="30" y="30" width="40" height="20" rx="3" ry="3" fill="lightblue" stroke="black" stroke-width="1"/>
+      <rect x="30" y="30" width="40" height="10" rx="3" ry="3" fill="lightblue" stroke="black" stroke-width="1"/>
       <!-- Baklys -->
-      <rect x="21" y="60" width="4" height="10" fill="red"/>
-      <rect x="75" y="60" width="4" height="10" fill="red"/>
+      <rect x="30" y="40" width="4" height="6" fill="red"/>
+      <rect x="66" y="40" width="4" height="6" fill="red"/>
       <!-- Hjul -->
-      <rect x="25" y="60" width="10" height="10" fill="darkgrey"/>
-      <rect x="65" y="60" width="10" height="10" fill="darkgrey"/>
+      <rect x="25" y="56" width="10" height="10" fill="black"/>
+      <rect x="65" y="56" width="10" height="10" fill="black"/>
     </svg>
 
     <!-- Spy -->
@@ -87,16 +87,21 @@
       void el.offsetWidth; // restart
       el.style.animation = 'sprut 0.5s ease-out forwards';
     }
-
+let spyr = false;
     function startApp() {
       window.addEventListener('devicemotion', (e) => {
         const x = e.accelerationIncludingGravity?.x || 0;
         const rot = Math.max(-20, Math.min(20, -x * 3));
         bil.style.transform = `rotate(${rot}deg)`;
 
-        if (Math.abs(x) > 6) {
-          if (x > 0) spyUt('venstre');
-          else spyUt('hogre');
+          if (!spyr && Math.abs(x) > 6) {
+            spyr = true;
+            if (x > 0) spyUt('venstre');
+            else spyUt('hogre');
+          }
+        }else if( spyr && Math.abs(x) < 1){
+            spyr = false;
+          }
         }
       });
     }
