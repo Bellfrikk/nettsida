@@ -2,7 +2,7 @@
 <html lang="nn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Køyr fint!</title>
   <style>
     body {
@@ -21,14 +21,15 @@
       height: 200px;
     }
 
-    #bil {
+    svg {
       width: 100%;
+      height: auto;
       transition: transform 0.1s linear;
     }
 
     .spy {
       position: absolute;
-      top: 80px;
+      top: 90px;
       width: 60px;
       height: 30px;
       background: radial-gradient(circle, #7f0, #4b0);
@@ -56,7 +57,21 @@
 </head>
 <body>
   <div id="scene">
-    <img id="bil" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Red_car_icon_top.svg/512px-Red_car_icon_top.svg.png" alt="Bil sett bakfra">
+    <!-- SVG av bil sett bakfra -->
+    <svg id="bil" viewBox="0 0 100 100">
+      <!-- Bilkropp -->
+      <rect x="20" y="20" width="60" height="60" rx="10" ry="10" fill="red" stroke="black" stroke-width="2"/>
+      <!-- Bakrute -->
+      <rect x="30" y="30" width="40" height="20" rx="3" ry="3" fill="lightblue" stroke="black" stroke-width="1"/>
+      <!-- Baklys -->
+      <rect x="18" y="60" width="4" height="10" fill="orange"/>
+      <rect x="78" y="60" width="4" height="10" fill="orange"/>
+      <!-- Hjul -->
+      <circle cx="30" cy="85" r="7" fill="black"/>
+      <circle cx="70" cy="85" r="7" fill="black"/>
+    </svg>
+
+    <!-- Spy -->
     <div id="spy-venstre" class="spy"></div>
     <div id="spy-hogre" class="spy"></div>
   </div>
@@ -66,16 +81,16 @@
     const spyV = document.getElementById('spy-venstre');
     const spyH = document.getElementById('spy-hogre');
 
-    function spyUt(side) {
-      const el = side === 'venstre' ? spyV : spyH;
+    function spyUt(retning) {
+      const el = retning === 'venstre' ? spyV : spyH;
       el.style.animation = 'none';
-      void el.offsetWidth; // restart animation
+      void el.offsetWidth; // restart
       el.style.animation = 'sprut 0.5s ease-out forwards';
     }
 
     function startApp() {
       window.addEventListener('devicemotion', (e) => {
-        const x = e.accelerationIncludingGravity.x || 0;
+        const x = e.accelerationIncludingGravity?.x || 0;
         const rot = Math.max(-20, Math.min(20, -x * 3));
         bil.style.transform = `rotate(${rot}deg)`;
 
@@ -86,10 +101,10 @@
       });
     }
 
-    // iOS: Be om tillating
+    // iOS krever tillating
     if (typeof DeviceMotionEvent?.requestPermission === 'function') {
       const knapp = document.createElement('button');
-      knapp.innerText = "Start";
+      knapp.textContent = "Start";
       knapp.style.padding = "1em";
       knapp.onclick = () => {
         DeviceMotionEvent.requestPermission().then(res => {
