@@ -21,96 +21,138 @@
       height: 200px;
     }
 
-    svg {
-      width: 100%;
-      height: auto;
+    #bil {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 150px;
+      transform: translate(-50%, -50%);
       transition: transform 0.1s linear;
+    }
+
+    #spy-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
     }
 
     .spy {
       position: absolute;
-      top: 90px;
       width: 60px;
-      height: 30px;
-      background: radial-gradient(circle, #7f0, #4b0);
+      height: 60px;
       opacity: 0;
-      transform: scale(1) rotate(0deg);
+    }
+
+    .spy-bue {
+      position: absolute;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      animation: sprut 0.5s ease-out forwards;
+      background: radial-gradient(circle at top left, #9f6, #4a0);
+      transform: scale(0);
+      animation: bue 1s forwards ease-out;
     }
 
-    #spy-venstre {
-      left: -40px;
-      transform: rotate(-20deg);
+    .spy-dam {
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      background: radial-gradient(circle, #6c3, #390);
+      border-radius: 50%;
+      opacity: 0;
+      animation: dam 1s forwards ease-out 0.8s;
     }
 
-    #spy-hogre {
-      right: -40px;
-      transform: rotate(20deg);
+    @keyframes bue {
+      0% {
+        transform: translate(0, 0) scale(0.5);
+        opacity: 1;
+      }
+      60% {
+        transform: translate(-40px, 60px) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-40px, 100px) scale(0.8);
+        opacity: 0;
+      }
     }
 
-    @keyframes sprut {
-      0% { opacity: 1; transform: scale(0.5); }
-      100% { opacity: 0; transform: scale(2); }
+    @keyframes dam {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
   <div id="scene">
-    <!-- SVG av bil sett bakfra -->
-    <svg id="bil" viewBox="0 0 100 100">
-      <!-- Bilkropp -->
-      <rect x="20" y="20" width="60" height="40" rx="10" ry="10" fill="darkblue" stroke="black" stroke-width="2"/>
-      <!-- Bakrute -->
-      <rect x="30" y="30" width="40" height="10" rx="3" ry="3" fill="lightblue" stroke="black" stroke-width="1"/>
-      <!-- Baklys -->
-      <rect x="30" y="40" width="4" height="6" fill="red"/>
-      <rect x="66" y="40" width="4" height="6" fill="red"/>
-      <!-- Hjul -->
-      <rect x="25" y="56" width="10" height="10" fill="black"/>
-      <rect x="65" y="56" width="10" height="10" fill="black"/>
-    </svg>
-
-    <!-- Spy -->
-    <div id="spy-venstre" class="spy"></div>
-    <div id="spy-hogre" class="spy"></div>
+    <div id="bil">🚘</div>
+    <div id="spy-container"></div>
   </div>
 
   <script>
     const bil = document.getElementById('bil');
-    const spyV = document.getElementById('spy-venstre');
-    const spyH = document.getElementById('spy-hogre');
+    const spyContainer = document.getElementById('spy-container');
+    let spyr = false;
 
     function spyUt(retning) {
-      const el = retning === 'venstre' ? spyV : spyH;
-      el.style.animation = 'none';
-      void el.offsetWidth; // restart
-      el.style.animation = 'sprut 0.5s ease-out forwards';
+      const spye = document.createElement('div');
+      spye.className = 'spy';
+
+      const bue = document.createElement('div');
+      bue.className = 'spy-bue';
+
+      const dam = document.createElement('div');
+      dam.className = 'spy-dam';
+
+      spye.appendChild(bue);
+      spye.appendChild(dam);
+
+      if (retning === 'venstre') {
+        spye.style.left = '0px';
+        spye.style.top = '90px';
+      } else {
+        spye.style.right = '0px';
+        spye.style.top = '90px';
+        spye.style.transform = 'scaleX(-1)'; // speilvend for høgre side
+      }
+
+      spyContainer.appendChild(spye);
+
+      setTimeout(() => spyContainer.removeChild(spye), 2000);
     }
-let spyr = false;
+
     function startApp() {
       window.addEventListener('devicemotion', (e) => {
         const x = e.accelerationIncludingGravity?.x || 0;
         const rot = Math.max(-20, Math.min(20, -x * 3));
-        bil.style.transform = `rotate(${rot}deg)`;
+        bil.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`;
 
-          if (!spyr && Math.abs(x) > 6) {
-            spyr = true;
-            if (x > 0) spyUt('venstre');
-            else spyUt('hogre');
-          }
-        }else if( spyr && Math.abs(x) < 1){
-            spyr = false;
-          }
+        if (!spyr && Math.abs(x) > 6) {
+          spyr = true;
+          if (x > 0) spyUt('venstre');
+          else spyUt('hogre');
+        } else if (spyr && Math.abs(x) < 1) {
+          spyr = false;
         }
       });
     }
 
-    // iOS krever tillating
+    // iOS krev tillating
     if (typeof DeviceMotionEvent?.requestPermission === 'function') {
       const knapp = document.createElement('button');
       knapp.textContent = "Start";
       knapp.style.padding = "1em";
+      knapp.style.fontSize = "1.2em";
       knapp.onclick = () => {
         DeviceMotionEvent.requestPermission().then(res => {
           if (res === 'granted') startApp();
