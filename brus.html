@@ -1,86 +1,105 @@
-
 <!DOCTYPE html>
 <html lang="nn">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brusglass</title>
+  <title>Køyr fint!</title>
   <style>
     body {
       margin: 0;
       background: #111;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: white;
-      font-family: sans-serif;
     }
 
-    svg {
+    #scene {
+      position: relative;
       width: 200px;
-      height: 400px;
+      height: 200px;
     }
 
-    #væske {
-      transition: transform 0.1s ease-out;
-      transform-origin: center center;
+    #bil {
+      width: 100%;
+      transition: transform 0.1s linear;
     }
 
-    #melding {
+    .spy {
       position: absolute;
-      top: 20px;
-      text-align: center;
+      top: 80px;
+      width: 60px;
+      height: 30px;
+      background: radial-gradient(circle, #7f0, #4b0);
+      opacity: 0;
+      transform: scale(1) rotate(0deg);
+      border-radius: 50%;
+      animation: sprut 0.5s ease-out forwards;
+    }
+
+    #spy-venstre {
+      left: -40px;
+      transform: rotate(-20deg);
+    }
+
+    #spy-hogre {
+      right: -40px;
+      transform: rotate(20deg);
+    }
+
+    @keyframes sprut {
+      0% { opacity: 1; transform: scale(0.5); }
+      100% { opacity: 0; transform: scale(2); }
     }
   </style>
 </head>
 <body>
-  <div id="melding">Tilt mobilen 🥤</div>
-  <svg viewBox="0 0 100 200">
-    <!-- Glass -->
-    <rect x="20" y="10" width="60" height="180" rx="10" ry="10" fill="none" stroke="white" stroke-width="3"/>
-    
-    <!-- Brus -->
-    <g id="væske">
-      <path d="M22,150 Q50,145 78,150 L78,190 Q50,195 22,190 Z" fill="#ff6600" />
-    </g>
-  </svg>
+  <div id="scene">
+    <img id="bil" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Red_car_icon_top.svg/512px-Red_car_icon_top.svg.png" alt="Bil sett bakfra">
+    <div id="spy-venstre" class="spy"></div>
+    <div id="spy-hogre" class="spy"></div>
+  </div>
 
   <script>
-    const væske = document.getElementById('væske');
-    const melding = document.getElementById('melding');
+    const bil = document.getElementById('bil');
+    const spyV = document.getElementById('spy-venstre');
+    const spyH = document.getElementById('spy-hogre');
 
-    // Be om tillatelse på iOS
-    function startMotion() {
-      if (typeof DeviceMotionEvent?.requestPermission === 'function') {
-        DeviceMotionEvent.requestPermission().then(response => {
-          if (response === 'granted') {
-            vindulytt();
-          } else {
-            melding.textContent = "Tilgang nekta 😢";
-          }
-        });
-      } else {
-        vindulytt(); // Android
-      }
+    function spyUt(side) {
+      const el = side === 'venstre' ? spyV : spyH;
+      el.style.animation = 'none';
+      void el.offsetWidth; // restart animation
+      el.style.animation = 'sprut 0.5s ease-out forwards';
     }
 
-    function vindulytt() {
-      window.addEventListener('devicemotion', (event) => {
-        const acc = event.accelerationIncludingGravity;
-        const x = acc?.x || 0;
+    function startApp() {
+      window.addEventListener('devicemotion', (e) => {
+        const x = e.accelerationIncludingGravity.x || 0;
+        const rot = Math.max(-20, Math.min(20, -x * 3));
+        bil.style.transform = `rotate(${rot}deg)`;
 
-        // Begrens vippen til ca -30 til 30 grader
-        const rotasjon = Math.max(-30, Math.min(30, -x * 3));
-        væske.style.transform = `rotate(${rotasjon}deg)`;
+        if (Math.abs(x) > 6) {
+          if (x > 0) spyUt('venstre');
+          else spyUt('hogre');
+        }
       });
     }
 
-    // Start med klikk om nødvendig
+    // iOS: Be om tillating
     if (typeof DeviceMotionEvent?.requestPermission === 'function') {
-      melding.innerHTML = `<button onclick="startMotion()">Tillat bevegelse</button>`;
+      const knapp = document.createElement('button');
+      knapp.innerText = "Start";
+      knapp.style.padding = "1em";
+      knapp.onclick = () => {
+        DeviceMotionEvent.requestPermission().then(res => {
+          if (res === 'granted') startApp();
+        });
+        knapp.remove();
+      };
+      document.body.appendChild(knapp);
     } else {
-      startMotion();
+      startApp(); // Android
     }
   </script>
 </body>
