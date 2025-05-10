@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brusglass</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
+    }
+
+    svg {
+      width: 200px;
+      height: 400px;
+    }
+
+    #væske {
+      transition: transform 0.1s ease-out;
+      transform-origin: center center;
+    }
+
+    #melding {
+      position: absolute;
+      top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="melding">Tilt mobilen 🥤</div>
+  <svg viewBox="0 0 100 200">
+    <!-- Glass -->
+    <rect x="20" y="10" width="60" height="180" rx="10" ry="10" fill="none" stroke="white" stroke-width="3"/>
+    
+    <!-- Brus -->
+    <g id="væske">
+      <path d="M22,150 Q50,145 78,150 L78,190 Q50,195 22,190 Z" fill="#ff6600" />
+    </g>
+  </svg>
+
+  <script>
+    const væske = document.getElementById('væske');
+    const melding = document.getElementById('melding');
+
+    // Be om tillatelse på iOS
+    function startMotion() {
+      if (typeof DeviceMotionEvent?.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission().then(response => {
+          if (response === 'granted') {
+            vindulytt();
+          } else {
+            melding.textContent = "Tilgang nekta 😢";
+          }
+        });
+      } else {
+        vindulytt(); // Android
+      }
+    }
+
+    function vindulytt() {
+      window.addEventListener('devicemotion', (event) => {
+        const acc = event.accelerationIncludingGravity;
+        const x = acc?.x || 0;
+
+        // Begrens vippen til ca -30 til 30 grader
+        const rotasjon = Math.max(-30, Math.min(30, -x * 3));
+        væske.style.transform = `rotate(${rotasjon}deg)`;
+      });
+    }
+
+    // Start med klikk om nødvendig
+    if (typeof DeviceMotionEvent?.requestPermission === 'function') {
+      melding.innerHTML = `<button onclick="startMotion()">Tillat bevegelse</button>`;
+    } else {
+      startMotion();
+    }
+  </script>
+</body>
+</html>
