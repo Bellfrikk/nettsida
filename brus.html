@@ -94,6 +94,8 @@
   </style>
 </head>
 <body>
+  <h1 id="nå"></h1>
+  <h2 id="maks"></h2>
   <div id="scene">
     <div id="bil">🚘</div>
     <div id="spy-container"></div>
@@ -130,13 +132,17 @@
 
       setTimeout(() => spyContainer.removeChild(spye), 2000);
     }
-
+let maks =0;
     function startApp() {
       window.addEventListener('devicemotion', (e) => {
         const x = e.accelerationIncludingGravity?.x || 0;
         const rot = Math.max(-20, Math.min(20, -x * 3));
         bil.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`;
-
+document.getElementById("nå").innerText = x;
+        if(x>maks){
+          maks=x;
+          document.getElementById("maks").innerText = maks;
+    }
         if (!spyr && Math.abs(x) > 6) {
           spyr = true;
           if (x > 0) spyUt('venstre');
