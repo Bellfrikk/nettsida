@@ -1,182 +1,128 @@
 <!DOCTYPE html>
 <html lang="nn">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Køyr fint!</title>
-  <style>
-    body {
-      margin: 0;
-      background: #888;
-      overflow: hidden;
-      display: flex;
-      flex-direction:column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    #scene {
-      position: relative;
-      width: 200px;
-      height: 200px;
-    }
-
-    #bil {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      font-size: 150px;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s linear;
-    }
-
-    #spy-container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-    }
-
-    .spy {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      opacity: 0;
-    }
-
-    .spy-bue {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: radial-gradient(circle at top left, #9f6, #4a0);
-      transform: scale(0);
-      animation: bue 1s forwards ease-out;
-    }
-
-    .spy-dam {
-      position: absolute;
-      width: 50px;
-      height: 20px;
-      background: radial-gradient(circle, #6c3, #390);
-      border-radius: 50%;
-      opacity: 0;
-      animation: dam 1s forwards ease-out 0.8s;
-    }
-
-    @keyframes bue {
-      0% {
-        transform: translate(0, 0) scale(0.5);
-        opacity: 1;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Køyr fint!</title>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        background: #888;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
-      60% {
-        transform: translate(-40px, 60px) scale(1);
-        opacity: 1;
+
+      #scene {
+        position: absolute;
+        z-index: 9;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
       }
-      100% {
-        transform: translate(-40px, 100px) scale(0.8);
-        opacity: 0;
+
+      #bil {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 10;
+        font-size: 150px;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s linear;
       }
+
+      #graf{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <canvas id="graf"></canvas>
+    <div id="scene">
+    <h2 id="maks">0</h2>
+    <h2 id="min">0</h2>
+    <span id="bil">🚘</span>
+    </div>
+    <script>
+    const bil = document.getElementById("bil");
+
+let maks = 0;
+let min = 0;
+
+let farge = 99;
+let endring = 5;
+function startApp() {
+  const ramme = document.getElementById("graf");
+  const ctx = ramme.getContext("2d");
+  ramme.width = window.innerWidth;
+  ramme.height = window.innerHeight;
+
+  window.addEventListener("devicemotion", (e) => {
+    const x = e.accelerationIncludingGravity?.x || 0;
+    const rot = Math.max(-20, Math.min(20, -x * 3));
+    bil.style.transform = `translate(-50%, -50%) rotate(${rot*2}deg)`;
+
+    // Sentrer tegninga i midten av skjermen
+    ctx.save();
+    ctx.translate(ramme.width / 2, ramme.height / 2);
+    ctx.rotate(rot*2 * Math.PI / 180);
+
+
+
+
+
+    ctx.fillStyle = `rgb(${farge}, ${farge}, ${farge})`; // Grønn
+    ctx.fillRect(-ramme.width, 80, ramme.width * 2, ramme.height * 2);
+    ctx.restore();
+
+    if(farge < 10) endring = -10;
+    if (farge > 255) endring = 10;
+    farge -= endring;
+
+
+
+    // Oppdater min/maks-visning
+    if (x > maks) {
+      maks = x;
+      document.getElementById("maks").innerText = Math.floor(maks);
     }
-
-    @keyframes dam {
-      0% {
-        transform: scale(0.3);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+    if (x < min) {
+      min = x;
+      document.getElementById("min").innerText = Math.floor(min);
     }
-  </style>
-</head>
-<body>
-  <h1 id="nå">0</h1><br>
-  <h2 id="maks">0</h2><br>
-  <h2 id="min">0</h2><br>
-  <div id="scene">
-    <div id="bil">🚘</div>
-    <div id="spy-container"></div>
-  </div>
+  });
+}
 
-  <script>
-    const bil = document.getElementById('bil');
-    const spyContainer = document.getElementById('spy-container');
-    let spyr = false;
 
-    function spyUt(retning) {
-      document.body.style.backgroundColor = "#00ff00";
-      const spye = document.createElement('div');
-      spye.className = 'spy';
-
-      const bue = document.createElement('div');
-      bue.className = 'spy-bue';
-
-      const dam = document.createElement('div');
-      dam.className = 'spy-dam';
-
-      spye.appendChild(bue);
-      spye.appendChild(dam);
-
-      if (retning === 'venstre') {
-        spye.style.left = '0px';
-        spye.style.top = '90px';
+      // iOS krev tillating
+      if (typeof DeviceMotionEvent?.requestPermission === "function") {
+        const knapp = document.createElement("button");
+        knapp.textContent = "Start";
+        knapp.style.padding = "1em";
+        knapp.style.fontSize = "1.2em";
+        knapp.onclick = () => {
+          DeviceMotionEvent.requestPermission().then((res) => {
+            if (res === "granted") startApp();
+          });
+          knapp.remove();
+        };
+        document.body.appendChild(knapp);
       } else {
-        spye.style.right = '0px';
-        spye.style.top = '90px';
-        spye.style.transform = 'scaleX(-1)'; // speilvend for høgre side
+        startApp(); // Android
       }
-
-      spyContainer.appendChild(spye);
-
-      setTimeout(() => spyContainer.removeChild(spye), 2000);
-    }
-let maks =0;
-    let min =0;
-    function startApp() {
-      window.addEventListener('devicemotion', (e) => {
-        const x = e.accelerationIncludingGravity?.x || 0;
-        const rot = Math.max(-20, Math.min(20, -x * 3));
-        bil.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`;
-document.getElementById("nå").innerText = Math.floor(x);
-        if(x>maks){
-          maks=x;
-          document.getElementById("maks").innerText = Math.floor(maks);
-    }
-        if(x<min){
-          min=x;
-          document.getElementById("min").innerText = Math.floor(min);
-        }
-        if (!spyr && Math.abs(x) > 6) {
-          spyr = true;
-          if (x > 0) spyUt('venstre');
-          else spyUt('hogre');
-        } else if (spyr && Math.abs(x) < 1) {
-          spyr = false;
-        }
-      });
-    }
-
-    // iOS krev tillating
-    if (typeof DeviceMotionEvent?.requestPermission === 'function') {
-      const knapp = document.createElement('button');
-      knapp.textContent = "Start";
-      knapp.style.padding = "1em";
-      knapp.style.fontSize = "1.2em";
-      knapp.onclick = () => {
-        DeviceMotionEvent.requestPermission().then(res => {
-          if (res === 'granted') startApp();
-        });
-        knapp.remove();
-      };
-      document.body.appendChild(knapp);
-    } else {
-      startApp(); // Android
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
