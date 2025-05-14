@@ -71,8 +71,10 @@ function startApp() {
   ramme.height = window.innerHeight;
 
   window.addEventListener("devicemotion", (e) => {
-    const x = e.accelerationIncludingGravity?.x || 0;
-    const rot = Math.max(-20, Math.min(20, -x * 3));
+    const aks = window.innerWidth > window.innerHeight ? 
+            e.accelerationIncludingGravity?.y || 0 : 
+            e.accelerationIncludingGravity?.x || 0;
+    const rot = Math.max(-20, Math.min(20, -aks * 3));
     bil.style.transform = `translate(-50%, -50%) rotate(${rot*2}deg)`;
 
     // Sentrer tegninga i midten av skjermen
@@ -95,12 +97,12 @@ function startApp() {
 
 
     // Oppdater min/maks-visning
-    if (x > maks) {
-      maks = x;
+    if (aks > maks) {
+      maks = aks;
       document.getElementById("maks").innerText = Math.floor(maks);
     }
-    if (x < min) {
-      min = x;
+    if (aks < min) {
+      min = aks;
       document.getElementById("min").innerText = Math.floor(min);
     }
   });
