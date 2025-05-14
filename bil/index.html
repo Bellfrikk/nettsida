@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="nn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Køyr fint!</title>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        background: radial-gradient(circle at 50% 60%, yellow,yellow, skyblue, skyblue, skyblue, skyblue, skyblue);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #scene {
+        position: absolute;
+        z-index: 9;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
+
+      #bil {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 10;
+        font-size: 150px;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s linear;
+      }
+
+      #graf{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <canvas id="graf"></canvas>
+    <div id="scene">
+    <h2 id="maks">0</h2>
+    <h2 id="min">0</h2>
+    <span id="bil">🚘</span>
+    </div>
+    <script>
+    const bil = document.getElementById("bil");
+
+
+
+function startApp() {
+  const ramme = document.getElementById("graf");
+  const ctx = ramme.getContext("2d");
+  ramme.width = window.innerWidth;
+  ramme.height = window.innerHeight;
+  let maks = 0;
+let min = 0;
+let vinkel = 0;
+const farge = {
+  bak: "rgb(127, 156, 172)",
+  vei: "rgb(0,0,0)",
+  spy: "rgb(74, 250, 26)",
+};
+  window.addEventListener("devicemotion", (e) => {
+    //Tegn forrige vinkel med grå
+    ctx.save();
+    ctx.translate(ramme.width / 2, ramme.height / 2);
+    ctx.rotate(vinkel * Math.PI / 180);
+    ctx.fillStyle = farge.bak; 
+    ctx.fillRect(-ramme.width, 80, ramme.width * 2, ramme.height * 2);
+    ctx.restore();
+    //oppdater vinkel
+    nyVinkel = window.innerWidth > window.innerHeight ? 
+            e.accelerationIncludingGravity?.y || 0 : 
+            e.accelerationIncludingGravity?.x || 0;
+    vinkel = Math.max(-20, Math.min(20, -nyVinkel * 2));
+    bil.style.transform = `translate(-50%, -50%) rotate(${vinkel}deg)`;
+    //tegn aktiv vinekel med svart
+    ctx.save();
+    ctx.translate(ramme.width / 2, ramme.height / 2);
+    ctx.rotate(vinkel * Math.PI / 180);
+    if(Math.abs(vinkel) > 12){
+      ctx.fillStyle = farge.spy;
+    }else{
+      ctx.fillStyle = farge.vei; 
+    }
+    ctx.fillRect(-ramme.width, 80, ramme.width * 2, ramme.height * 2);
+    ctx.restore();
+
+
+    // Oppdater min/maks-visning
+    if (vinkel > maks) {
+      maks = aks;
+      document.getElementById("maks").innerText = Math.floor(maks);
+    }
+    if (vinkel < min) {
+      min = vinkel;
+      document.getElementById("min").innerText = Math.floor(min);
+    }
+  });
+}
+
+
+      // iOS krev tillating
+      if (typeof DeviceMotionEvent?.requestPermission === "function") {
+        const knapp = document.createElement("button");
+        knapp.textContent = "Start";
+        knapp.style.padding = "1em";
+        knapp.style.fontSize = "1.2em";
+        knapp.onclick = () => {
+          DeviceMotionEvent.requestPermission().then((res) => {
+            if (res === "granted") startApp();
+          });
+          knapp.remove();
+        };
+        document.body.appendChild(knapp);
+      } else {
+        startApp(); // Android
+      }
+    </script>
+  </body>
+</html>
