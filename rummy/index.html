@@ -8,217 +8,204 @@
   <style>
     :root {
       --bakgrunnsfarge: #175e26;
-      --appfarge: #aaaaaa;
-      --tekstfarge: #FFF;
+      --tekstfarge: rgb(0, 0, 0);
       --fontstorleik: x-large;
+      --radFarge:#0dcd40;
+      --spelarFarge1: #e01300;
+      --spelarFarge2: #2a88fb;
+      --spelarFarge3: #f8ef00;
+      --spelarFarge4: #00d600;
+      --spelarFarge5: #f736f7;      
       --marg: 10px;
     }
     body{
-      background-color: #999;
+      background-color: var(--bakgrunnsfarge);
+      font-family: 'Comic Sans MS', sans-serif;
+
     }
     #appskjerm{
       border-radius: 5px;
       background-color: var(--bakgrunnsfarge);
     }
+    .spelar1{background-color:var(--spelarFarge1);}
+    .spelar2{background-color:var(--spelarFarge2);}
+    .spelar3{background-color:var(--spelarFarge3); display: none;}
+    .spelar4{background-color:var(--spelarFarge4); display: none;}
+    .spelar5{background-color:var(--spelarFarge5); display: none;}
+    .sjekkFullført { opacity: 0.6; }
     .rad {
-  height: 6dvh;
-  display: flex;
-  margin: 5px;
-  align-items: center;
-  justify-content: center;
-  position: relative; /* Viktig for at p kan plasseres absolutt */
-}
-#spelarmeny{
-  display: none;
-  font-size: 4dvh;
-  align-items: center;
-}
-#spelarmeny p{
-  margin:0;
-}
-#spelarmeny button{
-  font-size: 4vdh;
-  margin: 2px;
-  width:100%
-}
-.regel {
-  font-size: 4dvh;
-  margin: 0;
-  margin-left:15px;
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  left: 50%;
-  pointer-events: none; /* Sørger for at p ikke tar opp klikk */
-  text-align: left;
-  transform: translate(-50%, -50%);
-  z-index: 2; /* Sørger for at p ligger over bakrute */
-}
-button{
-  flex: 1; /* Fordeler plass jevnt */
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  font-size: 2,5dvh;
-  background-color: #dddddd;
-}
-.spelarrute{
-  flex: 1; /* Fordeler plass jevnt */
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  color:rgb(146, 250, 72);
-  font-weight: bold;
-  font-family: 'Comic Sans MS', sans-serif;
-}
-.spelarrute P{
-  margin: 0;
-  margin-left:3px;
-  font-size: 4dvh;
-}
-.spelarnavn{
-  font-weight: bold;
-  overflow: hidden;
-}
-.bakrute{
-  flex: 1; /* Fordeler plass jevnt */
-  height: 100%;
-  background-color: rgb(108, 237, 147)
-}
-.fullført{ background-color: rgb(209, 238, 44);}
-.spelar3, .spelar4, .spelar5{display: none;}
+      height: 6dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .sjekk{
+      flex:1;
+      height: 100%;
+    }
+    .tekstRegler {
+      font-size: 3dvh;
+      margin: 0;
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      pointer-events: none; /* Sørger for at p ikke tar opp klikk */
+      text-align: left;
+      transform: translate(-50%, -65%);
+      z-index: 2; /* Sørger for at p ligger over bakrute */
+      background-color: var(--radFarge);
+      color:var(--tekstfarge);
+    }
 
-
+    button{
+      flex: 1; /* Fordeler plass jevnt */
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      font-size: 2,5dvh;
+      background-color: #dddddd;
+    }
+    .spelarrute{
+      flex: 1; /* Fordeler plass jevnt */
+      height: 100%;
+      justify-content: center;
+      text-align: center;
+      color:var(--tekstfarge);
+      font-weight: bold;
+      font-size: 4dvh;
+    }
   </style>
 </head>
 <body>
   <div id="appskjerm" class="appskjerm-mobil">
     <div class="rad">
-      <div class="spelarrute spelar1" onclick="spelarmeny(1)"><p id="spelarnavn1" class="spelarnavn">Spelar1</p></div>
-      <div class="spelarrute spelar2" onclick="spelarmeny(2)"><p id="spelarnavn2" class="spelarnavn">Spelar2</p></div>
-      <div class="spelarrute spelar3" onclick="spelarmeny(3)"><p id="spelarnavn3" class="spelarnavn">Spelar3</p></div>
-      <div class="spelarrute spelar4" onclick="spelarmeny(4)"><p id="spelarnavn4" class="spelarnavn">Spelar4</p></div>
-      <div class="spelarrute spelar5" onclick="spelarmeny(5)"><p id="spelarnavn5" class="spelarnavn">Spelar5</p></div>
+      <div class="spelarrute spelar1" onclick="skrivPoeng(1)" id="poeng1">0</div>
+      <div class="spelarrute spelar2" onclick="skrivPoeng(2)" id="poeng2">0</div>
+      <div class="spelarrute spelar3" onclick="skrivPoeng(3)" id="poeng3">0</div>
+      <div class="spelarrute spelar4" onclick="skrivPoeng(4)" id="poeng4">0</div>
+      <div class="spelarrute spelar5" onclick="skrivPoeng(5)" id="poeng5">0</div>
     </div>
     <div class="rad">
-      <div class="spelarrute spelar1" onclick="spelarmeny(1)"><p cass="poeng">P: <span id="poeng1">0</p></div>
-      <div class="spelarrute spelar2" onclick="spelarmeny(2)"><p cass="poeng">P: <span id="poeng2">0</p></div>
-      <div class="spelarrute spelar3" onclick="spelarmeny(3)"><p cass="poeng">P: <span id="poeng3">0</p></div>
-      <div class="spelarrute spelar4" onclick="spelarmeny(4)"><p cass="poeng">P: <span id="poeng4">0</p></div>
-      <div class="spelarrute spelar5" onclick="spelarmeny(5)"><p cass="poeng">P: <span id="poeng5">0</p></div>
+      <p class="tekstRegler">1H - 4 Straight</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
     </div>
-    <div class="rad"><p class="regel">1H - 4 Straight</p>        <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">1H - 5 Like</p><div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">2H - 2stk 3 Like</p>      <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">2H - 5 Straight</p> <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">3H - 3stk 3 Like</p>    <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">3H - 5 Stright og 3 Like</p><div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">3H - 7 Stright</span></p>       <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">3H - 6 Stright og 3 Like</p><div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">2H - 2stk 4 Stright</p>     <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">4H - 2stk 5 Like</p>      <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><p class="regel">4H - 9 Stright</p>       <div onclick="byttFarge(this,1)" class="bakrute grå spelar1"></div><div onclick="byttFarge(this,2)" class="bakrute grå spelar2"></div><div onclick="byttFarge(this,3)" class="bakrute grå spelar3"></div><div onclick="byttFarge(this,4)" class="bakrute grå spelar4"></div><div onclick="byttFarge(this,5)" class="bakrute grå spelar5"></div></div>
-    <div class="rad"><button id="fjernSpelar" onclick="fjernSpelar()" disabled="true"> -🧍</button><button id="nullstill" onclick="nullstill()">↺</button><button id="nySpelar" onclick="nySpelar()"> +🧍</button></div>
-  </div>
-  <div id="spelarmeny" class="meldingsboks">
-    <p id="menyNavn" onclick="endreNavn()">Spelar</p>
-    <p onclick="skrivPoeng()">Poeng: <span id="menyPoeng">0</span></p>
-    <button onclick="meirPoeng(5)">1-10 (+5)</button>
-    <button onclick="meirPoeng(10)">J,Q,K (+10)</button>
-    <button onclick="meirPoeng(15)">A (+15)</button>
-    <button onclick="meirPoeng(20)">Hjeler (+20)</button>
-    <button onclick="lukkMeny()">Lukk</button>
+    <div class="rad">
+      <p class="tekstRegler">1H - 5 Like</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">2H - 2stk 3 Like</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">2H - 5 Straight</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">3H - 3stk 3 Like</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">3H - 5 Stright og 3 Like</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">3H - 7 Stright</span></p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">3H - 6 Stright og 3 Like</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">2H - 2stk 4 Stright</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">4H - 2stk 5 Like</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <p class="tekstRegler">4H - 9 Stright</p>
+      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
+    </div>
+    <div class="rad">
+      <button id="lasSkjermPa" onclick="lasSkjermPa()">🌟</button>
+      <button id="nullstill" onclick="nullstill()">↺</button>
+      <button id="endreAntalSpelarar" onclick="endreAntalSpelarar()">🧍?</button></div>
   </div>
 </body>
 <script>
-  antalSpelarar = 2;
-  let aktivSpelar= 0;
-  poeng = [null,0,0,0,0,0];
+  let antalSpelarar = 2;
+  let poeng = [null,0,0,0,0,0];
 
-  function byttFarge(rute, nr){ rute.classList.toggle('fullført');}
+  let ruter = document.querySelectorAll('.sjekk');
+  ruter.forEach((rute, index) => {
+     rute.addEventListener('click', () => { rute.classList.toggle('sjekkFullført'); });
+  });
   
-  function fjernSpelar(){
-    const ruter = document.querySelectorAll('.spelar'+antalSpelarar);
-    ruter.forEach(rute => {
-      rute.style.display = 'none';
-    });
-    antalSpelarar--;
-    if(antalSpelarar < 3){
-      document.getElementById('fjernSpelar').disabled = true;
-    }else if (antalSpelarar < 5){
-      document.getElementById('nySpelar').disabled = false;
+  function endreAntalSpelarar(){
+    if (antalSpelarar < 5){ 
+      antalSpelarar++;
+      visFjernSpelar(true, antalSpelarar);
+    } else{
+      visFjernSpelar(false, 3);
+      visFjernSpelar(false, 4);    
+      visFjernSpelar(false, 5);
+      antalSpelarar = 2;
     }
   }
-  function nySpelar(){
-    antalSpelarar++;
-    const ruter = document.querySelectorAll('.spelar'+antalSpelarar);
+//Endre spelarar knapp
+  function visFjernSpelar(skalVise, spelarNr){
+    const ruter = document.querySelectorAll('.spelar'+spelarNr);
     ruter.forEach(rute => {
-      rute.style.display = 'block';
+      rute.style.display = skalVise ? 'block' : 'none';
     });
-    if(antalSpelarar > 4){
-      document.getElementById('nySpelar').disabled = true;
-    }else if (antalSpelarar > 3){
-      document.getElementById('fjernSpelar').disabled = false;
+  }
+//Nullstill knapp
+  function nullstill(){
+    if(confirm('Er du sikker på at du vil nullstille?')){
+      const ruter = document.querySelectorAll('.sjekk');
+      ruter.forEach(rute => {
+        rute.classList.add('sjekkFullført');
+        poeng = [null,0,0,0,0,0];
+        for(let i = 1; i <= antalSpelarar; i++){
+          document.getElementById('poeng'+i).innerText = poeng[i];
+        }
+      });
     }
+  }
+//Skriv poeng
+  function skrivPoeng(aktivSpelar){
+    let svar = prompt('Skriv inn poeng');
+    svar = parseInt(svar);
+    if(isNaN(svar)) return;
+    poeng[aktivSpelar] = svar;
+    document.getElementById('poeng'+aktivSpelar).innerText = poeng[aktivSpelar];
   }
 
-function nullstill(){
-  const bekreft = confirm('Er du sikker på at du vil nullstille?');
-  if(bekreft){
-    const ruter = document.querySelectorAll('.bakrute');
-    ruter.forEach(rute => {
-      rute.classList.remove('fullført');
-    });
-    poeng = [null,0,0,0,0,0];
-    for(let i = 1; i <= antalSpelarar; i++){
-      document.getElementById('poeng'+i).innerText = poeng[i];
+//Skjerm på knapp
+  let skjermLastPa = null;
+
+  async function lasSkjermPa() {
+    if (skjermLastPa === null) {
+      try {
+        skjermLastPa = await navigator.wakeLock.request('screen');
+        document.getElementById('lasSkjermPa').innerText = '🌓';
+      } catch (err) {
+        alert('Feil: ' + err.message);
+        event.target.checked = false;
+      }
+    } else {
+      if (skjermLastPa) {
+        await skjermLastPa.release();
+        skjermLastPa = null;
+        document.getElementById('lasSkjermPa').innerText = '🌟';
+      }
     }
   }
-}
-function spelarmeny(nr){
-  if(nr === aktivSpelar){
-    lukkMeny();
-    return;
-  }
-  aktivSpelar = Number(nr);
-  const meny = document.getElementById('spelarmeny');
-  let namn = document.getElementById('spelarnavn'+aktivSpelar);
- 
-  meny.style.display = 'flex';
-  document.getElementById('menyNavn').innerText = namn.innerText;
-  document.getElementById('menyPoeng').innerText = poeng[aktivSpelar];
-}
-function endreNavn(){
-let navn = prompt('Skriv inn nytt navn');
-  if(navn === 'depito' || navn === 'dino' || navn === 'mokokako'){
-    alert('For dårlig navn!');
-    document.getElementById('menyNavn').innerText = 'Gunnar';
-    document.getElementById('spelarnavn'+aktivSpelar).innerText = 'Gunnar';
-    return;
-  }
-  if(navn !== ''){
-    document.getElementById('menyNavn').innerText = navn;
-    document.getElementById('spelarnavn'+aktivSpelar).innerText = navn;
-  }
-}
-function lukkMeny(){
-  document.getElementById('spelarmeny').style.display = 'none';
-  aktivSpelar = 0;
-}
-
-function meirPoeng(nyepoeng){
-  poeng[aktivSpelar] += nyepoeng;
-  document.getElementById('poeng'+aktivSpelar).innerText = poeng[aktivSpelar];
-  document.getElementById('menyPoeng').innerText = poeng[aktivSpelar];
-}
-function skrivPoeng(){
-  let svar = prompt('Skriv inn poeng');
-  svar = parseInt(svar);
-  if(isNaN(svar)) return;
-  poeng[aktivSpelar] = svar;
-  document.getElementById('poeng'+aktivSpelar).innerText = poeng[aktivSpelar];
-  document.getElementById('menyPoeng').innerText = poeng[aktivSpelar];
-}
 </script>
   
 </html>
