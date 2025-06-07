@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimeHusk</title>
+<style>
+  :root{
+    --halvtimeHoyde:3dvh;
+    --heiltimeHoyde:6dvh;
+    --rutefarge:antiquewhite;
+  }
+ body {
+   width: 100vw;
+   height: 100dvh;
+   background-color: rgb(31, 79, 95);
+  }
+  #tabell {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  @media (min-width: 600px) {
+    body {
+        width: 375px; /* Typisk mobilbredde */
+        height: 667px; /* Typisk mobilhøyde */
+    }
+  }
+  input{
+    width: 100%;
+    height: var(--halvtimeHoyde);
+    border: none;
+    margin:0;
+    padding: 0;
+    font-size: 1.2em;
+    text-align: center;
+  }
+  .tidStolpe{
+    width: 5vw;
+  }
+  .tidStolpe > p{
+    height:var(--heiltimeHoyde);
+    background-color:var(--rutefarge);
+    margin:0;
+    display: flex;
+    justify-content: center;
+    border-bottom: dotted 1px black;
+    margin-top:1px;
+
+  }
+  h2{
+    display: flex;
+    justify-content: center;
+    background-color: dodgerblue;
+    margin:1px;
+    }
+  .dag{
+    width:13vw;
+    border:solid 1px black;
+  }
+
+  .aktivDag{
+    width:43vw;
+  }
+  .rute{
+    height:var(--halvtimeHoyde);
+    background-color:var(--rutefarge);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    text-wrap: nowrap;
+    border-bottom: dotted 1px black;
+  }
+
+  .ført{
+    background-color: rgb(182, 67, 152);
+  }
+  .låst{
+    background-color: rgb(255, 0, 0);
+  }
+  .fri{
+    background-color: gainsboro;
+    color:darkgray;
+  }
+  .pause{
+    background-color: gainsboro;
+  }
+  .aktivRute{
+    background-color: lightgreen;
+    font-weight: bold;
+  }
+  .knappRad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.5em;
+}
+button{
+  width:auto;
+  font-size: clamp(1em, 5vw, 1.5em);
+}
+  </style>
+</head>
+<body>
+  <div id="tabell">
+  <div class="tidStolpe"><h2>-</h2>
+    <p class="fri">6</p>
+    <p>7</p>
+    <p>8</p>
+    <p>9</p>
+    <p>10</p>
+    <p>11</p>
+    <p>12</p>
+    <p>13</p>
+    <p>14</p>
+    <p class="fri">15</p>
+    <p class="fri">16</p>
+  </div>
+  <div class="dag aktivDag"><h2>MAN</h2>
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute pause" placeholder="zzz..">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+  </div>
+  <div class="dag"><h2>TIR</h2>
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute pause" placeholder="zzz..">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+  </div>
+  <div class="dag"><h2>ONS</h2>
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute pause" placeholder="zzz..">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+  </div>
+  <div class="dag"><h2>TOR</h2>
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute pause" placeholder="zzz..">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+  </div>
+  <div class="dag"><h2>FRE</h2>
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute pause" placeholder="zzz..">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+    <input type="text" class="rute fri">
+  </div>
+  </div>
+  <div class="knappRad">
+    <button class="pause" onclick="nyTypeTime('pause')">Pause</button>
+    <button class="fri" onclick="nyTypeTime('fri')">Fri</button>
+    <button class="ført" onclick="nyTypeTime('ført')">Ført</button>
+    <button class="låst" onclick="nyTypeTime('låst')">Låst</button>
+  </div>
+</body>
+
+
+<script>
+let valgteRuter = [];
+document.body.onload = () => {
+  //lag velg aktivDag dag funksjon
+  const dag = document.querySelectorAll('.dag')
+  dag.forEach(ting => {
+    ting.addEventListener('click', () => {
+      dag.forEach(d => d.classList.remove('aktivDag'));
+      ting.classList.add('aktivDag');
+    });
+  });
+  //lag velg aktivRute rute funksjon
+  const rute = document.querySelectorAll('.rute');
+  rute.forEach(ting => {
+    ting.addEventListener('touchstart', (e) => {
+      dra = true;
+      valgteRuter = [];
+      valgteRuter.forEach(r => r.classList.remove('aktivRute'));
+      ting.classList.add('aktivRute');
+      valgteRuter = [ting];
+    });
+
+    ting.addEventListener('touchmove', (e) => {
+      if (!dra) return;
+      const touch = e.touches[0];
+      const merkaRute = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (merkaRute && merkaRute.classList.contains('rute') && !valgteRuter.includes(merkaRute)) {
+        merkaRute.classList.add('aktivRute');
+        valgteRuter.push(merkaRute);
+      }
+    });
+
+    ting.addEventListener('touchend', () => {
+      dra = false;
+      valgteRuter[0].focus();
+    });
+
+
+    //oppdater tekst og koble saman
+    ting.addEventListener('input', () => {
+      valgteRuter[0].value = ting.value;
+      valgteRuter.slice(1).forEach(rute => {//legg til "koblaSaman" classe i alle merka ruter utenom første
+        rute.value = '';
+      });
+    });
+  });
+}
+function nyTypeTime(type){
+  if(valgteRuter.length === 0) return;
+  valgteRuter.forEach(rute => {
+    rute.classList.remove('fri', 'pause', 'ført', 'låst','aktivRute');
+    rute.classList.add(type);
+    if(type === 'pause'){
+      rute.value = 'zzz..';    
+    } else if(type === 'fri'){
+      rute.value = 'Fri';
+    }
+  });
+  valgteRuter[0].focus();
+
+}
+
+</script>
+</html>
