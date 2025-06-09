@@ -1,211 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rummy!</title>
-  <link rel="stylesheet" href="http://www.kjetilaardal.no/Global/global.css">
-  <style>
-    :root {
-      --bakgrunnsfarge: #175e26;
-      --tekstfarge: rgb(0, 0, 0);
-      --fontstorleik: xxx-large;
-      --radFarge:#fff;
-      --spelarFarge1: #e01300;
-      --spelarFarge2: #f8ef00;
-      --spelarFarge3: #f8ef00;
-      --spelarFarge4: #00d600;
-      --spelarFarge5: #f736f7;      
-      --marg: 10px;
-    }
-    body{
-      background-color: var(--bakgrunnsfarge);
-      font-family: 'Comic Sans MS', sans-serif;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#175e26" />
 
-    }
-    #appskjerm{
-      border-radius: 5px;
-      background-color: var(--bakgrunnsfarge);
-    }
-    .spelar1{background-color:var(--spelarFarge1);}
-    .spelar2{background-color:var(--spelarFarge2);}
-    .spelar3{background-color:var(--spelarFarge3); display: none;}
-    .spelar4{background-color:var(--spelarFarge4); display: none;}
-    .spelar5{background-color:var(--spelarFarge5); display: none;}
-    .sjekkFullført { opacity: 0.6; }
-    .rad {
-      height: 6dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .sjekk{
-      flex:1;
-      height: 100%;
-    }
-    .tekstRegler {
-      font-size: 3dvh;
-      margin: 0;
-      position: absolute;
-      width: 100%;
-      top: 50%;
-      left: 50%;
-      pointer-events: none; /* Sørger for at p ikke tar opp klikk */
-      text-align: left;
-      transform: translate(-50%, -70%);
-      z-index: 2; /* Sørger for at p ligger over bakrute */
-      background-color: var(--radFarge);
-      color:var(--tekstfarge);
-    }
+    <title>Rummy!</title>
+    <link
+      rel="stylesheet"
+      href="http://www.kjetilaardal.no/Global/global.css"
+    />
+    <style>
+      :root {
+        --bakgrunnsfarge: #175e26;
+        --tekstfarge: rgb(0, 0, 0);
+        --fontstorleik: xxx-large;
+        --radFarge2: #fff;
+        --radFarge1: #ddd;
+        --spelarFarge1: #e01300;
+        --spelarFarge2: #f8ef00;
+        --marg: 10px;
+        
+      }
+      body {
+        background-color: var(--bakgrunnsfarge);
+        font-family: "Comic Sans MS", sans-serif;
+        font-weight: bold;
+      }
+      #appskjerm {
+        border-radius: 5px;
+        background-color: var(--bakgrunnsfarge);
+      }
+      .spelar1 {
+        background-color: var(--spelarFarge1);
+      }
+      .spelar2 {
+        background-color: var(--spelarFarge2);
+      }
 
-    button{
-      flex: 1; /* Fordeler plass jevnt */
-      height: 100%;
-      justify-content: center;
-      align-items: center;
-      font-size: 2,5dvh;
-      background-color: #dddddd;
-    }
-    .spelarrute{
-      flex: 1; /* Fordeler plass jevnt */
-      height: 100%;
-      justify-content: center;
-      text-align: center;
-      color:var(--tekstfarge);
-      font-weight: bold;
-      font-size: 4dvh;
-    }
-  </style>
-</head>
-<body>
-  <div id="appskjerm" class="appskjerm-mobil">
-    <div class="rad">
-      <div class="spelarrute spelar1" onclick="skrivPoeng(1)" id="poeng1">0</div>
-      <div class="spelarrute spelar2" onclick="skrivPoeng(2)" id="poeng2">0</div>
-      <div class="spelarrute spelar3" onclick="skrivPoeng(3)" id="poeng3">0</div>
-      <div class="spelarrute spelar4" onclick="skrivPoeng(4)" id="poeng4">0</div>
-      <div class="spelarrute spelar5" onclick="skrivPoeng(5)" id="poeng5">0</div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">1H - 4 Straight</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">1H - 5 Like</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">2H - 2stk 3 Like</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">2H - 4 Straight og 3 like</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">3H - 3stk 3 Like</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">3H - 5 Stright og 3 Like</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">3H - 7 Stright</span></p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">3H - 6 Stright og 3 Like</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">2H - 2stk 4 Stright</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">4H - 2stk 5 Like</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <p class="tekstRegler">4H - 9 Stright</p>
-      <div class="sjekk  sjekkFullført spelar1"></div><div class="sjekk  sjekkFullført spelar2"></div><div class="sjekk  sjekkFullført spelar3"></div><div class="sjekk  sjekkFullført spelar4"></div><div class="sjekk  sjekkFullført spelar5"></div>
-    </div>
-    <div class="rad">
-      <button id="lasSkjermPa" onclick="lasSkjermPa()">🌟</button>
-      <button id="nullstill" onclick="nullstill()">↺</button>
-      <button id="endreAntalSpelarar" onclick="endreAntalSpelarar()">🧍?</button></div>
-  </div>
-</body>
-<script>
-  let antalSpelarar = 2;
-  let poeng = [null,0,0,0,0,0];
+      .rad {
+        height: 6dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .rad:nth-child(odd) {
+        background-color: var(--radFarge1);
+      }
+      .rad:nth-child(even) {
+        background-color: var(--radFarge2);
+      }
+      .bakSjekk {
+        flex: 1;
+        height: 100%;
+        width: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .sjekk {
+        flex: 1;
+        height: 90%;
+        width: 15%;
+      }
+      input[type="checkbox"].spelar1 {
+  accent-color: var(--spelarFarge1);
+}
+input[type="checkbox"].spelar2 {
+  accent-color: var(--spelarFarge2);
+}
+      .tekstRegler {
+        font-size: 3dvh;
+        margin-left: 10px;
+        width: 70%;
+        text-align: left;
+        color: var(--tekstfarge);
+        border-radius: 5px;
+      }
 
-  let ruter = document.querySelectorAll('.sjekk');
-  ruter.forEach((rute, index) => {
-     rute.addEventListener('click', () => { rute.classList.toggle('sjekkFullført'); });
-  });
-  
-  function endreAntalSpelarar(){
-    if (antalSpelarar < 5){ 
-      antalSpelarar++;
-      visFjernSpelar(true, antalSpelarar);
-    } else{
-      visFjernSpelar(false, 3);
-      visFjernSpelar(false, 4);    
-      visFjernSpelar(false, 5);
-      antalSpelarar = 2;
+      button {
+        flex: 1; /* Fordeler plass jevnt */
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        font-size: clamp(0.8rem, 2.5dvh, 1.4rem);
+        background-color: #dddddd;
+      }
+      .spelarrute {
+        flex: 1; /* Fordeler plass jevnt */
+        height: 100%;
+        justify-content: center;
+        text-align: center;
+        color: var(--tekstfarge);
+        font-weight: bold;
+        font-size: 4dvh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="appskjerm" class="appskjerm-mobil">
+      <div class="rad">
+        <div class="spelarrute spelar1" onclick="skrivPoeng(1)" id="poeng1">
+          0
+        </div>
+        <div class="spelarrute spelar2" onclick="skrivPoeng(2)" id="poeng2">
+          0
+        </div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk1spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">1H - 4 STRAIGHT</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk1spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk2spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">1H - 5 LIKE</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk2spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk3spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">2H - 2*3 LIKE</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk3spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk4spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">2H - 4 Straight og 3 like</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk4spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk5spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">3H - 3stk 3 Like</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk5spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk6spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">3H - 5 Stright og 3 Like</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk6spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk7spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">3H - 7 Stright</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk7spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk8spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">3H - 6 Stright og 3 Like</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk8spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk9spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">2H - 2stk 4 Stright</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk9spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk10spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">4H - 2stk 5 Like</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk10spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk11spelar1" class="sjekk spelar1" /></div>
+        <p class="tekstRegler">4H - 9 Stright</p>
+        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk11spelar2" class="sjekk spelar2" /></div>
+      </div>
+      <div class="rad">
+        <button id="lasSkjermPa" onclick="lasSkjermPa()">🌟</button>
+        <button id="nullstill" onclick="nullstill()">↺</button>
+        <button id="endreAntalSpelarar" onclick="endreAntalSpelarar()">
+          🧍?
+        </button>
+      </div>
+    </div>
+  </body>
+  <script>
+    let antalSpelarar = 2;
+    let poeng = [null, 0, 0, 0, 0, 0];
+
+    function endreAntalSpelarar() {
+      if (antalSpelarar < 5) {
+        antalSpelarar++;
+        visFjernSpelar(true, antalSpelarar);
+      } else {
+        visFjernSpelar(false, 3);
+        visFjernSpelar(false, 4);
+        visFjernSpelar(false, 5);
+        antalSpelarar = 2;
+      }
     }
-  }
-//Endre spelarar knapp
-  function visFjernSpelar(skalVise, spelarNr){
-    const ruter = document.querySelectorAll('.spelar'+spelarNr);
-    ruter.forEach(rute => {
-      rute.style.display = skalVise ? 'block' : 'none';
-    });
-  }
-//Nullstill knapp
-  function nullstill(){
-    if(confirm('Er du sikker på at du vil nullstille?')){
-      const ruter = document.querySelectorAll('.sjekk');
-      ruter.forEach(rute => {
-        rute.classList.add('sjekkFullført');
-        poeng = [null,0,0,0,0,0];
-        for(let i = 1; i <= antalSpelarar; i++){
-          document.getElementById('poeng'+i).innerText = poeng[i];
-        }
+    //Endre spelarar knapp
+    function visFjernSpelar(skalVise, spelarNr) {
+      const ruter = document.querySelectorAll(".spelar" + spelarNr);
+      ruter.forEach((rute) => {
+        rute.style.display = skalVise ? "block" : "none";
       });
     }
-  }
-//Skriv poeng
-  function skrivPoeng(aktivSpelar){
-    let svar = prompt('Skriv inn poeng');
-    svar = parseInt(svar);
-    if(isNaN(svar)) return;
-    poeng[aktivSpelar] += svar;
-    document.getElementById('poeng'+aktivSpelar).innerText = poeng[aktivSpelar];
-  }
-
-//Skjerm på knapp
-  let skjermLastPa = null;
-
-  async function lasSkjermPa() {
-    if (skjermLastPa === null) {
-      try {
-        skjermLastPa = await navigator.wakeLock.request('screen');
-        document.getElementById('lasSkjermPa').innerText = '🌓';
-      } catch (err) {
-        alert('Feil: ' + err.message);
-        event.target.checked = false;
-      }
-    } else {
-      if (skjermLastPa) {
-        await skjermLastPa.release();
-        skjermLastPa = null;
-        document.getElementById('lasSkjermPa').innerText = '🌟';
+    //Nullstill knapp
+    function nullstill() {
+      if (confirm("Er du sikker på at du vil nullstille?")) {
+        const ruter = document.querySelectorAll(".sjekk");
+        ruter.forEach((rute) => {
+          rute.checked = false;
+        });
+        poeng = [null, 0, 0, 0, 0, 0];
+        for (let i = 1; i <= antalSpelarar; i++) {
+          document.getElementById("poeng" + i).innerText = poeng[i];
+        }
       }
     }
-  }
-</script>
-  
+    //Skriv poeng
+    function skrivPoeng(aktivSpelar) {
+      let svar = prompt("Skriv inn poeng");
+      svar = parseInt(svar);
+      if (isNaN(svar)) return;
+      poeng[aktivSpelar] += svar;
+      document.getElementById("poeng" + aktivSpelar).innerText =
+        poeng[aktivSpelar];
+    }
+
+    //Skjerm på knapp
+    let skjermLastPa = null;
+
+    async function lasSkjermPa() {
+      if (skjermLastPa === null) {
+        try {
+          skjermLastPa = await navigator.wakeLock.request("screen");
+          document.getElementById("lasSkjermPa").innerText = "🌓";
+        } catch (err) {
+          alert("Feil: " + err.message);
+          event.target.checked = false;
+        }
+      } else {
+        if (skjermLastPa) {
+          await skjermLastPa.release();
+          skjermLastPa = null;
+          document.getElementById("lasSkjermPa").innerText = "🌟";
+        }
+      }
+    }
+  </script>
 </html>
