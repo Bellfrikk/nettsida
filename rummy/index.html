@@ -182,7 +182,7 @@
     let svar = prompt('Skriv inn poeng');
     svar = parseInt(svar);
     if(isNaN(svar)) return;
-    poeng[aktivSpelar] = svar;
+    poeng[aktivSpelar] += svar;
     document.getElementById('poeng'+aktivSpelar).innerText = poeng[aktivSpelar];
   }
 
