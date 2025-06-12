@@ -6,10 +6,7 @@
     <meta name="theme-color" content="#175e26" />
 
     <title>Rummy!</title>
-    <link
-      rel="stylesheet"
-      href="http://www.kjetilaardal.no/Global/global.css"
-    />
+    <link  rel="stylesheet"  href="http://www.kjetilaardal.no/Global/global.css"/>
     <style>
       :root {
         --bakgrunnsfarge: #175e26;
@@ -63,6 +60,10 @@
         flex: 1;
         height: 90%;
         width: 15%;
+      }
+      .låst {
+        opacity: 0.8;
+        pointer-events: none; /* Deaktiverer interaksjon */
       }
       input[type="checkbox"].spelar1 {
         accent-color: var(--spelarFarge1);
@@ -130,59 +131,59 @@
         <div class=" spelar2" id="nr2">👑</div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk1spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,1)" id="r1s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 1</span> <span class="rekka">1234</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk1spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,1)" id="r1s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk2spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,2)" id="r2s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 1</span> <span class="like">55555</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk2spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,2)" id="r2s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk3spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,3)" id="r3s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="like">333</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk3spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,3)" id="r3s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk4spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,4)" id="r4s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="rekka">1234</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk4spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,4)" id="r4s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk5spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,5)" id="r5s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="like">333</span> + <span class="like">333</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk5spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,5)" id="r5s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk6spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,6)" id="r6s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="rekka">12345</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk6spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,6)" id="r6s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk7spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,7)" id="r7s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="rekka">1234567</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk7spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,7)" id="r7s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk8spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,8)" id="r8s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="rekka">123456</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk8spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,8)" id="r8s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk9spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,9)" id="r9s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="rekka">1234</span> + <span class="rekka">1234</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk9spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,9)" id="r9s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk10spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,10)" id="r10s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 4</span> <span class="like">55555</span> + <span class="like">55555</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk10spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,10)" id="r10s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1"><input type="checkbox" id="sjekk11spelar1" class="sjekk spelar1" /></div>
+        <div class="bakSjekk spelar1"><input type="checkbox" onclick="kryssAvRute(1,11)" id="r11s1" class="sjekk spelar1" /></div>
         <p class="tekstRegler"><span class="hjelpar"> 4</span> <span class="rekka">123456789</span></p>
-        <div class="bakSjekk spelar2"><input type="checkbox" id="sjekk11spelar2" class="sjekk spelar2" /></div>
+        <div class="bakSjekk spelar2"><input type="checkbox" onclick="kryssAvRute(2,11)" id="r11s2" class="sjekk spelar2" /></div>
       </div>
       <div class="rad">
         <button id="lasSkjermPa" onclick="lasSkjermPa()">🌟</button>
@@ -192,9 +193,13 @@
     </div>
   </body>
   <script>
-    let poeng = [null, 0, 0];
+    let spelarData = [null,
+      { poeng:0, rundar:[null,false,false,false,false,false,false,false,false,false,false,false]},
+      { poeng:0, rundar:[null,false,false,false,false,false,false,false,false,false,false,false]}
+    ]
+    
     let aktivspelar = Math.floor(Math.random() * 2) + 1;
-
+    let kanKrysse = [null,true,true];
     document.body.onload = nesteRunde();  
     //Nullstill knapp
     function nullstill() {
@@ -203,9 +208,9 @@
         ruter.forEach((rute) => {
           rute.checked = false;
         });
-        poeng = [null, 0, 0, 0, 0, 0];
-        for (let i = 1; i <= antalSpelarar; i++) {
-          document.getElementById("poeng" + i).innerText = poeng[i];
+        for (let i = 1; i < 3; i++) {
+          spelarData[i].poeng = 0;
+          document.getElementById("poeng" + i).innerText = spelarData[i].poeng;
         }
       }
     }
@@ -215,9 +220,9 @@
       
       svar = parseInt(svar);
       if (isNaN(svar)) return;
-      poeng[aktivSpelar] = poeng[aktivSpelar] + svar;
+      spelarData[aktivSpelar].poeng = svar;
       document.getElementById("poeng" + aktivSpelar).innerText =
-        poeng[aktivSpelar];
+      spelarData[aktivSpelar].poeng;
     }
 
     //Skjerm på knapp
@@ -241,10 +246,47 @@
       }
     }
 
+    function kryssAvRute(spelar, rekke){
+      spelarData[spelar].rundar[rekke] = document.getElementById(`r${rekke}s${spelar}`).checked;
+      lagre()
+      aktiverSjekkrute(spelar,false);
+    }
     function nesteRunde() {
+      lastLagring();
       aktivspelar = aktivspelar === 1 ? 2 : 1;
       document.getElementById('nr1').innerText = aktivspelar === 1 ? '😁' : '😕';
       document.getElementById('nr2').innerText = aktivspelar === 2 ? '😁' : '😕';
+      aktiverSjekkrute(1,true);
+      aktiverSjekkrute(2,true);
+      lagre()
+    }
+
+    function aktiverSjekkrute(spelar,nyStatus){
+      const ruter = document.querySelectorAll(`.sjekk`&&`.spelar${spelar}`);
+      ruter.forEach((rute) => {
+        if (nyStatus === true) {
+          rute.classList.remove('låst');
+          console.log('opplåst auto');
+        } else {
+          rute.classList.add('låst');
+          console.log('låst');
+        }
+      });
+    }
+    function lagre() {
+      localStorage.setItem("Rummy", JSON.stringify(spelarData));
+    }
+    function lastLagring() {
+      const lagretData = localStorage.getItem("Rummy");
+      if (lagretData) {
+        spelarData = JSON.parse(lagretData);
+        for (let i = 1; i < 3; i++) {
+          document.getElementById("poeng" + i).innerText = spelarData[i].poeng;
+          for (let j = 1; j < 12; j++) {
+            document.getElementById(`r${j}s${i}`).checked = spelarData[i].rundar[j];
+          }
+        }
+      }
     }
   </script>
 </html>
