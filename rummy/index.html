@@ -190,7 +190,7 @@
         <div class="poeng spelar1">
           <span id="poeng1">0</span> <form id="nyePoeng1" onsubmit="skrivPoeng(1); return false;"> + <input id="poengfelt1" type="number" inputmode="numeric" /></form>
         </div>
-        <div id="pilboks"><span id="pil">🠞</span></div>
+        <div id="pilboks"><span id="pil">=>></span></div>
         <div class="poeng spelar2">
           <span id="poeng2">0</span> <form id="nyePoeng2" onsubmit="skrivPoeng(2); return false;"> + <input id="poengfelt2" type="number" inputmode="numeric" /></form>
         </div>      
@@ -315,11 +315,13 @@ function nesteRunde(){
       // neste spelar
       if(spelarData.runde === 1) {
         spelarData.startspelar = Math.random() < 0.5 ? 3780 : 3960; // 180 for spelar 1, 360 for spelar 2 + 3600 for 10 rundar
-        document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+       // document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+   document.getElementById("pil").innerText = "<<=";
         spelarData.startspelar -= 3600; // Fjerner 10 rundar
       }else{
         spelarData.startspelar = spelarData.startspelar === 180 ? 360 : 180;
-        document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+      //  document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+        document.getElementById("pil").innerText = "=>>";
       }
       
       document.getElementById('startKnapp').innerText = 'SKRIV POENG';
