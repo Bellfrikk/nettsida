@@ -337,7 +337,8 @@ function nesteRunde(){
           document.getElementById(`r${runde}s${spelar}`).checked = spelarData[spelar].rundar[runde];
         }
       }
-      document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+      //document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+      document.getElementById("pil").innerText = spelarData.startspelar = spelarData.startspelar === 180 ? "=>>" : "<<=";
     }
 
     //Skjerm på knapp
