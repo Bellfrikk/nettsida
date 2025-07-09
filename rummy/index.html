@@ -321,7 +321,7 @@ function nesteRunde(){
       }else{
         spelarData.startspelar = spelarData.startspelar === 180 ? 360 : 180;
       //  document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
-        document.getElementById("pil").innerText = "=>>";
+     document.getElementById("pil").innerText = spelarData.startspelar = spelarData.startspelar === 180 ? "=>>" : "<<=";
       }
       
       document.getElementById('startKnapp').innerText = 'SKRIV POENG';
