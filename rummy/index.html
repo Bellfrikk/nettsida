@@ -320,8 +320,8 @@ function nesteRunde(){
         spelarData.startspelar -= 3600; // Fjerner 10 rundar
       }else{
         spelarData.startspelar = spelarData.startspelar === 180 ? 360 : 180;
-      //  document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
-     document.getElementById("pil").innerText = spelarData.startspelar = spelarData.startspelar === 180 ? "=>>" : "<<=";
+        document.getElementById("pil").innerText = spelarData.startspelar === 180 ? "=>>" : "<<=";
+
       }
       
       document.getElementById('startKnapp').innerText = 'SKRIV POENG';
