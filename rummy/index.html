@@ -65,6 +65,7 @@
       #pilboks {
         position: absolute;
         left: auto;
+        top:10px;
         width: 60px;
         height: 60px;
         display: flex;
@@ -120,8 +121,10 @@
       }
       button {
         height: 6dvh;
-        font-size: clamp(0.8rem, 2.5dvh, 1.4rem);
-        background-color: #84f4a2;
+        font-size: clamp(0.8rem, 4dvh, 3rem);
+        background-color: #fff;
+        font-weight: bold;
+        box-shadow: inset 0 0 0 2px #000;
         padding:0;
       }
       #lasSkjermPaKnapp, #nullstillKnapp{
@@ -166,21 +169,21 @@
         height: 22dvh;
         background-color: white;
         color: #000;
+        font-size: medium;
+        font-family: 'monospace', monospace;
+        padding: 5px;
+        margin-top: 0;
         overflow-y: scroll;
-        font-size: large;
-        align-items: bottom;
-        logg.scrollTop = logg.scrollHeight;
-
+        display: block;
+        box-sizing: border-box;
       }
       .loggSpelar1{
         display: flex;
-        color:var(--spelarFarge1);
         justify-content: start;
       }
       .loggSpelar2{
         display: flex;
-        color:var(--spelarFarge2);
-        justify-content: end;
+        justify-content: start;
       }
     </style>
   </head>
@@ -190,8 +193,8 @@
         <div class="poeng spelar1">
           <span id="poeng1">0</span> <form id="nyePoeng1" onsubmit="skrivPoeng(1); return false;"> + <input id="poengfelt1" type="number" inputmode="numeric" /></form>
         </div>
-        <div id="pilboks"><svg id="pil" width="60" height="40" viewBox="0 0 100 100">
-          <polygon points="0,30 30,30 30,10 80,50 30,90 30,70 0,70" fill="black" />
+        <div id="pilboks"><svg id="pil" width="4dvh" height="4dvh" viewBox="0 0 100 100">
+            <polygon points="0,30 30,30 30,10 80,50 30,90 30,70 0,70" fill="black" />
         </svg></div>
         <div class="poeng spelar2">
           <span id="poeng2">0</span> <form id="nyePoeng2" onsubmit="skrivPoeng(2); return false;"> + <input id="poengfelt2" type="number" inputmode="numeric" /></form>
@@ -264,7 +267,7 @@
         <button id="startKnapp" onclick="nesteRunde()">START</button>
         <button id="nullstillKnapp" onclick="nullstill()">↺</button>
       </div>
-      <p id="logg"></p>
+      <div id="logg"></div>
     </div>
 
   </body>
@@ -295,7 +298,7 @@
 
     function kryssAvRute(spelar, rekke) {
       if(rekke !== null) spelarData[spelar].rundar[rekke] = document.getElementById(`r${rekke}s${spelar}`).checked;
-      nyLogg(spelar, `Klarte runde ${rekke}`);
+      nyLogg(spelar, `Spelar ${spelar}: Klarte runde ${rekke}`);
       lagre();
     }
     
@@ -305,7 +308,7 @@
       spelarData[spelar].poeng += Number(svar);
       document.getElementById(`poengfelt${spelar}`).value = '';
       document.getElementById(`poeng${spelar}`).innerText = spelarData[spelar].poeng;
-      nyLogg(spelar, `+ ${svar} poeng`);
+      nyLogg(spelar, `Spelar ${spelar}: + ${svar} poeng`);
     }
 
 
@@ -313,17 +316,16 @@
 function nesteRunde(){
       //ny runde
       spelarData.runde++;
-      nyLogg(spelarData.startspelar, `Starta runde${spelarData.runde}`);
       // neste spelar
       if(spelarData.runde === 1) {
-        spelarData.startspelar = Math.random() < 0.5 ? 3780 : 3960; // 180 for spelar 1, 360 for spelar 2 + 3600 for 10 rundar
-        document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
-        spelarData.startspelar -= 3600; // Fjerner 10 rundar
+        spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
+        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
       }else{
-        spelarData.startspelar = spelarData.startspelar === 180 ? 360 : 180;
-        document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+        spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
+        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
       }
-      
+      nyLogg(spelarData.startspelar, `Spelar ${spelarData.startspelar}: Starta runde ${spelarData.runde}`);
+
       document.getElementById('startKnapp').innerText = 'SKRIV POENG';
       document.getElementById('startKnapp').onclick = aktiverRedigering;
       spelarData.kanRedigere = 'låst';
@@ -337,7 +339,7 @@ function nesteRunde(){
           document.getElementById(`r${runde}s${spelar}`).checked = spelarData[spelar].rundar[runde];
         }
       }
-      document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar}deg)`;
+      document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
     }
 
     //Skjerm på knapp
@@ -365,6 +367,8 @@ function nesteRunde(){
     function nullstill() {
       if (confirm("Er du sikker på at du vil nullstille?")) {
         startOppsett();
+        lagre();
+        lastLagring();
       }
     }
 
