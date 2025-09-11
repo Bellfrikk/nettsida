@@ -97,7 +97,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-      }
+
+}
+
+
       .sjekk {
         flex: 1;
         height: 90%;
@@ -197,19 +200,53 @@ button:active {
         display: flex;
         justify-content: start;
       }
+      #tastatur {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        border-top: 2px solid black;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+        box-sizing: border-box;
+      }
+      #tastaturKnappar {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        width: 90%;
+        max-width: 400px;
+      }
+      #tastatur button {
+        background: #00000042;
+        border: none;
+        border-radius: 8px;
+        height: 60px;
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
+        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      }
     </style>
   </head>
   <body>
     <div id="appskjerm" class="appskjerm-mobil">
       <div class="rad">
-        <div class="poeng spelar1">
-          <span id="poeng1">0</span> <form id="nyePoeng1" onsubmit="skrivPoeng(1); return false;"> + <input id="poengfelt1" type="number" inputmode="numeric" /></form>
+        <div class="poeng spelar1" onclick="skrivPoeng(1)">
+          <span id="poeng1">0</span>
         </div>
+        <div class="poeng spelar1" id="navn1" onclick="byttNavn(1)">KAA</div>
+
         <div id="pilboks"><svg id="pil" width="4dvh" height="4dvh" viewBox="0 0 100 100">
             <polygon points="0,30 30,30 30,10 80,50 30,90 30,70 0,70" fill="black" />
         </svg></div>
-        <div class="poeng spelar2">
-          <span id="poeng2">0</span> <form id="nyePoeng2" onsubmit="skrivPoeng(2); return false;"> + <input id="poengfelt2" type="number" inputmode="numeric" /></form>
+        <div class="poeng spelar2" id="navn2" onclick="byttNavn(2)">Chris</div>
+        <div class="poeng spelar2" onclick="skrivPoeng(2)">
+          <span id="poeng2">0</span>
         </div>      
       </div>
       <div class="rad">
@@ -224,20 +261,17 @@ button:active {
       </div>
       <div class="rad">
         <div class="bakSjekk spelar1"> <input type="checkbox" onclick="kryssAvRute(1,3)" id="r3s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="like">333</span> +
-          <span class="like">333</span></p>
+        <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="like">333</span> + <span class="like">333</span></p>
         <div class="bakSjekk spelar2"> <input type="checkbox" onclick="kryssAvRute(2,3)" id="r3s2" class="sjekk låst spelar2"/></div>
       </div>
       <div class="rad">
         <div class="bakSjekk spelar1"> <input type="checkbox" onclick="kryssAvRute(1,4)" id="r4s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="rekka">1234</span> +
-          <span class="like">333</span></p>
+        <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="rekka">1234</span> + <span class="like">333</span></p>
         <div class="bakSjekk spelar2"> <input type="checkbox" onclick="kryssAvRute(2,4)" id="r4s2" class="sjekk låst spelar2"/></div>
       </div>
       <div class="rad">
         <div class="bakSjekk spelar1"> <input type="checkbox" onclick="kryssAvRute(1,5)" id="r5s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="like">333</span> +
-          <span class="like">333</span> + <span class="like">333</span></p>
+        <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="like">333</span> + <span class="like">333</span> + <span class="like">333</span></p>
         <div class="bakSjekk spelar2"> <input type="checkbox" onclick="kryssAvRute(2,5)" id="r5s2" class="sjekk låst spelar2"/></div>
       </div>
       <div class="rad">
@@ -281,7 +315,23 @@ button:active {
       </div>
       <div id="logg"></div>
     </div>
-
+    <div id="tastatur">
+    <p id="nyePoengTekst"></p>
+      <div id="tastaturKnappar">
+        <button onclick="tastaturKlikk(1)">1</button>
+        <button onclick="tastaturKlikk(2)">2</button>
+        <button onclick="tastaturKlikk(3)">3</button>
+        <button onclick="tastaturKlikk(4)">4</button>
+        <button onclick="tastaturKlikk(5)">5</button>
+        <button onclick="tastaturKlikk(6)">6</button>
+        <button onclick="tastaturKlikk(7)">7</button>
+        <button onclick="tastaturKlikk(8)">8</button>
+        <button onclick="tastaturKlikk(9)">9</button>
+        <button onclick="tastaturVisk()"><-</button>
+        <button onclick="tastaturKlikk(0)">0</button>
+        <button onclick="tastaturOK()">OK</button>
+      </div>
+    </div>
   </body>
 <script>
     // Registrer service worker
@@ -292,7 +342,20 @@ button:active {
     }
 
     let spelarData;
-
+    const rundeTekst = {
+      1: "Firarstrait",
+      2: "Fem lige",
+      3: "To gange tri lige",
+      4: "Firastrait og tress",
+      5: "Tri gange tri lige",
+      6: "Femarstrait og tress",
+      7: "Sjuarstrait",
+      8: "Seksarstrait og tress",
+      9: "To gange firarstrait",
+      10: "To gange fem lige",
+      11: "Niarstrait",
+    }
+  
     document.body.onload = () => lastLagring() || startOppsett();
 
     function startOppsett() {
@@ -303,10 +366,12 @@ button:active {
         logg:'',
         1:{
           poeng: 0,
+          navn:'KAA',
           rundar: [null,false,false,false,false,false,false,false,false,false,false,false],
         },
         2:{
           poeng: 0,
+          navn:'CAA',
           rundar: [null,false,false,false,false,false,false,false,false,false,false,false],
         },
       };
@@ -316,33 +381,14 @@ button:active {
 
     function kryssAvRute(spelar, rekke) {
       if(rekke !== null) spelarData[spelar].rundar[rekke] = document.getElementById(`r${rekke}s${spelar}`).checked;
-      nyLogg(spelar, `Spelar ${spelar}: Klarte runde ${rekke}`);
+      nyLogg(spelar, `${spelarData[spelar].navn} klarte ${rundeTekst[rekke]}`);
       lagre();
     }
-    
-    function skrivPoeng(spelar) {
-      svar = document.getElementById(`poengfelt${spelar}`).value;
-      if (isNaN(svar)) return;
-      spelarData[spelar].poeng += Number(svar);
-      document.getElementById(`poengfelt${spelar}`).value = '';
-      document.getElementById(`poeng${spelar}`).innerText = spelarData[spelar].poeng;
-      nyLogg(spelar, `Spelar ${spelar}: + ${svar} poeng`);
-    }
+
 
 
 
 function nesteRunde(){
-      //ny runde
-      spelarData.runde++;
-      // neste spelar
-      if(spelarData.runde === 1) {
-        spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
-        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
-      }else{
-        spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
-        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
-      }
-      nyLogg(spelarData.startspelar, `Spelar ${spelarData.startspelar}: Starta runde ${spelarData.runde}`);
 
       document.getElementById('startKnapp').innerText = 'SKRIV POENG';
       document.getElementById('startKnapp').onclick = aktiverRedigering;
@@ -353,6 +399,7 @@ function nesteRunde(){
     function oppdaterSkjerm() {
       for (let spelar = 1; spelar < 3; spelar++) {
         document.getElementById("poeng" + spelar).innerText = spelarData[spelar].poeng;
+        document.getElementById("navn" + spelar).innerText = spelarData[spelar].navn;
         for (let runde = 1; runde < 12; runde++) {
           document.getElementById(`r${runde}s${spelar}`).checked = spelarData[spelar].rundar[runde];
         }
@@ -395,18 +442,25 @@ function nesteRunde(){
       document.getElementById('startKnapp').onclick = nesteRunde;
       spelarData.kanRedigere = 'ulåst';
       oppdaterLås()
+      spelarData.runde++;
+      // neste spelar
+      if(spelarData.runde === 1) {
+        spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
+        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
+      }else{
+        spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
+        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
+      }
+      nyLogg(spelarData.startspelar, `Runde ${spelarData.runde}, ${spelarData[spelarData.startspelar].navn} starte`);
+
     }
 
 function oppdaterLås (){
       const ruter = document.querySelectorAll(`.sjekk`);
       if (spelarData.kanRedigere === 'låst') {
         ruter.forEach((rute) => {rute.classList.add("låst"); });
-        document.getElementById('nyePoeng1').style.display = 'none';
-        document.getElementById('nyePoeng2').style.display = 'none';
       } else{ 
         ruter.forEach((rute) => {rute.classList.remove("låst"); }); 
-        document.getElementById('nyePoeng1').style.display = 'flex';
-        document.getElementById('nyePoeng2').style.display = 'flex';  
       }
     }
 
@@ -433,6 +487,63 @@ function oppdaterLås (){
       spelarData.logg += `<span class="loggSpelar${spelar}">${nyTekst}</span>`;
       document.getElementById('logg').innerHTML = spelarData.logg;
       console.log(nyTekst);
+    }
+
+
+    // legge inn nye poeng
+    let aktivPoengSpelar = 0;
+    let tmpSiffer = [];
+    let tmpPoeng = 0;
+    function skrivPoeng(spelar) {
+      aktivPoengSpelar = spelar;
+      document.getElementById('tastatur').style.display = 'flex';
+      tmpSiffer = [];
+      tastaTal = 0;
+      tmpPoeng = spelarData[aktivPoengSpelar].poeng
+      document.getElementById('nyePoengTekst').innerText = tmpPoeng + ' + ';
+      document.getElementById('tastatur').style.backgroundColor = spelar === 1 ? 'var(--spelarFarge1)' : 'var(--spelarFarge2)';
+    }
+    
+    function tastaturKlikk(nr) {
+      tmpSiffer.push(nr);
+      oppdaterTastaturTekst()
+    }
+
+    function tastaturVisk(){
+      if(tmpSiffer.length === 0) {
+        tmpPoeng = 0;
+        oppdaterTastaturTekst();
+      }else{
+        tmpSiffer.pop();//fjerner siste taltet
+        oppdaterTastaturTekst()
+      }
+    }
+
+    function tastaturOK(){
+      let tmptal;
+      if(tmpSiffer.length === 0) tmpTal = 0;
+      else tmpTal = Number(tmpSiffer.join(""));
+      spelarData[aktivPoengSpelar].poeng = tmpPoeng + tmpTal;
+      document.getElementById(`poeng${aktivPoengSpelar}`).innerText = spelarData[aktivPoengSpelar].poeng;
+      nyLogg(aktivPoengSpelar, `${spelarData[aktivPoengSpelar].navn}: + ${tmpTal} poeng`);
+      
+      document.getElementById('tastatur').style.display = 'none';
+      lagre();
+    }
+
+    function oppdaterTastaturTekst() {
+      let tmpTal = Number(tmpSiffer.join(""));
+      document.getElementById('nyePoengTekst').innerText = tmpPoeng + ' + ' + tmpTal + ' = ' + (tmpPoeng + tmpTal);
+
+    }
+    // bytt navn
+    function byttNavn(spelar) {
+      let tmpNavn = prompt('Velg navn:',);
+      if (tmpNavn !== null && tmpNavn.trim() !== '') {
+        spelarData[spelar].navn = tmpNavn.trim();
+        document.getElementById(`navn${spelar}`).innerText = spelarData[spelar].navn;
+        lagre();
+      }
     }
   </script>
 </html>
