@@ -310,7 +310,7 @@ button:active {
       </div>
       <div class="rad">
         <button id="lasSkjermPaKnapp" onclick="lasSkjermPa()">🌟</button>
-        <button id="startKnapp" onclick="nesteRunde()">START</button>
+        <button id="startKnapp" onclick="start()">START</button>
         <button id="nullstillKnapp" onclick="nullstill()">↺</button>
       </div>
       <div id="logg"></div>
@@ -366,12 +366,12 @@ button:active {
         logg:'',
         1:{
           poeng: 0,
-          navn:'KAA',
+          navn:'🤠',
           rundar: [null,false,false,false,false,false,false,false,false,false,false,false],
         },
         2:{
           poeng: 0,
-          navn:'CAA',
+          navn:'😎',
           rundar: [null,false,false,false,false,false,false,false,false,false,false,false],
         },
       };
@@ -388,12 +388,30 @@ button:active {
 
 
 
-function nesteRunde(){
+function start(){
 
       document.getElementById('startKnapp').innerText = 'SKRIV POENG';
-      document.getElementById('startKnapp').onclick = aktiverRedigering;
+      document.getElementById('startKnapp').onclick = skrivPoengKnapp;
       spelarData.kanRedigere = 'låst';
       oppdaterLås();
+      if(spelarData.runde < 1) {
+        spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
+        spelarData.runde = 1;
+        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
+      }
+      nyLogg(spelarData.startspelar, `Runde ${spelarData.runde}, ${spelarData[spelarData.startspelar].navn} starte`);
+    }
+
+
+    function skrivPoengKnapp() {
+      document.getElementById('startKnapp').innerText = 'START';
+      document.getElementById('startKnapp').onclick = start;
+      spelarData.kanRedigere = 'ulåst';
+      oppdaterLås()
+      spelarData.runde++;
+      // neste spelar
+        spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
+        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
     }
 
     function oppdaterSkjerm() {
@@ -437,23 +455,6 @@ function nesteRunde(){
       }
     }
 
-    function aktiverRedigering() {
-      document.getElementById('startKnapp').innerText = 'START';
-      document.getElementById('startKnapp').onclick = nesteRunde;
-      spelarData.kanRedigere = 'ulåst';
-      oppdaterLås()
-      spelarData.runde++;
-      // neste spelar
-      if(spelarData.runde === 1) {
-        spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
-        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
-      }else{
-        spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
-        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
-      }
-      nyLogg(spelarData.startspelar, `Runde ${spelarData.runde}, ${spelarData[spelarData.startspelar].navn} starte`);
-
-    }
 
 function oppdaterLås (){
       const ruter = document.querySelectorAll(`.sjekk`);
