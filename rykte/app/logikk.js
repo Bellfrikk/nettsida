@@ -1,8 +1,7 @@
 import { supabase } from "./supabaseData.js";
 import { gjetteTidSetter, miGruppeId, minSpelarId, navn, naboSpelar, blokkNr, status, tegneTidSetter, antalSider, antalSiderSetter, blokkNrSetter, naboSpelarSetter } from "./hoved.js";
 import { stengspelarOppdateringKanal } from "./startFane.js";
-import { aktiverVisKnapp, endreVisSpelar } from "./vis.js";
-import { nullstillLerret } from "./tegning.js";
+import { visOppsett, aktiverVisKnapp, endreVisSpelar } from "./vis.js";
 import { oppdaterFarger } from "./styling.js";
 let side = 1;
 let ventePaNabo = false;
@@ -38,9 +37,11 @@ export async function logikk() {
             status('ferdig');
         }
         else {
+            if (Number(data.new.status) === 1) {
+                visOppsett();
+            }
             status('visFane');
             console.log('visningsmodus: ' + data.new.status);
-            nullstillLerret();
             oppdaterFarger(Number(data.new.status));
             aktiverVisKnapp(Number(data.new.status));
         }
@@ -75,7 +76,7 @@ export async function nesteSide() {
     }
 }
 //funksjon som venter tid mlliseksund før den gir eit svar som kan awaites på
-function vent(tid) {
+export function vent(tid) {
     return new Promise(resolve => setTimeout(resolve, tid));
 }
 //hent det som nabo har lagra
@@ -109,7 +110,7 @@ function aktiverTegning(ord, blokk, spelarNavn) {
     blokkNrSetter(blokk);
     status('tegneFane');
 }
-async function aktiverGjetting(teikningUrl, blokk, spelarNavn) {
+function aktiverGjetting(teikningUrl, blokk, spelarNavn) {
     document.getElementById('gjetteBilde').src = teikningUrl;
     document.getElementById('gjetteForfattar').innerText = spelarNavn;
     blokkNrSetter(blokk);

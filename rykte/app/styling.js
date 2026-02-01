@@ -25,3 +25,13 @@ export function stylingOppsett() {
     gjetteTidSkyvebryter.addEventListener('input', oppdaterGjetteTidSkyvebryterTekst);
     antalRundarSkyvebryter.addEventListener('input', oppdaterAntalRundarSkyvebryterTekst);
 }
+export function settTilAktivFarge(type) {
+    if (type === 'ord') {
+        document.getElementById('ytterboksOrd').classList.add('aktiv');
+        document.getElementById('ytterboksTegning').classList.remove('aktiv');
+    }
+    else if (type === 'tegning') {
+        document.getElementById('ytterboksTegning').classList.add('aktiv');
+        document.getElementById('ytterboksOrd').classList.remove('aktiv');
+    }
+}

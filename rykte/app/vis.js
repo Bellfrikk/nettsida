@@ -1,8 +1,31 @@
 import { supabase } from './supabaseData.js';
 import { status, miGruppeId, minSpelarId } from "./hoved.js";
 import { startFerdig } from './ferdig.js';
+import { settTilAktivFarge } from './styling.js';
 let visKanal;
 let visSide = 0;
+let visNesteSperra = false;
+export function visOppsett() {
+    document.getElementById('nesteVisKnapp')?.addEventListener('click', visNeste);
+    //Start kanal for vising av tegning og gjetta ord
+    visKanal = supabase.channel('visKanal')
+        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'rundeTabell', filter: `gruppeId=eq.${miGruppeId}` }, (data) => {
+        if (data.new.vis === 'aktiv') {
+            if (data.new.tegning !== null) {
+                document.getElementById('visTegning').classList.remove('usynlig');
+                document.getElementById('visKvenTegna').innerText = `${data.new.spelarNavn}`;
+                document.getElementById('visTegning').src = data.new.tegning;
+                settTilAktivFarge('tegning');
+            }
+            else if (data.new.gjettaOrd !== null) {
+                document.getElementById('visKvenGjetta').innerText = `${data.new.spelarNavn}`;
+                document.getElementById('visOrd').innerText = data.new.gjettaOrd;
+                settTilAktivFarge('ord');
+            }
+        }
+    })
+        .subscribe();
+}
 export async function aktiverVisKnapp(aktivSpelar) {
     //aktiver neste bilde knapp visst det er di blokk som er aktiv
     if (aktivSpelar === minSpelarId) {
@@ -22,25 +45,15 @@ export async function aktiverVisKnapp(aktivSpelar) {
     }
 }
 export function startVis() {
-    document.getElementById('nesteVisKnapp')?.addEventListener('click', () => visNeste(), true);
-    //Start kanal for vising av tegning og gjetta ord
-    visKanal = supabase.channel('visKanal')
-        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'rundeTabell', filter: `gruppeId=eq.${miGruppeId}` }, (data) => {
-        if (data.new.vis === 'aktiv') {
-            if (data.new.tegning !== null) {
-                document.getElementById('visForfattar').innerText = `${data.new.spelarNavn} tegna:`;
-                document.getElementById('visTegning').src = data.new.tegning;
-            }
-            else if (data.new.gjettaOrd !== null) {
-                document.getElementById('visForfattar').innerText = `${data.new.spelarNavn} gjetta:`;
-                document.getElementById('visOrd').innerText = data.new.gjettaOrd;
-            }
-        }
-    })
-        .subscribe();
+    document.getElementById('visTegning').classList.add('usynlig');
+    document.getElementById('visOrd').innerText = '';
+    document.getElementById('visKvenGjetta').innerText = '';
+    document.getElementById('visKvenTegna').innerText = '';
 }
 async function visNeste() {
-    document.getElementById('nesteVisKnapp')?.classList.add('usynlig');
+    if (visNesteSperra)
+        return;
+    visNesteSperra = true;
     //Hent id til den aktive runder
     const { data: aktivRunde } = await supabase
         .from('rundeTabell')
@@ -49,6 +62,7 @@ async function visNeste() {
         .eq('vis', 'aktiv')
         .maybeSingle();
     if (!aktivRunde) {
+        visNesteSperra = false;
         console.log('Ingen aktiv runde');
         return;
     }
@@ -69,6 +83,7 @@ async function visNeste() {
     if (!nesteRunde) {
         console.log('Visning ferdig for denne blokka');
         endreVisSpelar(minSpelarId + 1);
+        visNesteSperra = false;
         return;
     }
     //endre status til aktiv for neste runde
@@ -81,7 +96,7 @@ async function visNeste() {
         return;
     }
     else {
-        document.getElementById('nesteVisKnapp')?.classList.remove('usynlig');
+        visNesteSperra = false;
     }
 }
 export async function endreVisSpelar(spelarNr) {
@@ -108,6 +123,7 @@ export async function endreVisSpelar(spelarNr) {
         .eq('gruppeId', miGruppeId);
     if (error)
         console.error('Feil ved oppdatering av gruppestatus', error);
-    else
+    else {
         console.log('endra gruppestatus til' + spelarNr);
+    }
 }
