@@ -412,7 +412,12 @@ function start(){
       document.getElementById('startKnapp').onclick = spelarData.kanRedigere === 'ulåst' ? start : skrivPoengKnapp;
     }
     function oppdaterPil () {
-      document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar*180}deg)`;
+      const pil = document.getElementById("pil");
+      if(spelarData.kanRedigere === 'låst'){
+        pil.style.transform = `rotate(${90}deg)`;
+      }else{
+        pil.style.transform = `rotate(${spelarData.startspelar*180}deg)`;
+      }
     }
   
     function oppdaterSkjerm() {
