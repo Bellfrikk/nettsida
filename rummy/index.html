@@ -366,6 +366,7 @@
     document.body.onload = () => lastLagring() || startOppsett();
 
     function startOppsett() {
+      console.log('v.1.1);
       spelarData = {
         runde:0,
         kanRedigere: 'ulåst',
@@ -488,9 +489,9 @@ function oppdaterLås (){
     }
 function sjekkOmLåst(){
   const knapp = document.getElementById('startKnapp');
-  if(spelarData.kanRedigere === 'låst');
+  if(spelarData.kanRedigere === 'låst'){
     knapp.classList.add("risteKnapp");
-    setTimeout(() => { knapp.classList.remove("risteKnapp");}, 400);}
+    setTimeout(() => { knapp.classList.remove("risteKnapp");}, 400);
   }
 }
     function lagre() {
