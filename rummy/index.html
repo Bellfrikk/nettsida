@@ -395,31 +395,36 @@ button:active {
 
 
 function start(){
-
-      document.getElementById('startKnapp').innerText = 'SKRIV POENG';
-      document.getElementById('startKnapp').onclick = skrivPoengKnapp;
       spelarData.kanRedigere = 'låst';
+      oppdaterStartKnapp()
       oppdaterLås();
       if(spelarData.runde < 1) {
         spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
         spelarData.runde = 1;
-        document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar*180}deg)`;
+        oppdaterPil()
       }
       nyLogg(spelarData.startspelar, `Runde ${spelarData.runde}, ${spelarData[spelarData.startspelar].navn} starte`);
     }
 
 
     function skrivPoengKnapp() {
-      document.getElementById('startKnapp').innerText = 'START';
-      document.getElementById('startKnapp').onclick = start;
+
       spelarData.kanRedigere = 'ulåst';
+      oppdaterStartKnapp()
       oppdaterLås()
       spelarData.runde++;
       // neste spelar
-        spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
-        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
+      spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
+      oppdaterPil()
     }
-
+    function oppdaterStartKnapp () {
+      document.getElementById('startKnapp').innerText = spelarData.kanRedigere === 'ulåst' ? 'START' : 'SKRIV POENG';
+      document.getElementById('startKnapp').onclick = spelarData.kanRedigere === 'ulåst' ? start : skrivPoengKnapp;
+    }
+    function oppdaterPil () {
+      document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar*180}deg)`;
+    }
+  
     function oppdaterSkjerm() {
       for (let spelar = 1; spelar < 3; spelar++) {
         document.getElementById("poeng" + spelar).innerText = spelarData[spelar].poeng;
@@ -428,7 +433,8 @@ function start(){
           document.getElementById(`r${runde}s${spelar}`).checked = spelarData[spelar].rundar[runde];
         }
       }
-      document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
+      oppdaterPil();
+      
     }
 
     //Skjerm på knapp
@@ -456,6 +462,7 @@ function start(){
     function nullstill() {
       if (confirm("Er du sikker på at du vil nullstille?")) {
         startOppsett();
+        oppdaterStartKnapp();
         lagre();
         lastLagring();
       }
@@ -480,6 +487,7 @@ function oppdaterLås (){
       if (lagretData) {
         spelarData = JSON.parse(lagretData);
         oppdaterSkjerm();
+        oppdaterStartKnapp();
         oppdaterLås();
         //oppdater logg
         document.getElementById('logg').innerHTML = spelarData.logg;
