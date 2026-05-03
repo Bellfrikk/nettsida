@@ -506,6 +506,7 @@ function oppdaterLås (){
     let tmpSiffer = [];
     let tmpPoeng = 0;
     function skrivPoeng(spelar) {
+      if(spelarData.kanRedigere === 'låst') return;
       aktivPoengSpelar = spelar;
       document.getElementById('tastatur').style.display = 'flex';
       tmpSiffer = [];
