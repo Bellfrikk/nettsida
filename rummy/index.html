@@ -377,7 +377,8 @@
 
     function kryssAvRute(spelar, rekke) {
       if(rekke !== null) spelarData[spelar].rundar[rekke] = document.getElementById(`r${rekke}s${spelar}`).checked;
-      nyLogg(spelar, `${spelarData[spelar].navn} klarte ${rundeTekst[rekke]}`);
+      const nyTekst = rekke ? 'klarte' : 'Juksa';
+      nyLogg(spelar, `${spelarData[spelar].navn} ${nyTekst} ${rundeTekst[rekke]}`);
       lagre();
     }
 
@@ -492,6 +493,7 @@ function oppdaterLås (){
       spelarData.logg += `<span class="loggSpelar${spelar}">${nyTekst}</span>`;
       document.getElementById('logg').innerHTML = spelarData.logg;
       console.log(nyTekst);
+      document.getElementById('logg').scrollTop = logg.scrollHeight;//skroller ned
     }
 
 
@@ -525,7 +527,7 @@ function oppdaterLås (){
     }
 
     function tastaturOK(){
-      let tmptal;
+      let tmpTal;
       if(tmpSiffer.length === 0) tmpTal = 0;
       else tmpTal = Number(tmpSiffer.join(""));
       spelarData[aktivPoengSpelar].poeng = tmpPoeng + tmpTal;
