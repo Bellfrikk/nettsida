@@ -90,7 +90,7 @@
         border-bottom: 1px solid black;
 
       }
-      .bakSjekk onclick="sjekkOmLåst()" {
+      .bakSjekk {
         flex: 1;
         height: 100%;
         width: 10%;
@@ -235,7 +235,6 @@
 }
 
 .risteKnapp {
-  color: red !important;
   animation: hoppeKnapp 0.4s ease;
 }
     </style>
@@ -345,7 +344,7 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").then(() => {
         console.log("✅ Service Worker registrert");
-        console.log('v.1.1.1');
+        console.log('v.1.1.2');
       });
     }
 
@@ -517,9 +516,10 @@ function sjekkOmLåst(){
     function nyLogg(spelar, nyTekst){
       if(nyTekst === undefined || nyTekst === '') return;
       spelarData.logg += `<span class="loggSpelar${spelar}">${nyTekst}</span>`;
-      document.getElementById('logg').innerHTML = spelarData.logg;
+      const loggen = document.getElementById('logg')
+      loggen.innerHTML = spelarData.logg;
+      loggen.scrollTop = loggen.scrollHeight;//skroller ned
       console.log(nyTekst);
-      document.getElementById('logg').scrollTop = logg.scrollHeight;//skroller ned
     }
 
 
