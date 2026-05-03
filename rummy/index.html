@@ -391,8 +391,8 @@ function start(){
       if(spelarData.runde < 1) {
         spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
         spelarData.runde = 1;
-        oppdaterPil()
       }
+      oppdaterPil()
       nyLogg(spelarData.startspelar, `Runde ${spelarData.runde}, ${spelarData[spelarData.startspelar].navn} starte`);
     }
 
@@ -413,7 +413,7 @@ function start(){
     }
     function oppdaterPil () {
       const pil = document.getElementById("pil");
-      if(spelarData.kanRedigere === 'låst'){
+      if(spelarData.kanRedigere === 'ulåst'){
         pil.style.transform = `rotate(${90}deg)`;
       }else{
         pil.style.transform = `rotate(${spelarData.startspelar*180}deg)`;
