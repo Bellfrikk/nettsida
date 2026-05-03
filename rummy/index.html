@@ -345,6 +345,7 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").then(() => {
         console.log("✅ Service Worker registrert");
+        console.log('v.1.1.1');
       });
     }
 
@@ -366,7 +367,7 @@
     document.body.onload = () => lastLagring() || startOppsett();
 
     function startOppsett() {
-      console.log('v.1.1.1');
+      
       spelarData = {
         runde:0,
         kanRedigere: 'ulåst',
