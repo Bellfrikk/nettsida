@@ -125,7 +125,6 @@
       }
 
       button {
-  background: linear-gradient(135deg, var(--spelarFarge1) 0%, var(--spelarFarge2) 100%);
   border: none;
   border-radius: 8px;
   height: 95%;
@@ -137,16 +136,23 @@
   box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
   transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
-
+#lasSkjermPaKnapp{
+  background-color:var(--spelarFarge1)
+}
+#nullstillKnapp{
+  background-color:var(--spelarFarge2)
+}
+      
 button:active {
   transform: translateY(0);
   box-shadow: 0 3px 10px rgba(37, 117, 252, 0.5);
 }
-      #lasSkjermPaKnapp, #nullstillKnapp{
-        width:15%;
-      }
+#lasSkjermPaKnapp, #nullstillKnapp{
+  width:15%;
+}
       #startKnapp{
         width:70%;
+          background: linear-gradient(135deg, var(--spelarFarge1) 0%, var(--spelarFarge2) 100%);
       }
 
       .hjelpar {
@@ -397,7 +403,7 @@ function start(){
       if(spelarData.runde < 1) {
         spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
         spelarData.runde = 1;
-        document.getElementById("pil").style.transform = `rotate(${(spelarData.startspelar*180)-180}deg)`;
+        document.getElementById("pil").style.transform = `rotate(${spelarData.startspelar*180}deg)`;
       }
       nyLogg(spelarData.startspelar, `Runde ${spelarData.runde}, ${spelarData[spelarData.startspelar].navn} starte`);
     }
