@@ -599,8 +599,8 @@ function sjekkOmLåst(){
     }
     // bytt navn
     function byttNavn(spelar) {
-      document.getElementById('nyttNavnSpelar1').value = spelarData.1.navn;
-      document.getElementById('nyttNavnSpelar2').value = spelarData.2.navn;
+      document.getElementById('nyttNavnSpelar1').value = spelarData['1'].navn;
+      document.getElementById('nyttNavnSpelar2').value = spelarData['2'].navn;
       document.getElementById('nyttNavn').style.display = 'flex';
     }
     function nyttNavn( svar ) {
