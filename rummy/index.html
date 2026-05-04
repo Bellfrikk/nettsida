@@ -611,7 +611,7 @@ function sjekkOmLåst(){
       document.getElementById('nyttNavn').style.display = 'none';
     }
 
-    byttNavnet (spelar) {
+    function byttNavnet (spelar) {
      const tmpNavn = document.getElementById(`nyttNavnSpel${spelar}`).value;
       if (tmpNavn !== null && tmpNavn.trim() !== '') {
         spelarData[spelar].navn = tmpNavn.trim();
