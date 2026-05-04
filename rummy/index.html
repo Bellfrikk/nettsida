@@ -34,7 +34,7 @@
       @media (min-width: 500px) {
         .appskjerm-mobil {
           width: 500px;
-          height: 667px;
+          height: 100dvh;
           margin: 0 auto; /* Sentrer på bred skjerm */
         }
       }
@@ -195,9 +195,8 @@
         display: flex;
         justify-content: start;
       }
-      #tastatur {
+      .poppopp {
         position: fixed;
-        bottom: 0;
         left: 0;
         width: 100vw;
         border-top: 2px solid black;
@@ -206,6 +205,12 @@
         align-items: center;
         padding: 10px 0;
         box-sizing: border-box;
+      }
+      #bekreftNullstill {
+        bottom: auto;
+      }
+      #tastatur {
+        bottom: 0;
       }
       #tastaturKnappar {
         display: grid;
@@ -321,7 +326,7 @@
       </div>
       <div id="logg"></div>
     </div>
-    <div id="tastatur">
+    <div id="tastatur" class="poppopp">
     <p id="nyePoengTekst"></p>
       <div id="tastaturKnappar">
         <button onclick="tastaturKlikk(1)">1</button>
@@ -337,6 +342,17 @@
         <button onclick="tastaturKlikk(0)">0</button>
         <button onclick="tastaturOK()">OK</button>
       </div>
+    </div>
+    <div id="bekreftNullstill"  class="poppopp">
+      <p>Sikker på du vil nullstille?</p>
+      <button onclick="bekreftNullstill(true)">Nullstill</button>
+      <button onclick="bekreftNullstill(false)">Naaai!</button>
+    </div>
+    <div id="nyttNavn"  class="poppopp">
+      <input type="text" id="nyttNavnSpelar1">
+      <input type="text" id="nyttNavnSpelar2">
+      <button onclick="nyttNavn(true)">Lagre</button>
+      <button onclick="nyttNavn(false)">Avbryt</button>
     </div>
   </body>
 <script>
@@ -470,11 +486,17 @@ function start(){
 
     //Nullstill knapp
     function nullstill() {
-      if (confirm("Er du sikker på at du vil nullstille?")) {
+      document.getElementById('bekreftNullstill').style.display = 'flex';
+    }
+    function bekreftNullstill( svar ) {
+      if (svar) {
         startOppsett();
         oppdaterStartKnapp();
         lagre();
         lastLagring();
+      }else{
+        document.getElementById('bekreftNullstill').style.display = 'none';
+        return;
       }
     }
 
@@ -574,11 +596,23 @@ function sjekkOmLåst(){
     }
     // bytt navn
     function byttNavn(spelar) {
-      let tmpNavn = prompt('Velg navn:',);
+      document.getElementById('nyttNavnSpelar1').value = spelarData.1.navn;
+      document.getElementById('nyttNavnSpelar2').value = spelarData.2.navn;
+      document.getElementById('nyttNavn').style.display = 'flex';
+    }
+    function nyttNavn( svar )
+      if( svar === false ) return;
+      byttNavnet(1);
+      byttNavnet(2);
+      lagre();
+      document.getElementById('nyttNavn').style.display = 'none';
+    }
+
+    byttNavnet (spelar) {
+     const tmpNavn = document.getElementById(`nyttNavnSpel${spelar}`).value;
       if (tmpNavn !== null && tmpNavn.trim() !== '') {
         spelarData[spelar].navn = tmpNavn.trim();
         document.getElementById(`navn${spelar}`).innerText = spelarData[spelar].navn;
-        lagre();
       }
     }
   </script>
