@@ -210,21 +210,21 @@
   padding: 10px 0;
   border-radius: 20px;
       }
-      #poppup button {
-        background: #555;
-        border: none;
-        border-radius: 8px;
-        height: 60px;
-        color: white;
-        font-size: 2rem;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
-        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-      }
-      #bekreftNullstill {
-        bottom: auto;
-      }
+  .poppup button {
+    background: #555;
+    border: none
+    border-radius: 8px;
+    height: 60px;
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+   }
+   #bekreftNullstill {
+    bottom: auto;
+   }
       #tastatur {
         font-size:medium;
         bottom: 0;
@@ -386,7 +386,7 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").then(() => {
         console.log("✅ Service Worker registrert");
-        console.log('v.1.1.5');
+        console.log('v.1.1.6');
       });
     }
 
@@ -520,8 +520,6 @@ function start(){
         oppdaterStartKnapp();
         lagre();
         lastLagring();
-      }else{
-        return;
       }
       document.getElementById('bekreftNullstill').style.display = 'none';
     }
@@ -628,17 +626,15 @@ function sjekkOmLåst(){
     }
     function nyttNavn( svar ) {
       if( svar ){
-      byttNavnet(1);
-      byttNavnet(2);
-      lagre();
-      }else{
-        return;
+        byttNavnet(1);
+        byttNavnet(2);
+        lagre();
       }
       document.getElementById('nyttNavn').style.display = 'none';
     }
 
     function byttNavnet (spelar) {
-     const tmpNavn = document.getElementById(`nyttNavnSpel${spelar}`).value;
+     const tmpNavn = document.getElementById(`nyttNavnSpelar${spelar}`).value;
       if (tmpNavn !== null && tmpNavn.trim() !== '') {
         spelarData[spelar].navn = tmpNavn.trim();
         document.getElementById(`navn${spelar}`).innerText = spelarData[spelar].navn;
