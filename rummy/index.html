@@ -142,6 +142,7 @@
       #startKnapp{
         width:72%;
           background: linear-gradient(135deg, var(--spelarFarge1) 0%, var(--spelarFarge2) 100%);
+        color:black;
       }
 
       .hjelpar {
@@ -209,8 +210,8 @@
   padding: 10px 0;
   border-radius: 20px;
       }
-            #poppup button {
-        background: #00000042;
+      #poppup button {
+        background: #555;
         border: none;
         border-radius: 8px;
         height: 60px;
@@ -225,6 +226,7 @@
         bottom: auto;
       }
       #tastatur {
+        font-size:medium;
         bottom: 0;
       }
       #tastaturKnappar {
@@ -366,10 +368,14 @@
       </div>
     </div>
     <div id="nyttNavn"  class="poppopp">
-      <input type="text" id="nyttNavnSpelar1">
-      <input type="text" id="nyttNavnSpelar2">
+      <div>
+        <input type="text" id="nyttNavnSpelar1">
+        <input type="text" id="nyttNavnSpelar2">
+      </div>
+      <div>
       <button onclick="nyttNavn(true)">Lagre</button>
       <button onclick="nyttNavn(false)">Avbryt</button>
+      </div>
     </div>
   </body>
 
@@ -515,9 +521,9 @@ function start(){
         lagre();
         lastLagring();
       }else{
-        document.getElementById('bekreftNullstill').style.display = 'none';
         return;
       }
+      document.getElementById('bekreftNullstill').style.display = 'none';
     }
 
 
@@ -621,10 +627,13 @@ function sjekkOmLåst(){
       document.getElementById('nyttNavn').style.display = 'flex';
     }
     function nyttNavn( svar ) {
-      if( svar === false ) return;
+      if( svar ){
       byttNavnet(1);
       byttNavnet(2);
       lagre();
+      }else{
+        return;
+      }
       document.getElementById('nyttNavn').style.display = 'none';
     }
 
