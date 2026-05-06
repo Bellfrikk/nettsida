@@ -142,7 +142,7 @@
       #startKnapp{
         width:72%;
           background: linear-gradient(135deg, var(--spelarFarge1) 0%, var(--spelarFarge2) 100%);
-        color:black;
+        color: var(--tekstFarge);
       }
 
       .hjelpar {
@@ -210,7 +210,7 @@
   padding: 10px 0;
   border-radius: 20px;
       }
-  .poppup button {
+  .poppupKnapp {
     background: #555;
     border: none
     border-radius: 8px;
@@ -363,8 +363,8 @@
     <div id="bekreftNullstill"  class="poppopp">
       <p>Sikker på du vil nullstille?</p>
       <div>
-      <button onclick="bekreftNullstill(true)">Nullstill</button>
-      <button onclick="bekreftNullstill(false)">Naaai!</button>
+      <button style='poppuppKnapp' onclick="bekreftNullstill(true)">Nullstill</button>
+      <button style='poppuppKnapp' onclick="bekreftNullstill(false)">Naaai!</button>
       </div>
     </div>
     <div id="nyttNavn"  class="poppopp">
@@ -373,8 +373,8 @@
         <input type="text" id="nyttNavnSpelar2">
       </div>
       <div>
-      <button onclick="nyttNavn(true)">Lagre</button>
-      <button onclick="nyttNavn(false)">Avbryt</button>
+      <button style='poppuppKnapp' onclick="nyttNavn(true)">Lagre</button>
+      <button style='poppuppKnapp' onclick="nyttNavn(false)">Avbryt</button>
       </div>
     </div>
   </body>
@@ -386,7 +386,7 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").then(() => {
         console.log("✅ Service Worker registrert");
-        console.log('v.1.1.6');
+        console.log('v.1.1.7');
       });
     }
 
@@ -448,7 +448,7 @@ function start(){
         spelarData.runde = 1;
       }
       oppdaterPil()
-      nyLogg(spelarData.startspelar, `Runde ${spelarData.runde}, ${spelarData[spelarData.startspelar].navn} starte`);
+      nyLogg(spelarData.startspelar, `${spelarData[spelarData.startspelar].navn} starte runde ${spelarData.runde}, `);
     }
 
 
