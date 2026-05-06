@@ -196,15 +196,30 @@
         justify-content: start;
       }
       .poppopp {
-        position: fixed;
-        left: 0;
-        width: 100vw;
-        border-top: 2px solid black;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 0;
-        box-sizing: border-box;
+          position: fixed;
+  top: 30dvh;
+  left: 5vw;
+  background: var(--spelarFarge2);
+  width: 90%;
+  height: auto;
+  border: 2px solid black;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  border-radius: 20px;
+      }
+            #poppup button {
+        background: #00000042;
+        border: none;
+        border-radius: 8px;
+        height: 60px;
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
+        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
       }
       #bekreftNullstill {
         bottom: auto;
@@ -345,8 +360,10 @@
     </div>
     <div id="bekreftNullstill"  class="poppopp">
       <p>Sikker på du vil nullstille?</p>
+      <div>
       <button onclick="bekreftNullstill(true)">Nullstill</button>
       <button onclick="bekreftNullstill(false)">Naaai!</button>
+      </div>
     </div>
     <div id="nyttNavn"  class="poppopp">
       <input type="text" id="nyttNavnSpelar1">
@@ -363,7 +380,7 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").then(() => {
         console.log("✅ Service Worker registrert");
-        console.log('v.1.1.4');
+        console.log('v.1.1.5');
       });
     }
 
