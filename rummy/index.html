@@ -212,19 +212,20 @@
     .poppopp p {
       font-size:2rem;
       padding: 5px;
-      margin:0;
+      margin:10;
     }
     .poppopp input{
       font-size:2rem;
-      padding: 5px;
+      margin: 05px;
+      width:80%;
     }
   .poppoppKnapp {
     background: var(--spelarFarge1);
     border: none;
     border-radius: 8px;
-    height: 60px;
+    height: 40px;
     color: white;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
@@ -392,7 +393,7 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").then(() => {
         console.log("✅ Service Worker registrert");
-        console.log('v.1.2.0');
+        console.log('v.1.2.1');
       });
     }
 
