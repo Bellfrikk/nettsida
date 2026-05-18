@@ -1,18 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#175e26" />
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#000000" />
     <title>Rummy!</title>
     <style>
+      /*-----------Generelt------------*/
       :root {
         --bakgrunnsfarge: #000;
         --tekstfarge: #000;
         --fontstorleik: xxx-large;
-        --radFarge: #fff;
+        --radFarge: white;
         --spelarFarge1: #2bea09;
         --spelarFarge2: #11b7f8;
       }
@@ -44,14 +45,43 @@
         font-weight: bold;
       }
       #appskjerm {
-        background-color: var(--bakgrunnsfarge);
+        background: linear-gradient( 90deg, 
+          var(--spelarFarge1) 0%, 
+          var(--spelarFarge1) 49%, 
+          var(--spelarFarge2) 51%,
+          var(--spelarFarge2) 100% 
+          );
+        position: relative;
+        display: flex;
+        flex-direction: column;
       }
-      .spelar1 {
-        background-color: var(--spelarFarge1);
+
+      .rad {
+        height: 6dvh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
       }
-      .spelar2 {
-        background-color: var(--spelarFarge2);
+      /*----------- per element kronologisk ------------*/
+      /*meny*/
+
+      .meny{
+        background-color: black;
       }
+      .meny button{
+        width:25%;
+        height:100%;
+        background-color: black;
+        color: white;
+        font-size: 3dvh;
+        box-shadow: #999999 0px 4px 15px;
+
+        
+      }
+      
+      /*poeng, navn linje*/
       .poeng {
         display: flex;
         height: 100%;
@@ -63,32 +93,9 @@
         font-weight: bold;
         font-size: 4dvh;
       }
-      #pilboks {
-        position: absolute;
-        left: auto;
-        top:10px;
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: top;
-        justify-content: center;
-      }
-      #pil{
-        font-size: 40px;
-        transform-origin: center center;
-        transition: transform 1.3s ease-in-out;
-      }
 
-      .rad {
-        height: 6dvh;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        background-color: var(--radFarge);
-       
-      }
+
+      /*runde kryss*/
       .bakSjekk {
         flex: 1;
         height: 100%;
@@ -96,11 +103,29 @@
         display: flex;
         justify-content: center;
         align-items: center;
-}
+      }
       .sjekk {
         flex: 1;
         height: 90%;
         width: 15%;
+        
+      }
+      .like,
+      .rekka {
+        border-radius: 5px;
+        padding: 2px;
+      }
+      .like {
+        background-color: #ff000020;
+      }
+      .rekka {
+        background-color: #0000ff20;
+      }
+      .hjelpar {
+        color: #fff;
+        background-color: #000;
+        border-radius: 50%;
+        padding: 3px;
       }
       .låst {
         opacity: 0.8;
@@ -112,133 +137,159 @@
       input[type="checkbox"].spelar2 {
         accent-color: var(--spelarFarge2);
       }
-      .tekstRegler {
+      .rundeTekst {
         font-size: 3dvh;
         margin-left: 5px;
+        padding: 5px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         width: 70%;
         text-align: left;
         color: var(--tekstfarge);
-      }
-      button {
-  border: none;
-  height: 95%;
-  color: black;
-  padding: 12px 24px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-      
-#lasSkjermPaKnapp{
-  background-color:var(--spelarFarge1)
-}
-#nullstillKnapp{
-  background-color:var(--spelarFarge2)
-}
-#lasSkjermPaKnapp, #nullstillKnapp{
-  width:14%;
-}
-      #startKnapp{
-        width:72%;
-          background: linear-gradient(135deg, var(--spelarFarge1) 0%, var(--spelarFarge2) 100%);
-        color: var(--tekstFarge);
+        background-color: var(--radFarge);
       }
 
-      .hjelpar {
-        color: #fff;
-        background-color: #000;
-        border: #000 2px solid;
-        border-radius: 50%;
-        padding: 2px;
+      /*start knapp og skrivPoeng knapp*/
+      #startOgSkrivPoengKnapp{
+        min-height: 20dvh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
       }
-      .like,
-      .rekka {
-        border-radius: 5px;
-        padding: 2px;
+
+
+      #startKnapp, #skrivPoengKnapp, .startSpelar {
+        flex: 1;
+        margin: 10px;
+        box-sizing: border-box;
+        font-size: clamp(2rem, 5dvh, 4rem);
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        color: var(--tekstfarge);
+        background-color: var(--radFarge);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
-      .like {
-        background-color: #ff00001e;
+      #skrivPoengKnappBoks{
+        flex-direction: column;
+        justify-content: center;
+        display:none;
+
       }
-      .rekka {
-        background-color: #0000ff1e;
+      #skrivPoengKnapp, #startSpelar{
+        min-height: 8dvh;
       }
-      #poengfelt1, #poengfelt2{
-        border: 1px solid black;
-        width: 16vw;
-        height: 10vw;
-        font-size: xx-large;
+      #startKnapp{
+        height:100%;
       }
-      #poengfelt1{
-        background-color: var(--spelarFarge1)
+
+      .startSpelar1 {
+        background-color: var(--spelarFarge1);
       }
-      #poengfelt2{
-        background-color: var(--spelarFarge2)
+      .startSpelar2 {
+        background-color: var(--spelarFarge2);
       }
-      #logg{
-        width:100vw;
-        height: 22dvh;
-        background-color: white;
-        color: #000;
-        font-size: medium;
-        font-family: 'monospace', monospace;
-        padding: 5px;
-        margin-top: 0;
-        overflow-y: scroll;
-        display: block;
+
+      @keyframes skrivPoengKnappRisteMønster {
+        0% { transform: translateY(0); }
+        25% {  transform: translateY(-8px) rotate(-5deg); }
+        50% { transform: translateY(0) rotate(5deg); }
+        75% { transform: translateY(-4px) rotate(-3deg); }
+        100% { transform: translateY(0); }
+      }
+
+      .skrivPoengKnappRiste {
+        animation: skrivPoengKnappRisteMønster 0.4s ease;
+      }
+      
+
+
+
+      .poppopp {
+        position: absolute;
+        border: 2px solid black;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
         box-sizing: border-box;
       }
-      .loggSpelar1{
-        display: flex;
-        justify-content: start;
+      .melding{
+        top: 30dvh;
+        left: 5%;
+        width: 90%;
+        height: auto;
+        border-radius: 20px;
+        background: var(--spelarFarge2);
       }
-      .loggSpelar2{
-        display: flex;
-        justify-content: start;
+      .fane{
+        top: 6dvh;
+        width: 100%;
+        height: 94dvh;
+        padding:10px;
+        background: var(--radFarge);
       }
-      .poppopp {
-  position: fixed;
-  top: 30dvh;
-  left: 5vw;
-  background: var(--spelarFarge2);
-  width: 90%;
-  height: auto;
-  border: 2px solid black;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 0;
-  border-radius: 20px;
+      .fane p{
+        font-size: 1rem;
+        padding: 5px;
+        margin: 10px;
       }
-    .poppopp p {
-      font-size:2rem;
-      padding: 5px;
-      margin:10px;
-    }
-    .poppopp input{
-      font-size:2rem;
-      margin: 5px;
-      width:80%;
-      border-radius: 8px;
-    }
-  .poppoppKnapp {
-    background: var(--spelarFarge1);
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    margin: 10px 5px;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-   }
-   #bekreftNullstill {
-    bottom: auto;
-   }
+      #logg{
+        overflow-y: scroll;
+      }
+      .melding p {
+        font-size: 2rem;
+        padding: 5px;
+        margin: 10px;
+      }
+      .poppopp input {
+        font-size: 2rem;
+        margin: 5px;
+        width: 80%;
+        border-radius: 8px;
+      }
+      .poppoppKnapp {
+        background: var(--spelarFarge1);
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        margin: 10px 5px;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
+        transition:
+          background 0.3s ease,
+          box-shadow 0.3s ease,
+          transform 0.2s ease;
+      }
+      .loggSpelar1, .loggSpelar2 {
+        width:90%;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        text-align: left;
+        color: var(--tekstfarge);
+      }
+      .loggSpelar1 {
+        background: var(--spelarFarge1);
+      }
+      .loggSpelar2 {
+        background: var(--spelarFarge2);
+      }
+      #bekreftNullstill {
+        bottom: auto;
+      }
       #tastatur {
-        font-size:medium;
+        font-size: medium;
         bottom: 0;
+        top: auto;
       }
       #tastaturKnappar {
         display: grid;
@@ -257,148 +308,344 @@
         font-weight: 600;
         cursor: pointer;
         box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
-        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        transition:
+          background 0.3s ease,
+          box-shadow 0.3s ease,
+          transform 0.2s ease;
       }
-      @keyframes hoppeKnapp {
-  0% { transform: translateY(0); }
-  25% { transform: translateY(-8px) rotate(-5deg); }
-  50% { transform: translateY(0) rotate(5deg); }
-  75% { transform: translateY(-4px) rotate(-3deg); }
-  100% { transform: translateY(0); }
-}
-
-.risteKnapp {
-  animation: hoppeKnapp 0.4s ease;
-}
     </style>
   </head>
   <body>
     <div id="appskjerm" class="appskjerm-mobil">
+      <div class="rad meny">
+        <button onclick="lasSkjermPa()">Alltid på</button>
+        <button onclick="vis('loggFane')">Logg</button>
+        <button onclick="vis('reglar')">Reglar</button>
+        <button onclick="vis('bekreftNullstill')">Nullstill</button>
+      </div>
       <div class="rad">
-        <div class="poeng spelar1" onclick="skrivPoeng(1)">
-          <span id="poeng1">0</span>
-        </div>
-        <div class="poeng spelar1" id="navn1" onclick="byttNavn(1)">KAA</div>
-
-        <div id="pilboks"><svg id="pil" width="4dvh" height="4dvh" viewBox="0 0 100 100">
-            <polygon points="0,30 30,30 30,10 80,50 30,90 30,70 0,70" fill="black" />
-        </svg></div>
+        <div class="poeng" onclick="skrivPoeng(1)"> <span id="poeng1">0</span> </div>
+        <div class="poeng" id="navn1" onclick="byttNavn(1)">KAA</div>
         <div class="poeng spelar2" id="navn2" onclick="byttNavn(2)">Chris</div>
-        <div class="poeng spelar2" onclick="skrivPoeng(2)">
-          <span id="poeng2">0</span>
-        </div>      
+        <div class="poeng spelar2" onclick="skrivPoeng(2)"> <span id="poeng2">0</span> </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,1)" id="r1s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 1</span> <span class="rekka">1234</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,1)" id="r1s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 1)"
+            id="r1s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 1</span> <span class="rekka">1234</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 1)"
+            id="r1s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,2)" id="r2s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 1</span> <span class="like">55555</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,2)" id="r2s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 2)"
+            id="r2s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 1</span> <span class="like">55555</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 2)"
+            id="r2s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,3)" id="r3s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="like">333</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,3)" id="r3s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 3)"
+            id="r3s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 2</span> <span class="like">333</span> +
+          <span class="like">333</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 3)"
+            id="r3s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,4)" id="r4s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="rekka">1234</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,4)" id="r4s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 4)"
+            id="r4s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 2</span> <span class="rekka">1234</span> +
+          <span class="like">333</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 4)"
+            id="r4s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,5)" id="r5s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="like">333</span> + <span class="like">333</span> + <span class="like">333</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,5)" id="r5s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 5)"
+            id="r5s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 3</span> <span class="like">333</span> +
+          <span class="like">333</span> + <span class="like">333</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 5)"
+            id="r5s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,6)" id="r6s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="rekka">12345</span> +
-          <span class="like">333</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,6)" id="r6s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 6)"
+            id="r6s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 3</span> <span class="rekka">12345</span> +
+          <span class="like">333</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 6)"
+            id="r6s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,7)" id="r7s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="rekka">1234567</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,7)" id="r7s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 7)"
+            id="r7s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 3</span> <span class="rekka">1234567</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 7)"
+            id="r7s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,8)" id="r8s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 3</span> <span class="rekka">123456</span> +
-          <span class="like">333</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,8)" id="r8s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 8)"
+            id="r8s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 3</span> <span class="rekka">123456</span> +
+          <span class="like">333</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 8)"
+            id="r8s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,9)" id="r9s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 2</span> <span class="rekka">1234</span> +
-          <span class="rekka">1234</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,9)" id="r9s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 9)"
+            id="r9s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 2</span> <span class="rekka">1234</span> +
+          <span class="rekka">1234</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 9)"
+            id="r9s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,10)" id="r10s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 4</span> <span class="like">55555</span> +
-          <span class="like">55555</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,10)" id="r10s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 10)"
+            id="r10s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 4</span> <span class="like">55555</span> +
+          <span class="like">55555</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 10)"
+            id="r10s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
       <div class="rad">
-        <div class="bakSjekk spelar1" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(1,11)" id="r11s1" class="sjekk låst spelar1"/></div>
-        <p class="tekstRegler"><span class="hjelpar"> 4</span> <span class="rekka">123456789</span></p>
-        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()"> <input type="checkbox" onclick="kryssAvRute(2,11)" id="r11s2" class="sjekk låst spelar2"/></div>
+        <div class="bakSjekk" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(1, 11)"
+            id="r11s1"
+            class="sjekk låst"
+          />
+        </div>
+        <p class="rundeTekst">
+          <span class="hjelpar"> 4</span> <span class="rekka">123456789</span>
+        </p>
+        <div class="bakSjekk spelar2" onclick="sjekkOmLåst()">
+          <input
+            type="checkbox"
+            onclick="kryssAvRute(2, 11)"
+            id="r11s2"
+            class="sjekk låst spelar2"
+          />
+        </div>
       </div>
-      <div class="rad">
-        <button id="lasSkjermPaKnapp" onclick="lasSkjermPa()">🌟</button>
-        <button id="startKnapp" onclick="start()">START</button>
-        <button id="nullstillKnapp" onclick="nullstill()">↺</button>
+      <div id="#startOgSkrivPoengKnapp">
+        <div id="startKnapp" onclick="startKnapp()">
+          <p>START</p>
+        </div>
+        <div id="skrivPoengKnappBoks"  onclick="skrivPoengKnapp()">
+          <div id="startSpelar" class="startSpelar"></div>
+          <div id="skrivPoengKnapp">SKRIV POENG</div>
+        </div>
       </div>
-      <div id="logg">
-        
+      
+      <div id="loggFane"  class="poppopp fane">
+        Logg:
+        <div id="logg"></div>
+        <div class="poppoppKnapp" onclick="vis()">LUKK</div>
       </div>
- 
-    <div id="tastatur" class="poppopp">
-      <p id="nyePoengTekst"></p>
-       <div id="tastaturKnappar">
-        <button onclick="tastaturKlikk(1)">1</button>
-        <button onclick="tastaturKlikk(2)">2</button>
-        <button onclick="tastaturKlikk(3)">3</button>
-        <button onclick="tastaturKlikk(4)">4</button>
-        <button onclick="tastaturKlikk(5)">5</button>
-        <button onclick="tastaturKlikk(6)">6</button>
-        <button onclick="tastaturKlikk(7)">7</button>
-        <button onclick="tastaturKlikk(8)">8</button>
-        <button onclick="tastaturKlikk(9)">9</button>
-        <button onclick="tastaturVisk()"><-</button>
-        <button onclick="tastaturKlikk(0)">0</button>
-        <button onclick="tastaturOK()">OK</button>
-       </div>
+      
+      
+      <div id="reglar"  class="poppopp fane ">
+        <p>Reglane
+        <br>Del ut 11 kort til kvar frå ein dobbel kortstokk.
+        <br>Legg eit kort i kastebunka(ikkje hjelpar)
+        <br>Bytt på å trekka kort frå kastebunka eller trekkbunka og så kaste eit kort.
+        <br>Joker, 2 og 3 er hjelparar som har valgfri verdi, men kvar runda har maks antal hjelparar i opnings stikket, som vis i den svarte rundingen.
+        <br>Målet er å legge ned stikk tilsvarande ein av rundane, og så bli kvitt alle kort på hånd.
+        <br>Dei som klarte ein runde kan krysse den ut, så tel alle poeng for kort som er igjen på hånd. 
+        <br>3-10=5p J-K=10p A=15p hjelpar=20p
+        <br>Del ut på ny og spel til ein har klart aller rundane, ved uavgjort vinn den med minst poeng.
+        </p>
+        <div class="poppoppKnapp" onclick="vis()">LUKK</div>
+      </div>
+
+      
+      <div id="tastatur" class="poppopp melding">
+        <p id="nyePoengTekst"></p>
+        <div id="tastaturKnappar">
+          <button onclick="tastaturKlikk(1)">1</button>
+          <button onclick="tastaturKlikk(2)">2</button>
+          <button onclick="tastaturKlikk(3)">3</button>
+          <button onclick="tastaturKlikk(4)">4</button>
+          <button onclick="tastaturKlikk(5)">5</button>
+          <button onclick="tastaturKlikk(6)">6</button>
+          <button onclick="tastaturKlikk(7)">7</button>
+          <button onclick="tastaturKlikk(8)">8</button>
+          <button onclick="tastaturKlikk(9)">9</button>
+          <button onclick="tastaturVisk()"><-</button>
+          <button onclick="tastaturKlikk(0)">0</button>
+          <button onclick="tastaturOK()">OK</button>
+        </div>
+      </div>
+      <div id="bekreftNullstill" class="poppopp melding">
+        <p>Sikker?</p>
+        <div>
+          <button class="poppoppKnapp" onclick="bekreftNullstill(true)">
+            Nullstill
+          </button>
+          <button class="poppoppKnapp" onclick="bekreftNullstill(false)">
+            Naaai!
+          </button>
+        </div>
+      </div>
+      <div id="nyttNavn" class="poppopp melding">
+        <input type="text" id="nyttNavnSpelar1" />
+        <input type="text" id="nyttNavnSpelar2" />
+        <div>
+          <button class="poppoppKnapp" onclick="nyttNavn(true)">Lagre</button>
+          <button class="poppoppKnapp" onclick="nyttNavn(false)">Avbryt</button>
+        </div>
+      </div>
     </div>
-    <div id="bekreftNullstill"  class="poppopp">
-      <p>Sikker?</p>
-      <div>
-      <button class='poppoppKnapp' onclick="bekreftNullstill(true)">Nullstill</button>
-      <button class='poppoppKnapp' onclick="bekreftNullstill(false)">Naaai!</button>
-      </div>
-    </div>
-    <div id="nyttNavn"  class="poppopp">  
-      <input type="text" id="nyttNavnSpelar1">
-      <input type="text" id="nyttNavnSpelar2">
-      <div>
-        <button class='poppoppKnapp' onclick="nyttNavn(true)">Lagre</button>
-        <button class='poppoppKnapp' onclick="nyttNavn(false)">Avbryt</button>
-      </div>
-    </div>
-   </div><!--appskjerm slutt-->
+    <!--appskjerm slutt-->
   </body>
 
-  
-<script>
-  //=======================================================================================================================================================
+  <script>
+    //=======================================================================================================================================================
     // Registrer service worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").then(() => {
         console.log("✅ Service Worker registrert");
-        console.log('v.1.2.1');
+        console.log("v.1.2.1");
       });
     }
 
@@ -415,92 +662,111 @@
       9: "To gange firarstrait",
       10: "To gange fem lige",
       11: "Niarstrait",
-    }
-  
+    };
+
     document.body.onload = () => lastLagring() || startOppsett();
 
     function startOppsett() {
-      
       spelarData = {
-        runde:0,
-        kanRedigere: 'ulåst',
-        startspelar:0,
-        logg:'',
-        1:{
+        runde: 1,
+        kanRedigere: "ulåst",
+        startspelar: Math.ceil(Math.random() * 2),
+        logg: "",
+        1: {
           poeng: 0,
-          navn:'🤠',
-          rundar: [null,false,false,false,false,false,false,false,false,false,false,false],
+          navn: "🤠",
+          rundar: [ null, false, false, false, false, false, false, false, false, false, false, false]
         },
-        2:{
+        2: {
           poeng: 0,
-          navn:'😎',
-          rundar: [null,false,false,false,false,false,false,false,false,false,false,false],
-        },
+          navn: "😎",
+          rundar: [ null, false, false, false, false, false, false, false, false, false, false, false]
+        }
       };
       lagre();
       oppdaterSkjerm();
     }
 
     function kryssAvRute(spelar, rekke) {
-      if(rekke !== null) spelarData[spelar].rundar[rekke] = document.getElementById(`r${rekke}s${spelar}`).checked;
-      const nyTekst = rekke ? 'klarte' : 'Juksa';
-      nyLogg(spelar, `${spelarData[spelar].navn} ${nyTekst} ${rundeTekst[rekke]}`);
+      if (rekke !== null)
+        spelarData[spelar].rundar[rekke] = document.getElementById(
+          `r${rekke}s${spelar}`,
+        ).checked;
+      const nyTekst = rekke ? "klarte" : "Juksa";
+      nyLogg(
+        spelar,
+        `${spelarData[spelar].navn} ${nyTekst} ${rundeTekst[rekke]}`,
+      );
       lagre();
     }
-
-
-
-
-function start(){
-      spelarData.kanRedigere = 'låst';
+    function oppdaterLås() {
+      const ruter = document.querySelectorAll(`.sjekk`);
+      if (spelarData.kanRedigere === "låst") {
+        ruter.forEach((rute) => {
+          rute.classList.add("låst");
+        });
+      } else {
+        ruter.forEach((rute) => {
+          rute.classList.remove("låst");
+        });
+      }
+    }
+    function sjekkOmLåst() {
+      const knapp = document.getElementById("skrivPoengKnapp");
+      if (spelarData.kanRedigere === "låst") {
+        knapp.classList.add("skrivPoengKnappRiste");
+        setTimeout(() => {
+          knapp.classList.remove("skrivPoengKnappRiste");
+        }, 400);
+        return true;
+      }
+      return false;
+    }
+    
+    function startKnapp() {
+      spelarData.kanRedigere = "låst";
       oppdaterStartKnapp()
       oppdaterLås();
-      if(spelarData.runde < 1) {
-        spelarData.startspelar = Math.random() < 0.5 ? 1 : 2;
-        spelarData.runde = 1;
-      }
-      oppdaterPil()
-      nyLogg(spelarData.startspelar, `${spelarData[spelarData.startspelar].navn} starte runde ${spelarData.runde}, `);
-    }
 
+      nyLogg(
+        spelarData.startspelar,
+        `${spelarData[spelarData.startspelar].navn} starte runde ${spelarData.runde}, `,
+      );
+    }
 
     function skrivPoengKnapp() {
-
-      spelarData.kanRedigere = 'ulåst';
+      spelarData.kanRedigere = "ulåst";
       oppdaterStartKnapp()
-      oppdaterLås()
-      spelarData.runde++;
-      // neste spelar
-      spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
-      oppdaterPil()
+      oppdaterLås();
+      nesteSpelar();
     }
-    function oppdaterStartKnapp () {
-      const knapp = document.getElementById('startKnapp');
-      knapp.style.color = 'white';
-      knapp.innerText = spelarData.kanRedigere === 'ulåst' ? 'START' : 'SKRIV POENG';
-      knapp.onclick = spelarData.kanRedigere === 'ulåst' ? start : skrivPoengKnapp;
-    }
-    function oppdaterPil () {
-      const pil = document.getElementById("pil");
-      if(spelarData.kanRedigere === 'ulåst'){
-        pil.style.transform = `rotate(${90}deg)`;
-      }else{
-        pil.style.transform = `rotate(${spelarData.startspelar*180}deg)`;
-      }
+
+    function oppdaterStartKnapp() {
+      document.getElementById('startKnapp').style.display = (spelarData.kanRedigere === 'låst') ? 'none' : 'flex';
+      document.getElementById('skrivPoengKnappBoks').style.display = (spelarData.kanRedigere === 'låst') ? 'flex' : 'none';
     }
   
-    function oppdaterSkjerm() {
-      for (let spelar = 1; spelar < 3; spelar++) {
-        document.getElementById("poeng" + spelar).innerText = spelarData[spelar].poeng;
-        document.getElementById("navn" + spelar).innerText = spelarData[spelar].navn;
-        for (let runde = 1; runde < 12; runde++) {
-          document.getElementById(`r${runde}s${spelar}`).checked = spelarData[spelar].rundar[runde];
-        }
-      }
-      oppdaterPil();
-      
+    function nesteSpelar() {
+      spelarData.runde++;
+      spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
+      document.getElementById('startSpelar').className = spelarData.startspelar === 1 ? "startSpelar startSpelar1" : "startSpelar startSpelar2";
+      document.getElementById('startSpelar').innerText = spelarData.startspelar === 1 ? spelarData['1'].navn + " STARTE" : spelarData['2'].navn + " STARTE";
+
     }
 
+    function oppdaterSkjerm() {
+      for (let spelar = 1; spelar < 3; spelar++) {
+        document.getElementById("poeng" + spelar).innerText =
+          spelarData[spelar].poeng;
+        document.getElementById("navn" + spelar).innerText =
+          spelarData[spelar].navn;
+        for (let runde = 1; runde < 12; runde++) {
+          document.getElementById(`r${runde}s${spelar}`).checked =
+            spelarData[spelar].rundar[runde];
+        }
+      }
+    }
+//--------------------------------------------------
     //Skjerm på knapp
     let skjermLastPa = null;
 
@@ -521,39 +787,32 @@ function start(){
         }
       }
     }
+//--------------------------------------------------
 
     //Nullstill knapp
-    function nullstill() {
-      document.getElementById('bekreftNullstill').style.display = 'flex';
-    }
-    function bekreftNullstill( svar ) {
+    function bekreftNullstill(svar) {
       if (svar) {
         startOppsett();
         oppdaterStartKnapp();
         lagre();
         lastLagring();
       }
-      document.getElementById('bekreftNullstill').style.display = 'none';
+      vis()
     }
-
-
-function oppdaterLås (){
-      const ruter = document.querySelectorAll(`.sjekk`);
-      if (spelarData.kanRedigere === 'låst') {
-        ruter.forEach((rute) => {rute.classList.add("låst"); });
-      } else{ 
-        ruter.forEach((rute) => {rute.classList.remove("låst"); }); 
-      }
-    }
-function sjekkOmLåst(){
-  const knapp = document.getElementById('startKnapp');
-  if(spelarData.kanRedigere === 'låst'){
-    knapp.classList.add("risteKnapp");
-    setTimeout(() => { knapp.classList.remove("risteKnapp");}, 400);
-    return true;
+//--------------------------------------------------
+  //vis
+  function vis( fane ) {
+    document.getElementById("bekreftNullstill").style.display = "none";
+    document.getElementById("loggFane").style.display = "none";
+    document.getElementById("reglar").style.display = "none";
+    document.getElementById("tastatur").style.display = "none";
+    document.getElementById("nyttNavn").style.display = "none";
+    if(!fane) return;
+    document.getElementById(fane).style.display = "flex";
   }
-  return false;
-}
+
+  //--------------------------------------------------
+
     function lagre() {
       localStorage.setItem("Rummy", JSON.stringify(spelarData));
       console.log("Data lagret:");
@@ -566,90 +825,94 @@ function sjekkOmLåst(){
         oppdaterStartKnapp();
         oppdaterLås();
         //oppdater logg
-        document.getElementById('logg').innerHTML = spelarData.logg;
+        document.getElementById("logg").innerHTML = spelarData.logg;
         return true;
       } else {
         return false;
       }
     }
 
-    function nyLogg(spelar, nyTekst){
-      if(nyTekst === undefined || nyTekst === '') return;
-      spelarData.logg += `<span class="loggSpelar${spelar}">${nyTekst}</span>`;
-      const loggen = document.getElementById('logg')
+    function nyLogg(spelar, nyTekst) {
+      if (nyTekst === undefined || nyTekst === "") return;
+      spelarData.logg += `<p class="loggSpelar${spelar}">${nyTekst}</p>`;
+      const loggen = document.getElementById("logg");
       loggen.innerHTML = spelarData.logg;
-      loggen.scrollTop = loggen.scrollHeight;//skroller ned
+      loggen.scrollTop = loggen.scrollHeight; //skroller ned
       console.log(nyTekst);
     }
-
 
     // legge inn nye poeng
     let aktivPoengSpelar = 0;
     let tmpSiffer = [];
     let tmpPoeng = 0;
     function skrivPoeng(spelar) {
-      if( sjekkOmLåst()) return;
+      if (sjekkOmLåst()) return;
       aktivPoengSpelar = spelar;
-      document.getElementById('tastatur').style.display = 'flex';
+      vis('tastatur');
       tmpSiffer = [];
       tastaTal = 0;
-      tmpPoeng = spelarData[aktivPoengSpelar].poeng
-      document.getElementById('nyePoengTekst').innerText = tmpPoeng + ' + ';
-      document.getElementById('tastatur').style.backgroundColor = spelar === 1 ? 'var(--spelarFarge1)' : 'var(--spelarFarge2)';
-    }
-    
-    function tastaturKlikk(nr) {
-      tmpSiffer.push(nr);
-      oppdaterTastaturTekst()
+      tmpPoeng = spelarData[aktivPoengSpelar].poeng;
+      document.getElementById("nyePoengTekst").innerText = tmpPoeng + " + ";
+      document.getElementById("tastatur").style.backgroundColor =
+        spelar === 1 ? "var(--spelarFarge1)" : "var(--spelarFarge2)";
     }
 
-    function tastaturVisk(){
-      if(tmpSiffer.length === 0) {
+    function tastaturKlikk(nr) {
+      tmpSiffer.push(nr);
+      oppdaterTastaturTekst();
+    }
+
+    function tastaturVisk() {
+      if (tmpSiffer.length === 0) {
         tmpPoeng = 0;
         oppdaterTastaturTekst();
-      }else{
-        tmpSiffer.pop();//fjerner siste taltet
-        oppdaterTastaturTekst()
+      } else {
+        tmpSiffer.pop(); //fjerner siste taltet
+        oppdaterTastaturTekst();
       }
     }
 
-    function tastaturOK(){
+    function tastaturOK() {
       let tmpTal;
-      if(tmpSiffer.length === 0) tmpTal = 0;
+      if (tmpSiffer.length === 0) tmpTal = 0;
       else tmpTal = Number(tmpSiffer.join(""));
       spelarData[aktivPoengSpelar].poeng = tmpPoeng + tmpTal;
-      document.getElementById(`poeng${aktivPoengSpelar}`).innerText = spelarData[aktivPoengSpelar].poeng;
-      nyLogg(aktivPoengSpelar, `${spelarData[aktivPoengSpelar].navn}: + ${tmpTal} poeng`);
-      
-      document.getElementById('tastatur').style.display = 'none';
+      document.getElementById(`poeng${aktivPoengSpelar}`).innerText =
+        spelarData[aktivPoengSpelar].poeng;
+      nyLogg(
+        aktivPoengSpelar,
+        `${spelarData[aktivPoengSpelar].navn}: + ${tmpTal} poeng`,
+      );
+      vis();
       lagre();
     }
 
     function oppdaterTastaturTekst() {
       let tmpTal = Number(tmpSiffer.join(""));
-      document.getElementById('nyePoengTekst').innerText = tmpPoeng + ' + ' + tmpTal + ' = ' + (tmpPoeng + tmpTal);
-
+      document.getElementById("nyePoengTekst").innerText =
+        tmpPoeng + " + " + tmpTal + " = " + (tmpPoeng + tmpTal);
     }
     // bytt navn
     function byttNavn(spelar) {
-      document.getElementById('nyttNavnSpelar1').value = spelarData['1'].navn;
-      document.getElementById('nyttNavnSpelar2').value = spelarData['2'].navn;
-      document.getElementById('nyttNavn').style.display = 'flex';
+      document.getElementById("nyttNavnSpelar1").value = spelarData["1"].navn;
+      document.getElementById("nyttNavnSpelar2").value = spelarData["2"].navn;
+      vis('nyttNavn');
     }
-    function nyttNavn( svar ) {
-      if( svar ){
+    function nyttNavn(svar) {
+      if (svar) {
         byttNavnet(1);
         byttNavnet(2);
         lagre();
       }
-      document.getElementById('nyttNavn').style.display = 'none';
+      vis();
     }
 
-    function byttNavnet (spelar) {
-     const tmpNavn = document.getElementById(`nyttNavnSpelar${spelar}`).value;
-      if (tmpNavn !== null && tmpNavn.trim() !== '') {
+    function byttNavnet(spelar) {
+      const tmpNavn = document.getElementById(`nyttNavnSpelar${spelar}`).value;
+      if (tmpNavn !== null && tmpNavn.trim() !== "") {
         spelarData[spelar].navn = tmpNavn.trim();
-        document.getElementById(`navn${spelar}`).innerText = spelarData[spelar].navn;
+        document.getElementById(`navn${spelar}`).innerText =
+          spelarData[spelar].navn;
       }
     }
   </script>
