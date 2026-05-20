@@ -32,7 +32,6 @@
 
     .rekke {
       display: flex;
-      justify-content: center;
       width: 100vmin;
       height: 5vmin;
     }
@@ -633,7 +632,7 @@
     'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'eng', 'veiVertikal', 'radStopp',
     'veiSvingOppH', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiKryssOpp', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiHorisontal', 'veiSvingOppV'
   ];
-  let versjon = { denne: 32, krav: 31 };
+  let versjon = { denne: 33, krav: 33 };
   let kartKant = { left: 0, top: 0, right: 0, bottom: 0 };
   let brukar = 'Pelle';
   const doningOgRedskap = document.getElementById("doningRamme");
@@ -751,9 +750,8 @@
     document.getElementById('brukarTekst').innerText = brukar;
 
     // Last in brukar om den finst
-    tmp = document.cookie;
-    if (tmp.search(brukar) != -1) {
-      let tmp = document.cookie;
+    tmp = localStorage.getItem(brukar);
+    if (tmp != null) {
       console.log('fant denne kjeksen: ' + tmp);
       let brukarStart = tmp.search(brukar);
       let brukarSlutt = brukar + 'slutt';
@@ -813,15 +811,19 @@
         nr++;//hopp over overskift
         for (x = 0; x < ruter.length; x++) {
           ruter[x] = String(tmp[nr]); nr++;
-          if (ruter[x] != "radStopp") {
+          if (ruter[x] === 'erDyrka'){
             document.getElementById("R" + x).className = ruter[x];
+            document.getElementById("R" + x).style.backgroundImage = 'url(bilde/dyrke3.gif)';
+          }else if(ruter[x] != "radStopp" && ruter[x] != 'eng') {
+            document.getElementById("R" + x).className = ruter[x];
+            document.getElementById("R" + x).style.backgroundImage = 'url(bilde/' + ruter[x] + '.gif)';
           }
         }
         nr++;//hopp over overskift
         console.log('før henting: ' + vekseTidRuter);
 
         for (x = 0; x < vekseTidRuter.length; x++) {
-          vekseTidRuter[x] = Number(tmp[nr]); nr++;
+          vekseTidRuter[x] = tmp[nr]; nr++;
         }
         console.log('etter henting: ' + vekseTidRuter);
 
@@ -884,10 +886,10 @@
       nykjeks += '$' + vekseTidRuter[x];
 
     }
-    nykjeks += brukar + 'slutt; max-age=310000; path=/;';//slutten på kjeksen, gir ei levetid på ca 1 år
+    nykjeks += brukar + 'slutt;';
 
 
-    document.cookie = nykjeks;
+    localStorage.setItem(brukar, nykjeks);
 console.log('lagra dette: ' + nykjeks);
   }
   //Oppstart----------------------------------------Oppstart
@@ -937,7 +939,7 @@ console.log('lagra dette: ' + nykjeks);
   function oppsett() {//kjører ved oppstart og endring av størrelse på vindu
     console.log('oppsett');
     fart.faktor = verden.offsetWidth / 2000;//justerer farten til skjermbredden
-    //definer yttergrensene på spelet slik at ein ikkje kan kjøre utenfor, burker rammen til lastingAvBilder som mal
+    //definer yttergrensene på spelet slik at ein ikkje kan kjøre utenfor, burker bredden til rammen av lastingAvBilder som mål på 1% av verden
     let kant = document.getElementById('verden').getBoundingClientRect();
     let justering = document.getElementById('lastingAvBilder').getBoundingClientRect();
     kartKant.left = kant.left - justering.width * 3;
