@@ -567,7 +567,7 @@
           />
         </div>
       </div>
-      <div id="#startOgSkrivPoengKnapp">
+      <div id="startOgSkrivPoengKnapp">
         <div id="startKnapp" onclick="startKnapp()">
           <p>START</p>
         </div>
@@ -755,7 +755,7 @@
       spelarData.startspelar = spelarData.startspelar === 1 ? 2 : 1;
       document.getElementById('startSpelar').className = spelarData.startspelar === 1 ? "startSpelar startSpelar1" : "startSpelar startSpelar2";
       document.getElementById('startSpelar').innerText = spelarData.startspelar === 1 ? spelarData['1'].navn + " STARTE" : spelarData['2'].navn + " STARTE";
-
+      lagre();
     }
 
     function oppdaterSkjerm() {
