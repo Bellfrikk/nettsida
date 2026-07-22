@@ -8,312 +8,282 @@
     <meta name="theme-color" content="#000000" />
     <title>Rummy!</title>
     <style>
-      /*-----------Generelt------------*/
-      :root {
-        --bakgrunnsfarge: #000;
-        --tekstfarge: #000;
-        --fontstorleik: xxx-large;
-        --radFarge: white;
-        --spelarFarge1: #2bea09;
-        --spelarFarge2: #11b7f8;
-      }
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-      }
+     :root {
+  --bakgrunnsfarge: #000;
+  --tekstfarge: #222;
 
-      .appskjerm-mobil {
-        width: 100vw;
-        height: 100dvh;
-        overflow: hidden;
-      }
+  --spelarFarge1: #2bea09;
+  --spelarFarge2: #11b7f8;
 
-      @media (min-width: 500px) {
-        .appskjerm-mobil {
-          width: 500px;
-          height: 100dvh;
-          margin: 0 auto; /* Sentrer på brei skjerm */
-        }
-      }
-      body {
-        background-color: var(--bakgrunnsfarge);
-        font-family: "Comic Sans MS", sans-serif;
-        font-weight: bold;
-      }
-      #appskjerm {
-        background: linear-gradient( 90deg, 
-          var(--spelarFarge1) 0%, 
-          var(--spelarFarge1) 49%, 
-          var(--spelarFarge2) 51%,
-          var(--spelarFarge2) 100% 
-          );
-        position: relative;
-        display: flex;
-        flex-direction: column;
-      }
+  --kortFarge: #f3ead2;
+  --knappFarge: #e6d7b8;
+}
 
-      .rad {
-        height: 6dvh;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-      }
-      /*----------- per element kronologisk ------------*/
-      /*meny*/
+body {
+  background-color: var(--bakgrunnsfarge);
+  font-family: "Comic Sans MS", sans-serif;
+  font-weight: bold;
+}
 
-      .meny{
-        background-color: black;
-      }
-      .meny button{
-        width:25%;
-        height:100%;
-        background-color: black;
-        color: white;
-        font-size: 3dvh;
-        box-shadow: #999999 0px 4px 15px;
+#appskjerm {
+  background: linear-gradient(
+    90deg,
+    var(--spelarFarge1) 0%,
+    var(--spelarFarge1) 49%,
+    var(--spelarFarge2) 51%,
+    var(--spelarFarge2) 100%
+  );
+}
 
-        
-      }
-      
-      /*poeng, navn linje*/
-      .poeng {
-        display: flex;
-        height: 100%;
-        width: 50vw;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-        color: var(--tekstfarge);
-        font-weight: bold;
-        font-size: 4dvh;
-      }
+/* ---------------- Meny ---------------- */
 
+.meny {
+  background: #111;
+}
 
-      /*runde kryss*/
-      .bakSjekk {
-        flex: 1;
-        height: 100%;
-        width: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .sjekk {
-        flex: 1;
-        height: 90%;
-        width: 15%;
-        
-      }
-      .like,
-      .rekka {
-        border-radius: 5px;
-        padding: 2px;
-      }
-      .like {
-        background-color: #ff000020;
-      }
-      .rekka {
-        background-color: #0000ff20;
-      }
-      .hjelpar {
-        color: #fff;
-        background-color: #000;
-        border-radius: 50%;
-        padding: 3px;
-      }
-      .låst {
-        opacity: 0.8;
-        pointer-events: none; /* Deaktiverer interaksjon */
-      }
-      input[type="checkbox"].spelar1 {
-        accent-color: var(--spelarFarge1);
-      }
-      input[type="checkbox"].spelar2 {
-        accent-color: var(--spelarFarge2);
-      }
-      .rundeTekst {
-        font-size: 3dvh;
-        margin-left: 5px;
-        padding: 5px;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        width: 70%;
-        text-align: left;
-        color: var(--tekstfarge);
-        background-color: var(--radFarge);
-      }
+.meny button {
+  width: 25%;
+  height: 100%;
 
-      /*start knapp og skrivPoeng knapp*/
-      #startOgSkrivPoengKnapp{
-        min-height: 20dvh;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-      }
+  background: #1c1c1c;
+  color: white;
 
+  border: none;
 
-      #startKnapp, #skrivPoengKnapp, .startSpelar {
-        flex: 1;
-        margin: 10px;
-        box-sizing: border-box;
-        font-size: clamp(2rem, 5dvh, 4rem);
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        text-align: center;
-        color: var(--tekstfarge);
-        background-color: var(--radFarge);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      #skrivPoengKnappBoks{
-        flex-direction: column;
-        justify-content: center;
-        display:none;
+  font-size: 3dvh;
 
-      }
-      #skrivPoengKnapp, #startSpelar{
-        min-height: 8dvh;
-      }
-      #startKnapp{
-        height:100%;
-      }
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 3px 10px rgba(0,0,0,0.35);
+}
 
-      .startSpelar1 {
-        background-color: var(--spelarFarge1);
-      }
-      .startSpelar2 {
-        background-color: var(--spelarFarge2);
-      }
+/* ---------------- Poeng og namn ---------------- */
 
-      @keyframes skrivPoengKnappRisteMønster {
-        0% { transform: translateY(0); }
-        25% {  transform: translateY(-8px) rotate(-5deg); }
-        50% { transform: translateY(0) rotate(5deg); }
-        75% { transform: translateY(-4px) rotate(-3deg); }
-        100% { transform: translateY(0); }
-      }
+.poeng {
+  display: flex;
+  height: 100%;
+  width: 50vw;
 
-      .skrivPoengKnappRiste {
-        animation: skrivPoengKnappRisteMønster 0.4s ease;
-      }
-      
+  justify-content: center;
+  align-items: center;
 
+  margin: 2px;
 
+  border-radius: 12px;
 
-      .poppopp {
-        position: absolute;
-        border: 2px solid black;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 0;
-        box-sizing: border-box;
-      }
-      .melding{
-        top: 30dvh;
-        left: 5%;
-        width: 90%;
-        height: auto;
-        border-radius: 20px;
-        background: var(--spelarFarge2);
-      }
-      .fane{
-        top: 6dvh;
-        width: 100%;
-        height: 94dvh;
-        padding:10px;
-        background: var(--radFarge);
-      }
-      .fane p{
-        font-size: 1rem;
-        padding: 5px;
-        margin: 10px;
-      }
-      #logg{
-        overflow-y: scroll;
-      }
-      .melding p {
-        font-size: 2rem;
-        padding: 5px;
-        margin: 10px;
-      }
-      .poppopp input {
-        font-size: 2rem;
-        margin: 5px;
-        width: 80%;
-        border-radius: 8px;
-      }
-      .poppoppKnapp {
-        background: var(--spelarFarge1);
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
-        margin: 10px 5px;
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
-        transition:
-          background 0.3s ease,
-          box-shadow 0.3s ease,
-          transform 0.2s ease;
-      }
-      .loggSpelar1, .loggSpelar2 {
-        width:90%;
-        margin: 10px;
-        padding: 5px;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        text-align: left;
-        color: var(--tekstfarge);
-      }
-      .loggSpelar1 {
-        background: var(--spelarFarge1);
-      }
-      .loggSpelar2 {
-        background: var(--spelarFarge2);
-      }
-      #bekreftNullstill {
-        bottom: auto;
-      }
-      #tastatur {
-        font-size: medium;
-        bottom: 0;
-        top: auto;
-      }
-      #tastaturKnappar {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        width: 90%;
-        max-width: 400px;
-      }
-      #tastatur button {
-        background: #00000042;
-        border: none;
-        border-radius: 8px;
-        height: 60px;
-        color: white;
-        font-size: 2rem;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
-        transition:
-          background 0.3s ease,
-          box-shadow 0.3s ease,
-          transform 0.2s ease;
-      }
-    </style>
+  background: rgba(255,255,255,0.15);
+
+  color: white;
+
+  font-size: 4dvh;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* ---------------- Runde-kort ---------------- */
+
+.rundeTekst {
+  width: 70%;
+
+  margin-left: 5px;
+  padding: 8px 12px;
+
+  border-radius: 14px;
+
+  background: var(--kortFarge);
+
+  color: var(--tekstfarge);
+
+  font-size: 3dvh;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.25);
+}
+
+.like {
+  background: rgba(255,0,0,0.15);
+  border-radius: 6px;
+  padding: 2px 4px;
+}
+
+.rekka {
+  background: rgba(0,0,255,0.15);
+  border-radius: 6px;
+  padding: 2px 4px;
+}
+
+.hjelpar {
+  color: white;
+  background: #222;
+  border-radius: 50%;
+  padding: 3px 8px;
+}
+
+/* ---------------- Sjekkboksar ---------------- */
+
+.sjekk {
+  height: 90%;
+  width: 15%;
+}
+
+input[type="checkbox"].spelar1 {
+  accent-color: var(--spelarFarge1);
+}
+
+input[type="checkbox"].spelar2 {
+  accent-color: var(--spelarFarge2);
+}
+
+/* ---------------- Hovudknappar ---------------- */
+
+#startKnapp,
+#skrivPoengKnapp,
+.startSpelar {
+  background: linear-gradient(
+    180deg,
+    #f5ebd3 0%,
+    #dbc69e 100%
+  );
+
+  color: #222;
+
+  border: none;
+  border-radius: 18px;
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  text-align: center;
+}
+
+#startKnapp {
+  margin: 10px;
+
+  font-size: clamp(2rem, 5dvh, 4rem);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#skrivPoengKnappBoks {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+}
+
+.startSpelar {
+  min-height: 8dvh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  margin-bottom: 8px;
+}
+
+#skrivPoengKnapp {
+  min-height: 8dvh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Vis kven som startar */
+
+.startSpelar1 {
+  border-left: 14px solid var(--spelarFarge1);
+}
+
+.startSpelar2 {
+  border-left: 14px solid var(--spelarFarge2);
+}
+
+/* ---------------- Popup-vindauge ---------------- */
+
+.melding,
+.fane {
+  background: var(--kortFarge);
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.45);
+}
+
+.poppoppKnapp {
+  background: linear-gradient(
+    180deg,
+    #f5ebd3 0%,
+    #dbc69e 100%
+  );
+
+  color: #222;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 10px 20px;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.25);
+}
+
+/* ---------------- Logg ---------------- */
+
+.loggSpelar1,
+.loggSpelar2 {
+  width: 90%;
+
+  margin: 10px;
+  padding: 8px 12px;
+
+  border-radius: 12px;
+
+  color: #222;
+
+  box-shadow:
+    0 3px 10px rgba(0,0,0,0.25);
+}
+
+.loggSpelar1 {
+  background: rgba(43,234,9,0.25);
+}
+
+.loggSpelar2 {
+  background: rgba(17,183,248,0.25);
+}
+
+/* ---------------- Tastatur ---------------- */
+
+#tastatur button {
+  background: rgba(0,0,0,0.15);
+
+  border: none;
+  border-radius: 12px;
+
+  color: white;
+
+  font-size: 2rem;
+  font-weight: bold;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.25);
+}
+</style>
   </head>
   <body>
     <div id="appskjerm" class="appskjerm-mobil">
