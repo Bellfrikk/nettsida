@@ -318,7 +318,7 @@
   <body>
     <div id="appskjerm" class="appskjerm-mobil">
       <div class="rad meny">
-        <button onclick="lasSkjermPa()">Alltid på</button>
+        <button onclick="lasSkjermPa()" id="lasSkjermPaKnapp">Lys AV</button>
         <button onclick="vis('loggFane')">Logg</button>
         <button onclick="vis('reglar')">Reglar</button>
         <button onclick="vis('bekreftNullstill')">Nullstill</button>
@@ -335,7 +335,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 1)"
             id="r1s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -356,7 +356,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 2)"
             id="r2s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -377,7 +377,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 3)"
             id="r3s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -399,7 +399,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 4)"
             id="r4s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -421,7 +421,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 5)"
             id="r5s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -443,7 +443,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 6)"
             id="r6s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -465,7 +465,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 7)"
             id="r7s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -486,7 +486,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 8)"
             id="r8s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -508,7 +508,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 9)"
             id="r9s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -530,7 +530,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 10)"
             id="r10s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -552,7 +552,7 @@
             type="checkbox"
             onclick="kryssAvRute(1, 11)"
             id="r11s1"
-            class="sjekk låst"
+            class="sjekk låst spelar 1"
           />
         </div>
         <p class="rundeTekst">
@@ -692,7 +692,7 @@
         spelarData[spelar].rundar[rekke] = document.getElementById(
           `r${rekke}s${spelar}`,
         ).checked;
-      const nyTekst = rekke ? "klarte" : "Juksa";
+      const nyTekst = spelarData[spelar].rundar[rekke] ? "klarte" : "Juksa";
       nyLogg(
         spelar,
         `${spelarData[spelar].navn} ${nyTekst} ${rundeTekst[rekke]}`,
@@ -744,6 +744,10 @@
     function oppdaterStartKnapp() {
       document.getElementById('startKnapp').style.display = (spelarData.kanRedigere === 'låst') ? 'none' : 'flex';
       document.getElementById('skrivPoengKnappBoks').style.display = (spelarData.kanRedigere === 'låst') ? 'flex' : 'none';
+      //oppdater startknappen
+      document.getElementById('startSpelar').className = spelarData.startspelar === 1 ? "startSpelar startSpelar1" : "startSpelar startSpelar2";
+      document.getElementById('startSpelar').innerText = spelarData.startspelar === 1 ? spelarData['1'].navn + " STARTE" : spelarData['2'].navn + " STARTE";
+
     }
   
     function nesteSpelar() {
@@ -768,25 +772,26 @@
     }
 //--------------------------------------------------
     //Skjerm på knapp
-    let skjermLastPa = null;
+ let skjermLastPa = null;
 
-    async function lasSkjermPa() {
-      if (skjermLastPa === null) {
-        try {
-          skjermLastPa = await navigator.wakeLock.request("screen");
-          document.getElementById("lasSkjermPaKnapp").innerText = "🌓";
-        } catch (err) {
-          alert("Feil: " + err.message);
-          event.target.checked = false;
-        }
-      } else {
-        if (skjermLastPa) {
-          await skjermLastPa.release();
-          skjermLastPa = null;
-          document.getElementById("lasSkjermPaKnapp").innerText = "🌟";
-        }
-      }
+async function lasSkjermPa() {
+  try {
+    if (!skjermLastPa) {
+      skjermLastPa = await navigator.wakeLock.request("screen");
+
+      skjermLastPa.addEventListener("release", () => {
+        skjermLastPa = null;
+        document.getElementById("lasSkjermPaKnapp").innerText = "Lys AV";
+      });
+
+      document.getElementById("lasSkjermPaKnapp").innerText = "Lys PÅ";
+    } else {
+      await skjermLastPa.release();
     }
+  } catch (err) {
+    alert("Feil: " + err.message);
+  }
+}
 //--------------------------------------------------
 
     //Nullstill knapp
